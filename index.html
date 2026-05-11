@@ -547,87 +547,37 @@ tr { animation: slideIn 0.3s ease forwards; opacity: 0; }
 
 <script>
 // ─── الإعدادات ───────────────────────────────────────────────
-// غيّر هذه القيم بقيمك الحقيقية
 const CONFIG = {
-  // معرف تطبيق Azure (يُستخدم لطلب token مجهول)
-  clientId: 'fe7102a6-ea03-4ff1-b092-d66fa5f1b5bd',
-  tenantId: '27155d3f-422d-4b57-ab17-209c5c788017',
-  // رابط SharePoint API
-  apiUrl: 'https://graph.microsoft.com/v1.0/sites/etech321.sharepoint.com:/sites/e-tech/lists/Tenders/items?expand=fields&$top=500&$select=fields',
-  // مدة التحديث التلقائي (بالميلي ثانية) — 5 دقائق
+  // رابط ملف البيانات من GitHub
+  dataUrl: 'https://raw.githubusercontent.com/edwardehab0-design/tender-dashboard/main/data.json',
+  // مدة التحديث التلقائي — 5 دقائق
   refreshInterval: 5 * 60 * 1000,
 };
 
 let allTenders = [];
 let currentFilter = '';
-let accessToken = null;
 
-// ─── جلب Token ───────────────────────────────────────────────
-async function getToken() {
-  // استخدام token من SharePoint مباشرة عبر MSAL
-  // للمواقع العامة نستخدم App-Only token
-  try {
-    const resp = await fetch(
-      `https://login.microsoftonline.com/${CONFIG.tenantId}/oauth2/v2.0/token`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          grant_type: 'client_credentials',
-          client_id: CONFIG.clientId,
-          client_secret: 'u6e8Q~ENuZFdA6upUJDv4Y8EZIMZgJj9wLgnKbCs',
-          scope: 'https://graph.microsoft.com/.default',
-        }),
-      }
-    );
-    const data = await resp.json();
-    return data.access_token;
-  } catch (e) {
-    console.error('Token error:', e);
-    return null;
-  }
-}
-
-// ─── جلب البيانات من SharePoint ──────────────────────────────
+// ─── جلب البيانات من GitHub ───────────────────────────────────
 async function fetchTenders() {
   try {
-    if (!accessToken) {
-      accessToken = await getToken();
-    }
-    if (!accessToken) {
-      showError('تعذر الاتصال بـ SharePoint — تحقق من إعدادات Azure');
-      return;
-    }
-
-    const resp = await fetch(CONFIG.apiUrl, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        Accept: 'application/json',
-      },
-    });
-
-    if (!resp.ok) {
-      if (resp.status === 401) {
-        accessToken = null;
-        return fetchTenders();
-      }
-      throw new Error(`HTTP ${resp.status}`);
-    }
-
+    const resp = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
-    const items = data.value || [];
-
-    allTenders = items
-      .map(item => item.fields || {})
-      .filter(f => f.Title);
-
+    allTenders = (data.tenders || []).map(t => ({
+      Title: t["اسم المناقصة"] || '',
+      Owner: t["المالك"] || '',
+      wallet: t["القطاع"] || '',
+      WorkType: t["نوع الأعمال"] || '',
+      SubmitDate: t["تاريخ التقديم"] || '',
+      InitialGuarantee: t["تاريخ الضمان الابتدائي"] || '',
+      Status: t["الحالة"] || 'جارية',
+    }));
     renderAll();
     updateLastTime();
     hideError();
-
   } catch (e) {
     console.error('Fetch error:', e);
-    // fallback: بيانات تجريبية للعرض
+    showError('جاري تحميل البيانات... تأكد من تشغيل السكريبت على جهازك');
     loadSampleData();
   }
 }
