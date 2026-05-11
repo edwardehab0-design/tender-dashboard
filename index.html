@@ -7,92 +7,98 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #b8860b; --gold-light: #f0c040; --gold-bg: #fffbf0;
-  --bg: #f5f7fa; --bg-card: #ffffff; --border: #e8edf3;
-  --text: #1a2332; --text-muted: #7a8899;
+  --gold: #b8860b; --gold-light: #d4a017; --gold-bg: #fffbf0;
+  --blue-deep: #1e2a5e; --blue-mid: #3b4fb8; --blue-light: #5b7be8;
+  --blue-pale: #eef2ff;
+  --bg: #f0f4ff; --bg-card: #ffffff; --border: #d4daf5;
+  --text: #1a2332; --text-muted: #6b7a99;
   --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
   --yellow: #d97706; --yellow-bg: #fffbeb; --yellow-border: #fde68a;
   --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
   --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
-  --blue: #2563eb; --blue-bg: #eff6ff;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+  --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
+  --teal: #0891b2; --teal-bg: #ecfeff; --teal-border: #a5f3fc;
+  --shadow: 0 1px 3px rgba(30,42,94,0.08);
+  --shadow-md: 0 4px 16px rgba(30,42,94,0.14);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+body {
+  font-family:'Cairo',sans-serif;
+  background: linear-gradient(160deg, #eef2ff 0%, #f5f0ff 40%, #fffbf0 100%);
+  color:var(--text); min-height:100vh;
+}
 .header {
-  background:#fff; border-bottom:2px solid var(--gold-light);
-  padding:0 32px; height:68px; display:flex; align-items:center;
+  background: linear-gradient(105deg, #1a1f3c 0%, #2d3561 45%, #4a4a4a 80%, #6b6b6b 100%);
+  border-bottom: 2px solid var(--gold-light);
+  padding:0 32px; height:80px; display:flex; align-items:center;
   justify-content:space-between; position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 8px rgba(184,134,11,0.1);
+  box-shadow: 0 3px 16px rgba(30,42,94,0.25);
 }
 .header-logo { display:flex; align-items:center; gap:14px; }
-.logo-icon {
-  width:44px; height:44px;
-  background:linear-gradient(135deg,var(--gold-light),var(--gold));
-  border-radius:12px; display:flex; align-items:center; justify-content:center;
-  font-weight:900; font-size:15px; color:#fff;
-  box-shadow:0 2px 8px rgba(184,134,11,0.3);
-}
-.logo-text { font-size:20px; font-weight:800; color:var(--gold); }
-.logo-sub { font-size:11px; color:var(--text-muted); }
+.logo-text { font-size:22px; font-weight:900; color:#f0c040; letter-spacing:0.3px; }
+.logo-sub { font-size:11px; color:rgba(255,255,255,0.65); }
 .header-right { display:flex; align-items:center; gap:14px; }
 .live-badge {
   display:flex; align-items:center; gap:6px;
-  background:var(--green-bg); border:1px solid var(--green-border);
-  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; color:var(--green);
+  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; color:#fff;
 }
-.live-dot { width:7px; height:7px; background:var(--green); border-radius:50%; animation:blink 2s ease-in-out infinite; }
+.live-dot { width:7px; height:7px; background:#4ade80; border-radius:50%; animation:blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.last-update { font-size:12px; color:var(--text-muted); }
+.last-update { font-size:12px; color:rgba(255,255,255,0.7); }
 .main { padding:24px 32px; max-width:1600px; margin:0 auto; }
-.stats-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px; }
+
+/* ===== STAT CARDS ===== */
+.stats-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:22px; }
 .stat-card {
-  background:var(--bg-card); border-radius:16px; padding:20px;
-  box-shadow:var(--shadow); border:1.5px solid var(--border);
-  cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden;
+  border-radius:18px; padding:20px;
+  box-shadow:var(--shadow); border:1.5px solid transparent;
+  cursor:pointer; transition:all 0.22s; position:relative; overflow:hidden;
 }
-.stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
-.stat-card.green { border-color:var(--green-border); background:var(--green-bg); }
-.stat-card.yellow { border-color:var(--yellow-border); background:var(--yellow-bg); }
-.stat-card.orange { border-color:var(--orange-border); background:var(--orange-bg); }
-.stat-card.red { border-color:var(--red-border); background:var(--red-bg); }
-.stat-card.urgent { border-color:#dc2626; background:linear-gradient(135deg,#fef2f2,#fff5f5); animation:urgentPulse 2s ease-in-out infinite; }
+.stat-card::before {
+  content:''; position:absolute; top:-30px; left:-30px;
+  width:90px; height:90px; border-radius:50%; opacity:0.08;
+  background:currentColor;
+}
+.stat-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+
+.stat-card.c-blue  { background:linear-gradient(135deg,#eef2ff,#dbe4ff); border-color:#a5b4fc; color:var(--blue-mid); }
+.stat-card.c-green { background:linear-gradient(135deg,#f0fdf4,#dcfce7); border-color:#86efac; color:var(--green); }
+.stat-card.c-yellow{ background:linear-gradient(135deg,#fffbeb,#fef3c7); border-color:#fcd34d; color:var(--yellow); }
+.stat-card.c-orange{ background:linear-gradient(135deg,#fff7ed,#ffedd5); border-color:#fdba74; color:var(--orange); }
+.stat-card.c-red   { background:linear-gradient(135deg,#fef2f2,#fee2e2); border-color:#fca5a5; color:var(--red); }
+.stat-card.c-teal  { background:linear-gradient(135deg,#ecfeff,#cffafe); border-color:#67e8f9; color:var(--teal); }
+.stat-card.c-urgent { border-color:#dc2626; background:linear-gradient(135deg,#fef2f2,#fff5f5); animation:urgentPulse 2s ease-in-out infinite; color:var(--red); }
 @keyframes urgentPulse { 0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.15)} 50%{box-shadow:0 0 0 8px rgba(220,38,38,0)} }
-.stat-icon-wrap { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:12px; }
-.green .stat-icon-wrap { background:rgba(22,163,74,0.12); }
-.yellow .stat-icon-wrap { background:rgba(217,119,6,0.12); }
-.orange .stat-icon-wrap { background:rgba(234,88,12,0.12); }
-.red .stat-icon-wrap, .urgent .stat-icon-wrap { background:rgba(220,38,38,0.12); }
+
+.stat-icon-wrap { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:12px; background:rgba(255,255,255,0.55); }
 .stat-num { font-size:40px; font-weight:900; line-height:1; margin-bottom:4px; }
-.green .stat-num { color:var(--green); }
-.yellow .stat-num { color:var(--yellow); }
-.orange .stat-num { color:var(--orange); }
-.red .stat-num, .urgent .stat-num { color:var(--red); }
 .stat-label { font-size:13px; font-weight:700; color:var(--text); }
 .stat-sub { font-size:11px; color:var(--text-muted); margin-top:3px; }
+
+/* ===== LAYOUT ===== */
 .content-grid { display:grid; grid-template-columns:1fr 300px; gap:18px; }
-.table-section { background:var(--bg-card); border-radius:16px; border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
-.section-header { padding:16px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:#fafbfc; }
+.table-section { background:var(--bg-card); border-radius:18px; border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.section-header { padding:16px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:linear-gradient(90deg,#f8faff,#fff); }
 .section-title { font-size:15px; font-weight:800; color:var(--text); display:flex; align-items:center; gap:8px; }
-.section-count { background:var(--gold-light); color:#7a5500; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:800; }
+.section-count { background:var(--gold-light); color:#fff; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:800; }
 .search-box { display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:7px 14px; width:230px; }
-.search-box:focus-within { border-color:var(--gold-light); }
+.search-box:focus-within { border-color:var(--blue-light); }
 .search-box input { background:transparent; border:none; outline:none; color:var(--text); font-family:'Cairo',sans-serif; font-size:13px; width:100%; }
 .search-box input::placeholder { color:var(--text-muted); }
-.filters { padding:12px 22px; display:flex; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--border); background:#fafbfc; }
+.filters { padding:12px 22px; display:flex; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--border); background:#fafbff; }
 .filter-btn { padding:5px 14px; border-radius:20px; border:1.5px solid var(--border); background:#fff; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; }
-.filter-btn:hover { border-color:var(--gold-light); color:var(--gold); }
-.filter-btn.active { background:var(--gold-light); border-color:var(--gold); color:#7a5500; font-weight:800; }
+.filter-btn:hover { border-color:var(--blue-light); color:var(--blue-mid); }
+.filter-btn.active { background:var(--blue-mid); border-color:var(--blue-deep); color:#fff; font-weight:800; }
 .filter-btn.f-today.active { background:var(--red-bg); border-color:var(--red); color:var(--red); }
 .filter-btn.f-3days.active { background:#fff1f2; border-color:#f87171; color:#e11d48; }
 .filter-btn.f-week.active { background:var(--orange-bg); border-color:var(--orange); color:var(--orange); }
 .filter-btn.f-active.active { background:var(--green-bg); border-color:var(--green); color:var(--green); }
 table { width:100%; border-collapse:collapse; }
-thead tr { background:#fafbfc; }
+thead tr { background:#f8faff; }
 th { padding:11px 14px; font-size:11px; font-weight:800; color:var(--text-muted); text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; text-transform:uppercase; letter-spacing:0.5px; }
-td { padding:13px 14px; font-size:13px; color:var(--text); border-bottom:1px solid #f0f4f8; vertical-align:middle; }
-tr:hover td { background:#fafbfc; }
+td { padding:13px 14px; font-size:13px; color:var(--text); border-bottom:1px solid #eef2ff; vertical-align:middle; }
+tr:hover td { background:#f8faff; }
 tr:last-child td { border-bottom:none; }
 .title-text { font-weight:700; color:var(--text); display:block; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .owner-text { font-size:11px; color:var(--text-muted); max-width:240px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -104,66 +110,183 @@ tr:last-child td { border-bottom:none; }
 .u-urgent { background:#fef2f2; color:#991b1b; border:1px solid #fca5a5; }
 .u-other { background:#f8fafc; color:var(--text-muted); border:1px solid var(--border); }
 .date-text { font-size:12px; color:var(--text-muted); white-space:nowrap; }
+
+/* ===== SIDEBAR ===== */
 .sidebar { display:flex; flex-direction:column; gap:16px; }
-.side-card { background:var(--bg-card); border-radius:16px; border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
-.owner-row { display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid #f0f4f8; cursor:pointer; transition:background 0.15s; }
-.owner-row:hover { background:#fafbfc; }
+.side-card { background:var(--bg-card); border-radius:18px; border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.owner-row {
+  display:flex; align-items:center; gap:10px; padding:10px 16px;
+  border-bottom:1px solid #eef2ff; cursor:pointer; transition:background 0.15s;
+  position:relative;
+}
+.owner-row:hover { background:#f0f4ff; }
+.owner-row.active-owner { background:#eef2ff; border-right:3px solid var(--blue-mid); }
 .owner-row:last-child { border-bottom:none; }
 .owner-name { font-size:12px; font-weight:600; color:var(--text); flex:1; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.owner-bar-wrap { width:70px; height:5px; background:#f0f4f8; border-radius:3px; overflow:hidden; }
-.owner-bar { height:100%; background:var(--gold-light); border-radius:3px; transition:width 1s ease; }
-.owner-count { font-size:12px; font-weight:800; color:var(--gold); min-width:20px; text-align:center; }
+.owner-bar-wrap { width:70px; height:5px; background:#e8edf5; border-radius:3px; overflow:hidden; }
+.owner-bar { height:100%; border-radius:3px; transition:width 1s ease; }
+.owner-count { font-size:12px; font-weight:800; min-width:20px; text-align:center; }
+
+/* ===== OWNER MODAL ===== */
+.owner-modal-overlay {
+  display:none; position:fixed; inset:0; background:rgba(15,20,50,0.5);
+  z-index:200; align-items:center; justify-content:center;
+  backdrop-filter:blur(3px);
+}
+.owner-modal-overlay.open { display:flex; }
+.owner-modal {
+  background:#fff; border-radius:20px; padding:0; width:700px; max-width:95vw;
+  max-height:85vh; display:flex; flex-direction:column;
+  box-shadow:0 20px 60px rgba(30,42,94,0.25);
+  animation:modalIn 0.25s ease;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.94)} to{opacity:1;transform:scale(1)} }
+.owner-modal-header {
+  padding:20px 24px; border-bottom:1px solid var(--border);
+  background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+  border-radius:20px 20px 0 0; display:flex; align-items:center; justify-content:space-between;
+}
+.owner-modal-title { font-size:16px; font-weight:800; color:#fff; }
+.owner-modal-close {
+  width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.2);
+  border:none; color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:background 0.15s;
+}
+.owner-modal-close:hover { background:rgba(255,255,255,0.35); }
+.owner-modal-body { overflow-y:auto; padding:16px; }
+.owner-modal-count { padding:10px 24px; font-size:13px; color:var(--text-muted); border-bottom:1px solid var(--border); background:#fafbff; }
+.modal-tender-row {
+  display:flex; align-items:center; gap:12px; padding:12px 16px;
+  border-radius:12px; margin-bottom:6px; border:1px solid var(--border);
+  background:#fafbff; transition:background 0.15s;
+}
+.modal-tender-row:hover { background:#eef2ff; }
+.modal-tender-title { font-size:13px; font-weight:700; flex:1; color:var(--text); }
+.modal-tender-date { font-size:11px; color:var(--text-muted); white-space:nowrap; }
+
+/* ===== LOADING / EMPTY ===== */
 .loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:50px; gap:14px; color:var(--text-muted); }
-.spinner { width:32px; height:32px; border:3px solid #f0f4f8; border-top-color:var(--gold-light); border-radius:50%; animation:spin 0.8s linear infinite; }
+.spinner { width:32px; height:32px; border:3px solid #e8edf5; border-top-color:var(--blue-mid); border-radius:50%; animation:spin 0.8s linear infinite; }
 @keyframes spin { to{transform:rotate(360deg)} }
 .empty { text-align:center; padding:50px; color:var(--text-muted); font-size:14px; }
 .fade-in { animation:fadeIn 0.4s ease forwards; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* ===== EXPORT MENU ===== */
+.export-wrap { position:relative; }
+.export-btn {
+  display:flex; align-items:center; gap:7px;
+  background:linear-gradient(135deg,#d4a017,#b8860b);
+  border:none; border-radius:22px; padding:8px 18px;
+  color:#fff; font-family:'Cairo',sans-serif; font-size:13px; font-weight:800;
+  cursor:pointer; box-shadow:0 2px 10px rgba(184,134,11,0.35);
+  transition:all 0.2s;
+}
+.export-btn:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(184,134,11,0.45); }
+.export-dropdown {
+  display:none; position:absolute; top:calc(100% + 8px); left:0;
+  background:#fff; border-radius:14px; border:1.5px solid var(--border);
+  box-shadow:0 8px 32px rgba(30,42,94,0.18); min-width:260px; overflow:hidden; z-index:300;
+}
+.export-dropdown.open { display:block; animation:fadeIn 0.18s ease; }
+.export-group-title {
+  padding:8px 16px 4px; font-size:10px; font-weight:800; color:var(--text-muted);
+  text-transform:uppercase; letter-spacing:1px; background:#f8faff;
+  border-bottom:1px solid var(--border);
+}
+.export-item {
+  display:flex; align-items:center; gap:10px; padding:11px 16px;
+  cursor:pointer; transition:background 0.15s; font-size:13px; font-weight:600; color:var(--text);
+  border-bottom:1px solid #f0f4ff;
+}
+.export-item:last-child { border-bottom:none; }
+.export-item:hover { background:#f0f4ff; }
+.export-item .ei-icon { font-size:18px; }
+.export-item .ei-label { flex:1; }
+.export-item .ei-tag {
+  font-size:10px; padding:2px 8px; border-radius:10px;
+  background:#e8f5e9; color:#16a34a; font-weight:800;
+}
+.export-item .ei-tag.orange { background:#fff3e0; color:#ea580c; }
+.export-toast {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:linear-gradient(135deg,#1e2a5e,#3b4fb8);
+  color:#fff; padding:12px 28px; border-radius:30px; font-size:14px; font-weight:700;
+  box-shadow:0 6px 24px rgba(30,42,94,0.3); z-index:999;
+  opacity:0; transition:all 0.3s; pointer-events:none;
+}
+.export-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
 @media(max-width:1100px){.content-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
 <header class="header">
   <div class="header-logo">
-    <img src="data:image/png;base64,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" alt="الرواف" style="height:48px;width:auto;object-fit:contain;" />
-    <div>
-      <div class="logo-text">نظام الرواف</div>
-      <div class="logo-sub">إدارة المناقصات والفرص</div>
+    <img src="data:image/png;base64,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" alt="الرواف" style="height:68px;width:auto;object-fit:contain;" />
+    <div style="display:flex;flex-direction:column;justify-content:center;">
+      <div class="logo-text">الإدارة العامة للمناقصات</div>
     </div>
   </div>
   <div class="header-right">
+    <div class="export-wrap">
+      <button class="export-btn" onclick="toggleExport(event)">📊 تصدير تقرير ▾</button>
+      <div class="export-dropdown" id="export-dropdown">
+        <div class="export-group-title">📋 تقارير المناقصات</div>
+        <div class="export-item" onclick="exportReport('all')"><span class="ei-icon">📋</span><span class="ei-label">كل المناقصات</span><span class="ei-tag">الكل</span></div>
+        <div class="export-item" onclick="exportReport('active')"><span class="ei-icon">🟢</span><span class="ei-label">المناقصات الجارية</span><span class="ei-tag">جارية</span></div>
+        <div class="export-item" onclick="exportReport('critical')"><span class="ei-icon">🔥</span><span class="ei-label">المناقصات الحرجة (3 أيام)</span><span class="ei-tag orange">عاجل</span></div>
+        <div class="export-item" onclick="exportReport('today')"><span class="ei-icon">⚡</span><span class="ei-label">تنتهي اليوم</span><span class="ei-tag orange">اليوم</span></div>
+        <div class="export-group-title">🔐 تقارير الضمانات</div>
+        <div class="export-item" onclick="exportReport('guarantee_today')"><span class="ei-icon">🔐</span><span class="ei-label">الضمانات المستحقة اليوم</span><span class="ei-tag orange">اليوم</span></div>
+        <div class="export-item" onclick="exportReport('guarantee_all')"><span class="ei-icon">📆</span><span class="ei-label">كل الضمانات مرتبة بالتاريخ</span><span class="ei-tag">كل</span></div>
+        <div class="export-group-title">📊 تقارير تحليلية</div>
+        <div class="export-item" onclick="exportReport('by_owner')"><span class="ei-icon">🏛️</span><span class="ei-label">توزيع الجهات المالكة</span><span class="ei-tag">تحليل</span></div>
+        <div class="export-item" onclick="exportReport('by_worktype')"><span class="ei-icon">⚙️</span><span class="ei-label">توزيع أنواع الأعمال</span><span class="ei-tag">تحليل</span></div>
+        <div class="export-item" onclick="exportReport('monthly')"><span class="ei-icon">📈</span><span class="ei-label">الملخص الإحصائي الشهري</span><span class="ei-tag">ملخص</span></div>
+        <div class="export-group-title">⭐ التقرير الشامل</div>
+        <div class="export-item" onclick="exportReport('full')" style="background:linear-gradient(90deg,#fffbf0,#fff);"><span class="ei-icon">🏆</span><span class="ei-label" style="font-weight:800;color:#b8860b">التقرير التنفيذي الكامل</span><span class="ei-tag" style="background:#fffbeb;color:#b8860b;">احترافي</span></div>
+      </div>
+    </div>
     <div class="live-badge"><div class="live-dot"></div>مباشر</div>
     <div class="last-update" id="last-update">جاري التحميل...</div>
   </div>
 </header>
 <main class="main">
   <div class="stats-grid fade-in">
-    <div class="stat-card green" onclick="filterBy('active')">
+    <div class="stat-card c-blue" onclick="filterBy('active')">
       <div class="stat-icon-wrap">📋</div>
       <div class="stat-num" id="stat-active">—</div>
       <div class="stat-label">المناقصات الجارية</div>
       <div class="stat-sub">إجمالي النشطة</div>
     </div>
-    <div class="stat-card yellow" onclick="filterBy('week')">
+    <div class="stat-card c-green" onclick="filterBy('week')">
       <div class="stat-icon-wrap">📅</div>
       <div class="stat-num" id="stat-week">—</div>
       <div class="stat-label">الباقي أسبوع</div>
       <div class="stat-sub">7 أيام أو أقل</div>
     </div>
-    <div class="stat-card orange" onclick="filterBy('3days')">
+    <div class="stat-card c-yellow" onclick="filterBy('3days')">
       <div class="stat-icon-wrap">⏰</div>
       <div class="stat-num" id="stat-3days">—</div>
       <div class="stat-label">الباقي 3 أيام</div>
       <div class="stat-sub">تحتاج متابعة عاجلة</div>
     </div>
-    <div class="stat-card red" onclick="filterBy('today')">
+    <div class="stat-card c-orange" onclick="filterBy('today')">
       <div class="stat-icon-wrap">🔥</div>
       <div class="stat-num" id="stat-today">—</div>
-      <div class="stat-label">اليوم</div>
-      <div class="stat-sub">تنتهي اليوم</div>
+      <div class="stat-label">تنتهي اليوم</div>
+      <div class="stat-sub">آخر موعد للتقديم</div>
     </div>
-    <div class="stat-card urgent" onclick="filterBy('urgent')">
+    <div class="stat-card c-teal" onclick="filterBy('guarantee')">
+      <div class="stat-icon-wrap">🔐</div>
+      <div class="stat-num" id="stat-guarantee">—</div>
+      <div class="stat-label">ضمان مستحق اليوم</div>
+      <div class="stat-sub">تاريخ الضمان الابتدائي</div>
+    </div>
+    <div class="stat-card c-urgent" onclick="filterBy('urgent')">
       <div class="stat-icon-wrap">🚨</div>
       <div class="stat-num" id="stat-urgent">—</div>
       <div class="stat-label">الحرجة</div>
@@ -186,6 +309,7 @@ tr:last-child td { border-bottom:none; }
         <button class="filter-btn f-3days" onclick="filterBy('3days')">⏰ باقي 3 أيام</button>
         <button class="filter-btn f-today" onclick="filterBy('today')">🔥 اليوم</button>
         <button class="filter-btn f-today" onclick="filterBy('urgent')">🚨 الحرجة</button>
+        <button class="filter-btn" onclick="filterBy('guarantee')" style="border-color:#a5f3fc;color:#0891b2;">🔐 ضمان اليوم</button>
       </div>
       <div id="loading" class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
       <div style="overflow-x:auto">
@@ -208,6 +332,19 @@ tr:last-child td { border-bottom:none; }
     </div>
   </div>
 </main>
+
+<!-- Owner Modal -->
+<div class="owner-modal-overlay" id="owner-modal-overlay" onclick="closeOwnerModal(event)">
+  <div class="owner-modal">
+    <div class="owner-modal-header">
+      <div class="owner-modal-title" id="owner-modal-title">مشاريع الجهة</div>
+      <button class="owner-modal-close" onclick="document.getElementById('owner-modal-overlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="owner-modal-count" id="owner-modal-count"></div>
+    <div class="owner-modal-body" id="owner-modal-body"></div>
+  </div>
+</div>
+
 <script>
 const DATA_URL = 'https://raw.githubusercontent.com/edwardehab0-design/tender-dashboard/main/data.json';
 let allTenders = [], currentFilter = 'all';
@@ -224,19 +361,26 @@ function getUrgency(submitDate) {
   return { level:'active', label:`${diff} يوم`, cls:'u-active', diff };
 }
 
+function isGuaranteeToday(guarantee) {
+  if (!guarantee) return false;
+  const d = new Date(guarantee); d.setHours(0,0,0,0);
+  const n = new Date(); n.setHours(0,0,0,0);
+  return d.getTime() === n.getTime();
+}
+
 async function fetchTenders() {
   try {
     const r = await fetch(DATA_URL + '?t=' + Date.now());
     if (!r.ok) throw new Error(r.status);
     const data = await r.json();
     allTenders = (data.tenders||[]).map(t=>({
-      title:    t['اسم المناقصة']||'',
-      owner:    t['المالك']||'',
-      sector:   t['القطاع']||'',
-      workType: t['نوع الأعمال']||'',
+      title:      t['اسم المناقصة']||'',
+      owner:      t['المالك']||'',
+      sector:     t['القطاع']||'',
+      workType:   t['نوع الأعمال']||'',
       submitDate: t['تاريخ التقديم']||'',
       guarantee:  t['تاريخ الضمان الابتدائي']||'',
-      status:   t['الحالة']||'جارية',
+      status:     t['الحالة']||'جارية',
     })).filter(t=>t.title);
     renderAll();
     document.getElementById('last-update').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA');
@@ -247,7 +391,7 @@ async function fetchTenders() {
 }
 
 function renderStats() {
-  const c = {active:0,week:0,'3days':0,today:0,urgent:0};
+  const c = {active:0,week:0,'3days':0,today:0,urgent:0,guarantee:0};
   allTenders.forEach(t => {
     const u = getUrgency(t.submitDate);
     if (u.level === 'urgent') c.urgent++;
@@ -255,8 +399,9 @@ function renderStats() {
     else if (u.level === '3days') { c['3days']++; c.active++; }
     else if (u.level === 'week')  { c.week++; c.active++; }
     else if (u.level === 'active') c.active++;
+    if (isGuaranteeToday(t.guarantee)) c.guarantee++;
   });
-  ['active','week','3days','today','urgent'].forEach(k => {
+  ['active','week','3days','today','urgent','guarantee'].forEach(k => {
     const el = document.getElementById('stat-'+k);
     if (el) { let n=0; const t=setInterval(()=>{ n=Math.min(n+1,c[k]); el.textContent=n; if(n>=c[k])clearInterval(t); },40); }
   });
@@ -265,8 +410,8 @@ function renderStats() {
 function filterBy(f) {
   currentFilter = f;
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  const map = {all:0,active:1,week:2,'3days':3,today:4,urgent:5};
   const btns = document.querySelectorAll('.filter-btn');
+  const map = {all:0,active:1,week:2,'3days':3,today:4,urgent:5,guarantee:6};
   if (btns[map[f]]) btns[map[f]].classList.add('active');
   applyFilters();
 }
@@ -277,6 +422,7 @@ function applyFilters() {
     const u = getUrgency(t.submitDate);
     let ok = currentFilter==='all' ||
       (currentFilter==='active' && ['active','week','3days','today'].includes(u.level)) ||
+      (currentFilter==='guarantee' && isGuaranteeToday(t.guarantee)) ||
       u.level === currentFilter;
     return ok && (!search || t.title.toLowerCase().includes(search) || t.owner.toLowerCase().includes(search) || t.workType.toLowerCase().includes(search));
   });
@@ -293,14 +439,28 @@ function renderTable(tenders) {
   table.style.display='table'; empty.style.display='none';
   document.getElementById('tenders-tbody').innerHTML = tenders.map((t,i) => {
     const u = getUrgency(t.submitDate);
+    const gToday = isGuaranteeToday(t.guarantee);
     return `<tr><td style="color:var(--text-muted);font-size:12px;font-weight:600">${i+1}</td>
     <td><span class="title-text" title="${t.title}">${t.title}</span><span class="owner-text">${t.workType}</span></td>
     <td><span class="owner-text" style="max-width:140px">${t.owner}</span></td>
     <td style="font-size:12px">${t.workType||'—'}</td>
     <td class="date-text">${t.submitDate?t.submitDate.split('T')[0]:'—'}</td>
-    <td class="date-text">${t.guarantee?t.guarantee.split('T')[0]:'—'}</td>
+    <td class="date-text" style="${gToday?'color:var(--teal);font-weight:800;':''}">${t.guarantee?t.guarantee.split('T')[0]:'—'}${gToday?' 🔐':''}</td>
     <td><span class="urgency-badge ${u.cls}">${u.label}</span></td></tr>`;
   }).join('');
+}
+
+const ownerColors = ['#3b4fb8','#16a34a','#d97706','#ea580c','#7c3aed','#0891b2','#dc2626','#b8860b'];
+
+function renderOwners(data) {
+  const max = data[0]?.[1]||1;
+  document.getElementById('owners-list').innerHTML = data.map(([n,c],i)=>`
+    <div class="owner-row" onclick="openOwnerModal('${n.replace(/'/g,"\'")}')">
+      <div class="owner-count" style="color:${ownerColors[i%ownerColors.length]}">${c}</div>
+      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${c/max*100}%;background:${ownerColors[i%ownerColors.length]}"></div></div>
+      <div class="owner-name">${n}</div>
+      <span style="font-size:11px;color:var(--blue-light)">↗</span>
+    </div>`).join('') || '<div class="empty">لا توجد بيانات</div>';
 }
 
 function renderSide(id, data, color) {
@@ -308,21 +468,334 @@ function renderSide(id, data, color) {
   document.getElementById(id).innerHTML = data.map(([n,c])=>`
     <div class="owner-row">
       <div class="owner-count" style="color:${color}">${c}</div>
-      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${c/max*100}%;background:${color}40"></div></div>
+      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${c/max*100}%;background:${color}"></div></div>
       <div class="owner-name">${n}</div>
     </div>`).join('') || '<div class="empty">لا توجد بيانات</div>';
+}
+
+function openOwnerModal(ownerName) {
+  const tenders = allTenders.filter(t => t.owner === ownerName);
+  document.getElementById('owner-modal-title').textContent = '🏛️ ' + ownerName;
+  document.getElementById('owner-modal-count').textContent = `عدد المناقصات: ${tenders.length}`;
+  document.getElementById('owner-modal-body').innerHTML = tenders.length
+    ? tenders.map(t => {
+        const u = getUrgency(t.submitDate);
+        return `<div class="modal-tender-row">
+          <div style="font-size:18px">${u.cls==='u-today'?'🔥':u.cls==='u-3days'?'⏰':u.cls==='u-week'?'📅':u.cls==='u-urgent'?'🚨':'📋'}</div>
+          <div class="modal-tender-title">${t.title}</div>
+          <span class="urgency-badge ${u.cls}" style="font-size:10px">${u.label}</span>
+          <div class="modal-tender-date">${t.submitDate?t.submitDate.split('T')[0]:'—'}</div>
+        </div>`;
+      }).join('')
+    : '<div class="empty">لا توجد مناقصات</div>';
+  document.getElementById('owner-modal-overlay').classList.add('open');
+}
+
+function closeOwnerModal(e) {
+  if (e.target === document.getElementById('owner-modal-overlay'))
+    document.getElementById('owner-modal-overlay').classList.remove('open');
 }
 
 function renderAll() {
   renderStats(); applyFilters();
   const oc={}, wc={};
   allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1; if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
-  renderSide('owners-list', Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8), '#b8860b');
-  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,6), '#2563eb');
+  renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8));
+  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,6), '#3b4fb8');
 }
 
 fetchTenders();
 setInterval(fetchTenders, 5*60*1000);
+
+function exportReport_full() {
+  // Build 7-sheet professional workbook using SheetJS
+  const wb = XLSX.utils.book_new();
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0,10);
+
+  function u(t) {
+    if (!t.submitDate) return 'other';
+    const d = new Date(t.submitDate); d.setHours(0,0,0,0);
+    const n = new Date(); n.setHours(0,0,0,0);
+    const diff = Math.round((d-n)/86400000);
+    if (diff < 0) return 'urgent';
+    if (diff === 0) return 'today';
+    if (diff <= 3) return '3days';
+    if (diff <= 7) return 'week';
+    return 'active';
+  }
+  function uLabel(t) {
+    if (!t.submitDate) return '—';
+    const diff = Math.round((new Date(t.submitDate)-new Date())/86400000);
+    if (diff < 0) return 'منتهية';
+    if (diff === 0) return 'اليوم';
+    return diff + ' أيام';
+  }
+
+  // Sheet 1: All tenders
+  const allRows = allTenders.map((t,i)=>[i+1,t.title,t.owner,t.workType,
+    t.submitDate?t.submitDate.slice(0,10):'—',
+    t.guarantee?t.guarantee.slice(0,10):'—',
+    uLabel(t),t.status||'جارية']);
+  const ws1 = XLSX.utils.aoa_to_sheet([
+    ['التقرير التنفيذي الشامل — الإدارة العامة للمناقصات — ' + todayStr],
+    [],
+    ['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الأولوية','الحالة'],
+    ...allRows
+  ]);
+  ws1['!cols'] = [{wch:5},{wch:44},{wch:28},{wch:16},{wch:16},{wch:16},{wch:14},{wch:12}];
+  ws1['!merges'] = [{s:{r:0,c:0},e:{r:0,c:7}}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'كل المناقصات');
+
+  // Sheet 2: Critical
+  const crit = allTenders.filter(t=>['today','3days'].includes(u(t)));
+  const critRows = crit.map((t,i)=>{
+    const diff = t.submitDate?Math.round((new Date(t.submitDate)-new Date())/86400000):9999;
+    return [i+1,t.title,t.owner,t.workType,
+      t.submitDate?t.submitDate.slice(0,10):'—',
+      diff===0?'اليوم ⚡':diff+' أيام ⏰',
+      t.guarantee?t.guarantee.slice(0,10):'—'];
+  });
+  const ws2 = XLSX.utils.aoa_to_sheet([
+    ['🔥 المناقصات الحرجة — تنتهي خلال 3 أيام أو اليوم — ' + todayStr],
+    [],
+    ['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','الوقت المتبقي','تاريخ الضمان'],
+    ...critRows
+  ]);
+  ws2['!cols'] = [{wch:5},{wch:44},{wch:28},{wch:16},{wch:16},{wch:16},{wch:16}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'المناقصات الحرجة');
+
+  // Sheet 3: Guarantees sorted
+  const guas = [...allTenders].filter(t=>t.guarantee).sort((a,b)=>a.guarantee.localeCompare(b.guarantee));
+  const guaRows = guas.map((t,i)=>{
+    const gd = new Date(t.guarantee); gd.setHours(0,0,0,0);
+    const nd = new Date(); nd.setHours(0,0,0,0);
+    const dg = Math.round((gd-nd)/86400000);
+    return [i+1,t.title,t.owner,t.workType,
+      t.submitDate?t.submitDate.slice(0,10):'—',
+      t.guarantee.slice(0,10),
+      dg===0?'مستحق اليوم 🔐':dg<0?'متأخر ⚠️':'بعد '+dg+' يوم'];
+  });
+  const ws3 = XLSX.utils.aoa_to_sheet([
+    ['🔐 جدول الضمانات الابتدائية — مرتبة بالتاريخ — ' + todayStr],
+    [],
+    ['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الحالة'],
+    ...guaRows
+  ]);
+  ws3['!cols'] = [{wch:5},{wch:44},{wch:28},{wch:16},{wch:16},{wch:16},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws3, 'الضمانات');
+
+  // Sheet 4: Owner analysis
+  const oc = {};
+  allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||[]); oc[t.owner].push(t); });
+  const ownRows = Object.entries(oc).sort((a,b)=>b[1].length-a[1].length).map(([n,ts],i)=>{
+    const count=ts.length;
+    const diffs=ts.map(t=>t.submitDate?Math.round((new Date(t.submitDate)-new Date())/86400000):null).filter(x=>x!==null);
+    const avg=diffs.length?Math.round(diffs.reduce((a,b)=>a+b,0)/diffs.length):0;
+    return [i+1,n,count,(count/allTenders.length*100).toFixed(1)+'%',avg+' يوم'];
+  });
+  const ws4 = XLSX.utils.aoa_to_sheet([
+    ['🏛️ تحليل توزيع المناقصات حسب الجهة المالكة — ' + todayStr],
+    [],
+    ['#','الجهة المالكة','عدد المناقصات','النسبة المئوية','متوسط الأيام المتبقية'],
+    ...ownRows
+  ]);
+  ws4['!cols'] = [{wch:5},{wch:32},{wch:18},{wch:18},{wch:24}];
+  XLSX.utils.book_append_sheet(wb, ws4, 'تحليل الجهات');
+
+  // Sheet 5: Work type
+  const wc = {};
+  allTenders.forEach(t=>{ if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
+  const wtRows = Object.entries(wc).sort((a,b)=>b[1]-a[1]).map(([n,c],i)=>
+    [i+1,n,c,(c/allTenders.length*100).toFixed(1)+'%']);
+  const ws5 = XLSX.utils.aoa_to_sheet([
+    ['⚙️ توزيع المناقصات حسب نوع الأعمال — ' + todayStr],
+    [],
+    ['#','نوع الأعمال','عدد المناقصات','النسبة المئوية'],
+    ...wtRows
+  ]);
+  ws5['!cols'] = [{wch:5},{wch:28},{wch:18},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws5, 'أنواع الأعمال');
+
+  // Sheet 6: Executive summary
+  const cnt = {
+    total:allTenders.length,
+    running:allTenders.filter(t=>['active','week','3days','today'].includes(u(t))).length,
+    today:allTenders.filter(t=>u(t)==='today').length,
+    days3:allTenders.filter(t=>u(t)==='3days').length,
+    week:allTenders.filter(t=>u(t)==='week').length,
+    active:allTenders.filter(t=>u(t)==='active').length,
+    urgent:allTenders.filter(t=>u(t)==='urgent').length,
+    guaToday:allTenders.filter(t=>isGuaranteeToday(t.guarantee)).length,
+  };
+  const sumRows = [
+    ['إجمالي المناقصات',cnt.total,(cnt.total/cnt.total*100).toFixed(1)+'%','كامل قاعدة البيانات'],
+    ['المناقصات الجارية',cnt.running,(cnt.running/cnt.total*100).toFixed(1)+'%','نشطة ولم تنته بعد'],
+    ['تنتهي اليوم',cnt.today,(cnt.today/cnt.total*100).toFixed(1)+'%','آخر موعد للتقديم'],
+    ['حرجة خلال 3 أيام',cnt.days3,(cnt.days3/cnt.total*100).toFixed(1)+'%','تحتاج متابعة فورية'],
+    ['تنتهي خلال أسبوع',cnt.week,(cnt.week/cnt.total*100).toFixed(1)+'%','متابعة مستمرة'],
+    ['جارية ومفتوحة',cnt.active,(cnt.active/cnt.total*100).toFixed(1)+'%','مهلة كافية'],
+    ['منتهية / متأخرة',cnt.urgent,(cnt.urgent/cnt.total*100).toFixed(1)+'%','تجاوزت الموعد النهائي'],
+    ['ضمانات مستحقة اليوم',cnt.guaToday,(cnt.guaToday/cnt.total*100).toFixed(1)+'%','يجب مراجعتها فوراً'],
+  ];
+  const ws6 = XLSX.utils.aoa_to_sheet([
+    ['📈 الملخص التنفيذي — الإدارة العامة للمناقصات'],
+    ['تاريخ التقرير: '+todayStr+'    |    الرواف للمقاولات'],
+    [],
+    ['البيان','العدد','النسبة','الملاحظة'],
+    ...sumRows
+  ]);
+  ws6['!cols'] = [{wch:28},{wch:12},{wch:14},{wch:32}];
+  XLSX.utils.book_append_sheet(wb, ws6, 'الملخص التنفيذي');
+
+  XLSX.writeFile(wb, 'تقرير_الرواف_التنفيذي_'+todayStr+'.xlsx');
+  showToast('🏆 تم تصدير التقرير التنفيذي الكامل!');
+}
+
+
+function toggleExport(e) {
+  e.stopPropagation();
+  document.getElementById('export-dropdown').classList.toggle('open');
+}
+document.addEventListener('click', () => {
+  document.getElementById('export-dropdown').classList.remove('open');
+});
+
+function showToast(msg) {
+  const t = document.getElementById('export-toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function arabicCol(headers, rows) {
+  return [headers, ...rows];
+}
+
+function exportReport(type) {
+  document.getElementById('export-dropdown').classList.remove('open');
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('ar-SA');
+  const wb = XLSX.utils.book_new();
+
+  if (type === 'all') {
+    const rows = allTenders.map((t,i) => {
+      const u = getUrgency(t.submitDate);
+      return [i+1, t.title, t.owner, t.workType, t.submitDate?t.submitDate.split('T')[0]:'—', t.guarantee?t.guarantee.split('T')[0]:'—', u.label.replace(/[🔥⏰📅🚨📋]/g,'').trim()];
+    });
+    const ws = XLSX.utils.aoa_to_sheet([['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الأولوية'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'كل المناقصات');
+    download(wb, 'تقرير_كل_المناقصات');
+
+  } else if (type === 'active') {
+    const data = allTenders.filter(t => ['active','week','3days','today'].includes(getUrgency(t.submitDate).level));
+    const rows = data.map((t,i) => {
+      const u = getUrgency(t.submitDate);
+      return [i+1, t.title, t.owner, t.workType, t.submitDate?t.submitDate.split('T')[0]:'—', u.diff + ' يوم'];
+    });
+    const ws = XLSX.utils.aoa_to_sheet([['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','الأيام المتبقية'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'المناقصات الجارية');
+    download(wb, 'تقرير_المناقصات_الجارية');
+
+  } else if (type === 'critical') {
+    const data = allTenders.filter(t => ['3days','today'].includes(getUrgency(t.submitDate).level));
+    const rows = data.map((t,i) => {
+      const u = getUrgency(t.submitDate);
+      return [i+1, t.title, t.owner, t.workType, t.submitDate?t.submitDate.split('T')[0]:'—', u.diff === 0 ? 'اليوم' : u.diff + ' أيام'];
+    });
+    const ws = XLSX.utils.aoa_to_sheet([['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','الوقت المتبقي'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'المناقصات الحرجة');
+    download(wb, 'تقرير_المناقصات_الحرجة');
+
+  } else if (type === 'today') {
+    const data = allTenders.filter(t => getUrgency(t.submitDate).level === 'today');
+    const rows = data.map((t,i) => [i+1, t.title, t.owner, t.workType, t.submitDate?t.submitDate.split('T')[0]:'—', t.guarantee?t.guarantee.split('T')[0]:'—']);
+    const ws = XLSX.utils.aoa_to_sheet([['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'تنتهي اليوم');
+    download(wb, 'تقرير_تنتهي_اليوم');
+
+  } else if (type === 'guarantee_today') {
+    const data = allTenders.filter(t => isGuaranteeToday(t.guarantee));
+    const rows = data.map((t,i) => [i+1, t.title, t.owner, t.workType, t.submitDate?t.submitDate.split('T')[0]:'—', t.guarantee?t.guarantee.split('T')[0]:'—']);
+    const ws = XLSX.utils.aoa_to_sheet([['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'ضمانات اليوم');
+    download(wb, 'تقرير_الضمانات_المستحقة_اليوم');
+
+  } else if (type === 'guarantee_all') {
+    const data = [...allTenders].filter(t=>t.guarantee).sort((a,b)=> new Date(a.guarantee)-new Date(b.guarantee));
+    const rows = data.map((t,i) => [i+1, t.title, t.owner, t.workType, t.submitDate?t.submitDate.split('T')[0]:'—', t.guarantee?t.guarantee.split('T')[0]:'—']);
+    const ws = XLSX.utils.aoa_to_sheet([['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'كل الضمانات');
+    download(wb, 'تقرير_كل_الضمانات');
+
+  } else if (type === 'by_owner') {
+    const oc = {};
+    allTenders.forEach(t => { if(t.owner) oc[t.owner] = (oc[t.owner]||0)+1; });
+    const rows = Object.entries(oc).sort((a,b)=>b[1]-a[1]).map(([n,c],i) => [i+1, n, c, Math.round(c/allTenders.length*100)+'%']);
+    const ws = XLSX.utils.aoa_to_sheet([['#','الجهة المالكة','عدد المناقصات','النسبة'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'توزيع الجهات');
+    download(wb, 'تقرير_توزيع_الجهات');
+
+  } else if (type === 'by_worktype') {
+    const wc = {};
+    allTenders.forEach(t => { if(t.workType) wc[t.workType] = (wc[t.workType]||0)+1; });
+    const rows = Object.entries(wc).sort((a,b)=>b[1]-a[1]).map(([n,c],i) => [i+1, n, c, Math.round(c/allTenders.length*100)+'%']);
+    const ws = XLSX.utils.aoa_to_sheet([['#','نوع الأعمال','عدد المناقصات','النسبة'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'أنواع الأعمال');
+    download(wb, 'تقرير_أنواع_الأعمال');
+
+  } else if (type === 'full') { exportReport_full(); return;
+  } else if (type === 'monthly') {
+    const c = {active:0,week:0,'3days':0,today:0,urgent:0,guarantee:0,total:allTenders.length};
+    allTenders.forEach(t => {
+      const u = getUrgency(t.submitDate);
+      if (u.level==='urgent') c.urgent++;
+      else if (u.level==='today') { c.today++; c.active++; }
+      else if (u.level==='3days') { c['3days']++; c.active++; }
+      else if (u.level==='week') { c.week++; c.active++; }
+      else if (u.level==='active') c.active++;
+      if (isGuaranteeToday(t.guarantee)) c.guarantee++;
+    });
+    const rows = [
+      ['إجمالي المناقصات', c.total],
+      ['المناقصات الجارية', c.active],
+      ['تنتهي خلال أسبوع', c.week],
+      ['تنتهي خلال 3 أيام', c['3days']],
+      ['تنتهي اليوم', c.today],
+      ['المنتهية / الحرجة', c.urgent],
+      ['ضمانات مستحقة اليوم', c.guarantee],
+      ['تاريخ التقرير', dateStr],
+    ];
+    const ws = XLSX.utils.aoa_to_sheet([['البيان','العدد'], ...rows]);
+    styleSheet(ws, rows.length);
+    XLSX.utils.book_append_sheet(wb, ws, 'الملخص الشهري');
+    download(wb, 'تقرير_الملخص_الإحصائي');
+  }
+}
+
+function styleSheet(ws, rowCount) {
+  const cols = [];
+  const range = XLSX.utils.decode_range(ws['!ref']);
+  for (let c = range.s.c; c <= range.e.c; c++) {
+    cols.push({ wch: 28 });
+  }
+  ws['!cols'] = cols;
+}
+
+function download(wb, name) {
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, name + '_' + date + '.xlsx');
+  showToast('✅ تم تصدير التقرير بنجاح!');
+}
+
 </script>
+<div class="export-toast" id="export-toast"></div>
 </body>
 </html>
