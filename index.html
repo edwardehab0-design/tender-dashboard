@@ -23,7 +23,7 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body {
-  width:100%; height:100%; overflow-x:hidden;
+  width:100%; height:100%; overflow-x:hidden; margin:0; padding:0;
 }
 body {
   font-family:'Cairo',sans-serif;
@@ -33,8 +33,8 @@ body {
 .header {
   background: linear-gradient(105deg, #1a1f3c 0%, #2d3561 45%, #4a4a4a 80%, #6b6b6b 100%);
   border-bottom: 2px solid var(--gold-light);
-  padding:0 32px; height:80px; display:flex; align-items:center;
-  justify-content:space-between; position:sticky; top:0; z-index:100; width:100%;
+  padding:0 24px; height:80px; display:flex; align-items:center;
+  justify-content:space-between; position:sticky; top:0; z-index:100; width:100%; left:0; right:0;
   box-shadow: 0 3px 16px rgba(30,42,94,0.25);
 }
 .header-logo { display:flex; align-items:center; gap:14px; }
@@ -49,7 +49,7 @@ body {
 .live-dot { width:7px; height:7px; background:#4ade80; border-radius:50%; animation:blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 .last-update { font-size:12px; color:rgba(255,255,255,0.7); }
-.main { padding:24px 32px; width:100%; margin:0 auto; }
+.main { padding:16px 20px; width:100%; margin:0; }
 
 /* ===== STAT CARDS ===== */
 .stats-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:22px; }
@@ -220,6 +220,53 @@ tr:last-child td { border-bottom:none; }
 }
 .export-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
+
+/* ===== COUNTDOWN BANNER ===== */
+.countdown-banner {
+  background: linear-gradient(135deg, #1a1f3c 0%, #2d3561 60%, #8a6a00 100%);
+  border-radius:18px; padding:18px 28px; margin-bottom:22px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow: 0 4px 20px rgba(30,42,94,0.2);
+  border:1.5px solid rgba(212,160,23,0.3);
+  position:relative; overflow:hidden;
+}
+.countdown-banner::before {
+  content:''; position:absolute; top:-40px; right:-40px;
+  width:150px; height:150px; border-radius:50%;
+  background:rgba(212,160,23,0.08);
+}
+.countdown-left { display:flex; align-items:center; gap:16px; }
+.countdown-icon { font-size:32px; }
+.countdown-info { }
+.countdown-title {
+  font-size:11px; font-weight:700; color:rgba(255,255,255,0.6);
+  text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;
+}
+.countdown-name {
+  font-size:15px; font-weight:800; color:#f0c040;
+  max-width:420px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.countdown-owner { font-size:12px; color:rgba(255,255,255,0.5); margin-top:3px; }
+.countdown-right { display:flex; align-items:center; gap:8px; }
+.countdown-unit {
+  background:rgba(255,255,255,0.1); border-radius:12px;
+  padding:10px 16px; text-align:center; min-width:64px;
+  border:1px solid rgba(255,255,255,0.15);
+}
+.countdown-num {
+  font-size:28px; font-weight:900; color:#fff; line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.countdown-num.urgent { color:#f87171; animation:urgentPulse 1s ease-in-out infinite; }
+.countdown-label { font-size:10px; color:rgba(255,255,255,0.5); margin-top:4px; font-weight:600; }
+.countdown-sep { font-size:24px; color:rgba(255,255,255,0.3); font-weight:900; margin:0 2px; padding-bottom:14px; }
+.countdown-done {
+  font-size:18px; font-weight:800; color:#f87171;
+  background:rgba(220,38,38,0.15); border-radius:12px;
+  padding:12px 24px; border:1px solid rgba(220,38,38,0.3);
+  animation:urgentPulse 1s ease-in-out infinite;
+}
+
 @media(max-width:1100px){.content-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
@@ -295,6 +342,25 @@ tr:last-child td { border-bottom:none; }
       <div class="stat-num" id="stat-urgent">—</div>
       <div class="stat-label">الحرجة</div>
       <div class="stat-sub">منتهية أو متأخرة</div>
+    </div>
+  </div>
+  <div class="countdown-banner fade-in" id="countdown-banner">
+    <div class="countdown-left">
+      <div class="countdown-icon">⏳</div>
+      <div class="countdown-info">
+        <div class="countdown-title">أقرب مناقصة تنتهي</div>
+        <div class="countdown-name" id="cd-name">جاري التحميل...</div>
+        <div class="countdown-owner" id="cd-owner"></div>
+      </div>
+    </div>
+    <div class="countdown-right" id="cd-timer">
+      <div class="countdown-unit"><div class="countdown-num" id="cd-days">--</div><div class="countdown-label">يوم</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-label">ساعة</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-label">دقيقة</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-label">ثانية</div></div>
     </div>
   </div>
   <div class="content-grid">
@@ -510,11 +576,72 @@ function closeOwnerModal(e) {
 }
 
 function renderAll() {
-  renderStats(); applyFilters();
+  renderStats(); applyFilters(); startCountdown();
   const oc={}, wc={};
   allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1; if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
   renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8));
   renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,6), '#3b4fb8');
+}
+
+
+// ── COUNTDOWN ─────────────────────────────────────────
+let cdInterval = null;
+
+function startCountdown() {
+  if (cdInterval) clearInterval(cdInterval);
+  
+  // Find nearest upcoming tender
+  const upcoming = allTenders
+    .filter(t => t.submitDate)
+    .map(t => {
+      const d = new Date(t.submitDate); d.setHours(23,59,59,0);
+      return { ...t, target: d };
+    })
+    .filter(t => t.target >= new Date())
+    .sort((a,b) => a.target - b.target);
+
+  if (!upcoming.length) {
+    document.getElementById('cd-name').textContent = 'لا توجد مناقصات قادمة';
+    document.getElementById('cd-timer').innerHTML = '<div class="countdown-done">لا توجد مناقصات</div>';
+    return;
+  }
+
+  const nearest = upcoming[0];
+  document.getElementById('cd-name').textContent = nearest.title;
+  document.getElementById('cd-owner').textContent = nearest.owner + ' — ' + (nearest.submitDate?nearest.submitDate.slice(0,10):'');
+
+  function tick() {
+    const now = new Date();
+    const diff = nearest.target - now;
+    
+    if (diff <= 0) {
+      clearInterval(cdInterval);
+      document.getElementById('cd-timer').innerHTML = '<div class="countdown-done">🔥 انتهى الموعد!</div>';
+      return;
+    }
+
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000)    / 1000);
+
+    const fmt = n => String(n).padStart(2,'0');
+    const urgent = days === 0;
+
+    document.getElementById('cd-days').textContent  = fmt(days);
+    document.getElementById('cd-hours').textContent = fmt(hours);
+    document.getElementById('cd-mins').textContent  = fmt(mins);
+    document.getElementById('cd-secs').textContent  = fmt(secs);
+
+    ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => {
+      const el = document.getElementById(id);
+      if (urgent) el.classList.add('urgent');
+      else el.classList.remove('urgent');
+    });
+  }
+
+  tick();
+  cdInterval = setInterval(tick, 1000);
 }
 
 fetchTenders();
