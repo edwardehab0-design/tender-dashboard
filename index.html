@@ -221,6 +221,7 @@ tr:last-child td { border-bottom:none; }
 @media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
 </head>
 <body>
 <header class="header">
@@ -508,12 +509,11 @@ fetchTenders();
 setInterval(fetchTenders, 5*60*1000);
 
 function exportReport_full() {
-  // Build 7-sheet professional workbook using SheetJS
-  const wb = XLSX.utils.book_new();
-  const today = new Date();
-  const todayStr = today.toISOString().slice(0,10);
+  const todayDate = new Date();
+  const todayStr = todayDate.toISOString().slice(0,10);
+  const todayAr = todayDate.toLocaleDateString('ar-SA');
 
-  function u(t) {
+  function urgLevel(t) {
     if (!t.submitDate) return 'other';
     const d = new Date(t.submitDate); d.setHours(0,0,0,0);
     const n = new Date(); n.setHours(0,0,0,0);
@@ -524,132 +524,334 @@ function exportReport_full() {
     if (diff <= 7) return 'week';
     return 'active';
   }
-  function uLabel(t) {
-    if (!t.submitDate) return '—';
-    const diff = Math.round((new Date(t.submitDate)-new Date())/86400000);
+  function urgDiff(t) {
+    if (!t.submitDate) return 9999;
+    return Math.round((new Date(t.submitDate)-new Date())/86400000);
+  }
+  function urgLabel(t) {
+    const diff = urgDiff(t);
     if (diff < 0) return 'منتهية';
     if (diff === 0) return 'اليوم';
     return diff + ' أيام';
   }
+  function urgColor(level) {
+    return {urgent:'DC2626',today:'DC2626','3days':'EA580C',week:'D97706',active:'16A34A',other:'6B7A99'}[level]||'6B7A99';
+  }
 
-  // Sheet 1: All tenders
-  const allRows = allTenders.map((t,i)=>[i+1,t.title,t.owner,t.workType,
-    t.submitDate?t.submitDate.slice(0,10):'—',
-    t.guarantee?t.guarantee.slice(0,10):'—',
-    uLabel(t),t.status||'جارية']);
-  const ws1 = XLSX.utils.aoa_to_sheet([
-    ['التقرير التنفيذي الشامل — الإدارة العامة للمناقصات — ' + todayStr],
-    [],
-    ['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الأولوية','الحالة'],
-    ...allRows
-  ]);
-  ws1['!cols'] = [{wch:5},{wch:44},{wch:28},{wch:16},{wch:16},{wch:16},{wch:14},{wch:12}];
-  ws1['!merges'] = [{s:{r:0,c:0},e:{r:0,c:7}}];
-  XLSX.utils.book_append_sheet(wb, ws1, 'كل المناقصات');
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'الرواف للمقاولات';
+  wb.created = todayDate;
 
-  // Sheet 2: Critical
-  const crit = allTenders.filter(t=>['today','3days'].includes(u(t)));
-  const critRows = crit.map((t,i)=>{
-    const diff = t.submitDate?Math.round((new Date(t.submitDate)-new Date())/86400000):9999;
-    return [i+1,t.title,t.owner,t.workType,
+  const NAVY='1A1F3C', BLUE='3B4FB8', GOLD='D4A017', GOLDBG='FFFBF0',
+        WHITE='FFFFFFFF', GREY='F4F6FB', RED='DC2626', ORANGE='EA580C',
+        GREEN='16A34A', TEAL='0891B2', YELLOW='D97706', PURPLE='7C3AED',
+        DARK='1A2332', MUTED='6B7A99', BORDER='D4DAF5';
+
+  function solidFill(hex) { return { type:'pattern', pattern:'solid', fgColor:{argb:'FF'+hex} }; }
+  function fontStyle(bold,size,color,name='Arial') { return {bold,size,color:{argb:'FF'+color},name}; }
+  function alignStyle(h='right',v='middle',wrapText=false) { return {horizontal:h,vertical:v,wrapText,readingOrder:2}; }
+  function borderStyle(c=BORDER) {
+    const s={style:'thin',color:{argb:'FF'+c}};
+    return {top:s,left:s,bottom:s,right:s};
+  }
+  function medBorder(c=GOLD) {
+    const s={style:'medium',color:{argb:'FF'+c}};
+    return {top:s,left:s,bottom:s,right:s};
+  }
+
+  function addTitleRow(ws, text, mergeEnd, bgHex, fgHex, sz=14) {
+    const row = ws.addRow([text]);
+    row.height = 38;
+    const cell = row.getCell(1);
+    cell.font = fontStyle(true, sz, fgHex);
+    cell.fill = solidFill(bgHex);
+    cell.alignment = alignStyle('center');
+    cell.border = medBorder(GOLD);
+    ws.mergeCells(ws.rowCount, 1, ws.rowCount, mergeEnd);
+    ws.addRow([]);
+  }
+
+  function addHeaderRow(ws, headers, bgHex, fgHex='FFFFFF') {
+    const row = ws.addRow(headers);
+    row.height = 30;
+    row.eachCell(cell => {
+      cell.font = fontStyle(true, 11, fgHex);
+      cell.fill = solidFill(bgHex);
+      cell.alignment = alignStyle('center');
+      cell.border = medBorder();
+    });
+  }
+
+  function addDataRow(ws, values, bgHex, alignments=[]) {
+    const row = ws.addRow(values);
+    row.height = 24;
+    row.eachCell((cell, ci) => {
+      cell.font = fontStyle(false, 10, DARK);
+      cell.fill = solidFill(bgHex);
+      cell.alignment = alignStyle(alignments[ci-1]||'right');
+      cell.border = borderStyle();
+    });
+    return row;
+  }
+
+  // ══════════════════════════════════════════════════════
+  // SHEET 1: COVER
+  // ══════════════════════════════════════════════════════
+  const cvr = wb.addWorksheet('الغلاف', {views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+GOLD}}});
+  cvr.columns = Array(9).fill({width:16});
+
+  for (let r=1;r<=20;r++) {
+    const row = cvr.addRow(Array(9).fill(''));
+    row.height = 36;
+    row.eachCell(cell => {
+      cell.fill = solidFill(r<=14?NAVY:r<=18?BLUE:GOLD);
+    });
+  }
+
+  // Title
+  cvr.mergeCells('A3:I5');
+  const t1=cvr.getCell('A3');
+  t1.value='الإدارة العامة للمناقصات';
+  t1.font=fontStyle(true,28,'F0C040');
+  t1.alignment=alignStyle('center');
+  t1.fill=solidFill(NAVY);
+
+  cvr.mergeCells('A6:I8');
+  const t2=cvr.getCell('A6');
+  t2.value='التقرير التنفيذي الشامل للمناقصات';
+  t2.font=fontStyle(true,20,'FFFFFF');
+  t2.alignment=alignStyle('center');
+  t2.fill=solidFill(NAVY);
+
+  cvr.mergeCells('A9:I11');
+  const t3=cvr.getCell('A9');
+  t3.value='تاريخ الإصدار: '+todayStr+'    |    الرواف للمقاولات';
+  t3.font=fontStyle(false,13,'C8D4FF');
+  t3.alignment=alignStyle('center');
+  t3.fill=solidFill(NAVY);
+
+  // KPI strip
+  const cnt={
+    total:allTenders.length,
+    running:allTenders.filter(t=>['active','week','3days','today'].includes(urgLevel(t))).length,
+    today:allTenders.filter(t=>urgLevel(t)==='today').length,
+    critical:allTenders.filter(t=>['today','3days'].includes(urgLevel(t))).length,
+    urgent:allTenders.filter(t=>urgLevel(t)==='urgent').length,
+    guarantee:allTenders.filter(t=>isGuaranteeToday(t.guarantee)).length
+  };
+  const kpis=[
+    {label:'إجمالي المناقصات',val:cnt.total,color:'F0C040'},
+    {label:'جارية',val:cnt.running,color:'4ADE80'},
+    {label:'تنتهي اليوم',val:cnt.today,color:'F87171'},
+    {label:'حرجة 3 أيام',val:cnt.critical,color:'FB923C'},
+    {label:'منتهية',val:cnt.urgent,color:'C084FC'},
+  ];
+  const kpiRow15=cvr.getRow(15);
+  kpiRow15.height=50;
+  const kpiRow16=cvr.getRow(16);
+  kpiRow16.height=38;
+  const cols=[1,3,5,7,9];
+  kpis.forEach((k,i)=>{
+    const col=cols[i];
+    const c1=cvr.getCell(15,col);
+    c1.value=k.val;
+    c1.font=fontStyle(true,28,k.color);
+    c1.fill=solidFill('FFFFFF');
+    c1.alignment=alignStyle('center');
+    const c2=cvr.getCell(16,col);
+    c2.value=k.label;
+    c2.font=fontStyle(false,11,DARK);
+    c2.fill=solidFill('FFFFFF');
+    c2.alignment=alignStyle('center');
+    if(col<9){
+      cvr.mergeCells(15,col,15,col+1);
+      cvr.mergeCells(16,col,16,col+1);
+    }
+  });
+
+  // ══════════════════════════════════════════════════════
+  // SHEET 2: ALL TENDERS
+  // ══════════════════════════════════════════════════════
+  const wsA = wb.addWorksheet('كل المناقصات',{views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+BLUE}}});
+  wsA.columns=[
+    {key:'n',width:5},{key:'title',width:44},{key:'owner',width:28},
+    {key:'wt',width:16},{key:'sd',width:16},{key:'gd',width:16},
+    {key:'pri',width:14},{key:'stat',width:12}
+  ];
+  addTitleRow(wsA,'📋  قائمة المناقصات الشاملة  —  '+todayStr,8,NAVY,'FFFFFF');
+  addHeaderRow(wsA,['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الأولوية','الحالة'],BLUE);
+  allTenders.forEach((t,i)=>{
+    const level=urgLevel(t);
+    const bg=i%2===0?'FFFFFF':GREY;
+    const row=addDataRow(wsA,[i+1,t.title,t.owner,t.workType,
+      t.submitDate?t.submitDate.slice(0,10):'—',
+      t.guarantee?t.guarantee.slice(0,10):'—',
+      urgLabel(t),t.status||'جارية'],
+      bg,['center','right','right','right','center','center','center','center']);
+    // color the priority cell
+    const priCell=row.getCell(7);
+    priCell.font=fontStyle(true,10,urgColor(level));
+  });
+  wsA.views=[{state:'frozen',ySplit:3,rightToLeft:true}];
+
+  // ══════════════════════════════════════════════════════
+  // SHEET 3: CRITICAL
+  // ══════════════════════════════════════════════════════
+  const wsC = wb.addWorksheet('المناقصات الحرجة',{views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+RED}}});
+  wsC.columns=[
+    {width:5},{width:44},{width:28},{width:16},{width:16},{width:18},{width:16}
+  ];
+  addTitleRow(wsC,'🔥  المناقصات الحرجة — تنتهي خلال 3 أيام أو اليوم',7,RED,'FFFFFF');
+  addHeaderRow(wsC,['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','الوقت المتبقي','تاريخ الضمان'],ORANGE);
+  const crit=allTenders.filter(t=>['today','3days'].includes(urgLevel(t)));
+  crit.forEach((t,i)=>{
+    const diff=urgDiff(t);
+    const bg=i%2===0?'FFFFFF':'FFF5F5';
+    const row=addDataRow(wsC,[i+1,t.title,t.owner,t.workType,
       t.submitDate?t.submitDate.slice(0,10):'—',
       diff===0?'اليوم ⚡':diff+' أيام ⏰',
-      t.guarantee?t.guarantee.slice(0,10):'—'];
+      t.guarantee?t.guarantee.slice(0,10):'—'],
+      bg,['center','right','right','right','center','center','center']);
+    row.getCell(6).font=fontStyle(true,10,diff===0?RED:ORANGE);
   });
-  const ws2 = XLSX.utils.aoa_to_sheet([
-    ['🔥 المناقصات الحرجة — تنتهي خلال 3 أيام أو اليوم — ' + todayStr],
-    [],
-    ['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','الوقت المتبقي','تاريخ الضمان'],
-    ...critRows
-  ]);
-  ws2['!cols'] = [{wch:5},{wch:44},{wch:28},{wch:16},{wch:16},{wch:16},{wch:16}];
-  XLSX.utils.book_append_sheet(wb, ws2, 'المناقصات الحرجة');
+  wsC.views=[{state:'frozen',ySplit:3,rightToLeft:true}];
 
-  // Sheet 3: Guarantees sorted
-  const guas = [...allTenders].filter(t=>t.guarantee).sort((a,b)=>a.guarantee.localeCompare(b.guarantee));
-  const guaRows = guas.map((t,i)=>{
-    const gd = new Date(t.guarantee); gd.setHours(0,0,0,0);
-    const nd = new Date(); nd.setHours(0,0,0,0);
-    const dg = Math.round((gd-nd)/86400000);
-    return [i+1,t.title,t.owner,t.workType,
+  // ══════════════════════════════════════════════════════
+  // SHEET 4: GUARANTEES
+  // ══════════════════════════════════════════════════════
+  const wsG = wb.addWorksheet('الضمانات',{views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+TEAL}}});
+  wsG.columns=[{width:5},{width:44},{width:28},{width:16},{width:16},{width:16},{width:18}];
+  addTitleRow(wsG,'🔐  جدول الضمانات الابتدائية — مرتبة بالتاريخ',7,TEAL,'FFFFFF');
+  addHeaderRow(wsG,['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الحالة'],TEAL);
+  const guas=[...allTenders].filter(t=>t.guarantee).sort((a,b)=>a.guarantee.localeCompare(b.guarantee));
+  guas.forEach((t,i)=>{
+    const gd=new Date(t.guarantee); gd.setHours(0,0,0,0);
+    const nd=new Date(); nd.setHours(0,0,0,0);
+    const dg=Math.round((gd-nd)/86400000);
+    const status=dg===0?'مستحق اليوم 🔐':dg<0?'متأخر ⚠️':'بعد '+dg+' يوم';
+    const bg=i%2===0?'FFFFFF':'ECFEFF';
+    const row=addDataRow(wsG,[i+1,t.title,t.owner,t.workType,
       t.submitDate?t.submitDate.slice(0,10):'—',
-      t.guarantee.slice(0,10),
-      dg===0?'مستحق اليوم 🔐':dg<0?'متأخر ⚠️':'بعد '+dg+' يوم'];
+      t.guarantee.slice(0,10),status],
+      bg,['center','right','right','right','center','center','center']);
+    row.getCell(7).font=fontStyle(true,10,dg===0?TEAL:dg<0?RED:GREEN);
   });
-  const ws3 = XLSX.utils.aoa_to_sheet([
-    ['🔐 جدول الضمانات الابتدائية — مرتبة بالتاريخ — ' + todayStr],
-    [],
-    ['#','اسم المناقصة','الجهة المالكة','نوع الأعمال','تاريخ التقديم','تاريخ الضمان','الحالة'],
-    ...guaRows
-  ]);
-  ws3['!cols'] = [{wch:5},{wch:44},{wch:28},{wch:16},{wch:16},{wch:16},{wch:18}];
-  XLSX.utils.book_append_sheet(wb, ws3, 'الضمانات');
+  wsG.views=[{state:'frozen',ySplit:3,rightToLeft:true}];
 
-  // Sheet 4: Owner analysis
-  const oc = {};
-  allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||[]); oc[t.owner].push(t); });
-  const ownRows = Object.entries(oc).sort((a,b)=>b[1].length-a[1].length).map(([n,ts],i)=>{
+  // ══════════════════════════════════════════════════════
+  // SHEET 5: OWNER ANALYSIS
+  // ══════════════════════════════════════════════════════
+  const wsO = wb.addWorksheet('تحليل الجهات',{views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+NAVY}}});
+  wsO.columns=[{width:5},{width:32},{width:18},{width:18},{width:24}];
+  addTitleRow(wsO,'🏛️  توزيع المناقصات حسب الجهة المالكة',5,NAVY,'FFFFFF');
+  addHeaderRow(wsO,['#','الجهة المالكة','عدد المناقصات','النسبة المئوية','متوسط الأيام المتبقية'],BLUE);
+  const ownerColors=['3B4FB8','16A34A','D4A017','EA580C','0891B2','7C3AED','DC2626','C4690B'];
+  const oc={};
+  allTenders.forEach(t=>{if(t.owner) oc[t.owner]=(oc[t.owner]||[]).concat(t);});
+  Object.entries(oc).sort((a,b)=>b[1].length-a[1].length).forEach(([name,ts],i)=>{
     const count=ts.length;
-    const diffs=ts.map(t=>t.submitDate?Math.round((new Date(t.submitDate)-new Date())/86400000):null).filter(x=>x!==null);
+    const pct=(count/allTenders.length*100).toFixed(1)+'%';
+    const diffs=ts.map(t=>urgDiff(t)).filter(d=>d!==9999);
     const avg=diffs.length?Math.round(diffs.reduce((a,b)=>a+b,0)/diffs.length):0;
-    return [i+1,n,count,(count/allTenders.length*100).toFixed(1)+'%',avg+' يوم'];
+    const bg=i%2===0?'FFFFFF':GREY;
+    const row=addDataRow(wsO,[i+1,name,count,pct,avg+' يوم'],
+      bg,['center','right','center','center','center']);
+    row.getCell(3).font=fontStyle(true,11,ownerColors[i%ownerColors.length]);
   });
-  const ws4 = XLSX.utils.aoa_to_sheet([
-    ['🏛️ تحليل توزيع المناقصات حسب الجهة المالكة — ' + todayStr],
-    [],
-    ['#','الجهة المالكة','عدد المناقصات','النسبة المئوية','متوسط الأيام المتبقية'],
-    ...ownRows
-  ]);
-  ws4['!cols'] = [{wch:5},{wch:32},{wch:18},{wch:18},{wch:24}];
-  XLSX.utils.book_append_sheet(wb, ws4, 'تحليل الجهات');
+  wsO.views=[{state:'frozen',ySplit:3,rightToLeft:true}];
 
-  // Sheet 5: Work type
-  const wc = {};
-  allTenders.forEach(t=>{ if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
-  const wtRows = Object.entries(wc).sort((a,b)=>b[1]-a[1]).map(([n,c],i)=>
-    [i+1,n,c,(c/allTenders.length*100).toFixed(1)+'%']);
-  const ws5 = XLSX.utils.aoa_to_sheet([
-    ['⚙️ توزيع المناقصات حسب نوع الأعمال — ' + todayStr],
-    [],
-    ['#','نوع الأعمال','عدد المناقصات','النسبة المئوية'],
-    ...wtRows
-  ]);
-  ws5['!cols'] = [{wch:5},{wch:28},{wch:18},{wch:18}];
-  XLSX.utils.book_append_sheet(wb, ws5, 'أنواع الأعمال');
+  // ══════════════════════════════════════════════════════
+  // SHEET 6: WORK TYPES
+  // ══════════════════════════════════════════════════════
+  const wsW = wb.addWorksheet('أنواع الأعمال',{views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+PURPLE}}});
+  wsW.columns=[{width:5},{width:28},{width:18},{width:18}];
+  addTitleRow(wsW,'⚙️  توزيع المناقصات حسب نوع الأعمال',4,'7C3AED','FFFFFF');
+  addHeaderRow(wsW,['#','نوع الأعمال','عدد المناقصات','النسبة المئوية'],'7C3AED');
+  const wc={};
+  allTenders.forEach(t=>{if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1;});
+  Object.entries(wc).sort((a,b)=>b[1]-a[1]).forEach(([name,count],i)=>{
+    const pct=(count/allTenders.length*100).toFixed(1)+'%';
+    const bg=i%2===0?'FFFFFF':'F5F3FF';
+    const row=addDataRow(wsW,[i+1,name,count,pct],bg,['center','right','center','center']);
+    row.getCell(3).font=fontStyle(true,11,PURPLE);
+  });
+  wsW.views=[{state:'frozen',ySplit:3,rightToLeft:true}];
 
-  // Sheet 6: Executive summary
-  const cnt = {
+  // ══════════════════════════════════════════════════════
+  // SHEET 7: EXECUTIVE SUMMARY
+  // ══════════════════════════════════════════════════════
+  const wsS = wb.addWorksheet('الملخص التنفيذي',{views:[{rightToLeft:true,showGridLines:false}],
+    properties:{tabColor:{argb:'FF'+GOLD}}});
+  wsS.columns=[{width:28},{width:12},{width:14},{width:32}];
+
+  // Big gold title
+  wsS.addRow(['📈  الملخص التنفيذي للمناقصات']).height=44;
+  wsS.mergeCells('A1:D1');
+  const sc1=wsS.getCell('A1');
+  sc1.font=fontStyle(true,18,NAVY);
+  sc1.fill=solidFill(GOLD);
+  sc1.alignment=alignStyle('center');
+  sc1.border=medBorder();
+
+  wsS.addRow(['تاريخ التقرير: '+todayStr+'    |    الرواف للمقاولات']).height=28;
+  wsS.mergeCells('A2:D2');
+  const sc2=wsS.getCell('A2');
+  sc2.font=fontStyle(false,11,DARK);
+  sc2.fill=solidFill(GOLDBG);
+  sc2.alignment=alignStyle('center');
+
+  wsS.addRow([]);
+  addHeaderRow(wsS,['البيان','العدد','النسبة','الملاحظة'],NAVY);
+
+  const cnt2={
     total:allTenders.length,
-    running:allTenders.filter(t=>['active','week','3days','today'].includes(u(t))).length,
-    today:allTenders.filter(t=>u(t)==='today').length,
-    days3:allTenders.filter(t=>u(t)==='3days').length,
-    week:allTenders.filter(t=>u(t)==='week').length,
-    active:allTenders.filter(t=>u(t)==='active').length,
-    urgent:allTenders.filter(t=>u(t)==='urgent').length,
-    guaToday:allTenders.filter(t=>isGuaranteeToday(t.guarantee)).length,
+    running:allTenders.filter(t=>['active','week','3days','today'].includes(urgLevel(t))).length,
+    today:allTenders.filter(t=>urgLevel(t)==='today').length,
+    days3:allTenders.filter(t=>urgLevel(t)==='3days').length,
+    week:allTenders.filter(t=>urgLevel(t)==='week').length,
+    active:allTenders.filter(t=>urgLevel(t)==='active').length,
+    urgent:allTenders.filter(t=>urgLevel(t)==='urgent').length,
+    guaToday:allTenders.filter(t=>isGuaranteeToday(t.guarantee)).length
   };
-  const sumRows = [
-    ['إجمالي المناقصات',cnt.total,(cnt.total/cnt.total*100).toFixed(1)+'%','كامل قاعدة البيانات'],
-    ['المناقصات الجارية',cnt.running,(cnt.running/cnt.total*100).toFixed(1)+'%','نشطة ولم تنته بعد'],
-    ['تنتهي اليوم',cnt.today,(cnt.today/cnt.total*100).toFixed(1)+'%','آخر موعد للتقديم'],
-    ['حرجة خلال 3 أيام',cnt.days3,(cnt.days3/cnt.total*100).toFixed(1)+'%','تحتاج متابعة فورية'],
-    ['تنتهي خلال أسبوع',cnt.week,(cnt.week/cnt.total*100).toFixed(1)+'%','متابعة مستمرة'],
-    ['جارية ومفتوحة',cnt.active,(cnt.active/cnt.total*100).toFixed(1)+'%','مهلة كافية'],
-    ['منتهية / متأخرة',cnt.urgent,(cnt.urgent/cnt.total*100).toFixed(1)+'%','تجاوزت الموعد النهائي'],
-    ['ضمانات مستحقة اليوم',cnt.guaToday,(cnt.guaToday/cnt.total*100).toFixed(1)+'%','يجب مراجعتها فوراً'],
+  const sumRows=[
+    {l:'إجمالي المناقصات',   v:cnt2.total,   c:DARK,    note:'كامل قاعدة البيانات'},
+    {l:'المناقصات الجارية',  v:cnt2.running, c:GREEN,   note:'نشطة ولم تنته بعد'},
+    {l:'تنتهي اليوم',        v:cnt2.today,   c:RED,     note:'آخر موعد للتقديم'},
+    {l:'حرجة خلال 3 أيام',  v:cnt2.days3,   c:ORANGE,  note:'تحتاج متابعة فورية'},
+    {l:'تنتهي خلال أسبوع',  v:cnt2.week,    c:YELLOW,  note:'متابعة مستمرة'},
+    {l:'جارية ومفتوحة',     v:cnt2.active,  c:BLUE,    note:'مهلة كافية'},
+    {l:'منتهية / متأخرة',   v:cnt2.urgent,  c:RED,     note:'تجاوزت الموعد النهائي'},
+    {l:'ضمانات مستحقة اليوم',v:cnt2.guaToday,c:TEAL,   note:'يجب مراجعتها فوراً'},
   ];
-  const ws6 = XLSX.utils.aoa_to_sheet([
-    ['📈 الملخص التنفيذي — الإدارة العامة للمناقصات'],
-    ['تاريخ التقرير: '+todayStr+'    |    الرواف للمقاولات'],
-    [],
-    ['البيان','العدد','النسبة','الملاحظة'],
-    ...sumRows
-  ]);
-  ws6['!cols'] = [{wch:28},{wch:12},{wch:14},{wch:32}];
-  XLSX.utils.book_append_sheet(wb, ws6, 'الملخص التنفيذي');
+  sumRows.forEach((s,i)=>{
+    const pct=cnt2.total?(s.v/cnt2.total*100).toFixed(1)+'%':'0%';
+    const bg=i%2===0?'FFFFFF':GREY;
+    const row=wsS.addRow([s.l,s.v,pct,s.note]);
+    row.height=30;
+    const c1=row.getCell(1); c1.font=fontStyle(true,11,s.c); c1.fill=solidFill(bg); c1.alignment=alignStyle('right'); c1.border=borderStyle();
+    const c2=row.getCell(2); c2.font=fontStyle(true,16,s.c); c2.fill=solidFill(bg); c2.alignment=alignStyle('center'); c2.border=borderStyle();
+    const c3=row.getCell(3); c3.font=fontStyle(false,10,MUTED); c3.fill=solidFill(bg); c3.alignment=alignStyle('center'); c3.border=borderStyle();
+    const c4=row.getCell(4); c4.font=fontStyle(false,10,MUTED); c4.fill=solidFill(bg); c4.alignment=alignStyle('right'); c4.border=borderStyle();
+  });
+  wsS.views=[{state:'frozen',ySplit:4,rightToLeft:true}];
 
-  XLSX.writeFile(wb, 'تقرير_الرواف_التنفيذي_'+todayStr+'.xlsx');
-  showToast('🏆 تم تصدير التقرير التنفيذي الكامل!');
+  // ── Write & download ──────────────────────────────────
+  wb.xlsx.writeBuffer().then(buffer => {
+    const blob = new Blob([buffer], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'تقرير_الرواف_التنفيذي_' + todayStr + '.xlsx';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('🏆 تم تصدير التقرير التنفيذي الكامل!');
+  });
 }
 
 
