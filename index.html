@@ -7,750 +7,322 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --gold: #c9a84c;
-  --gold-light: #e8c87a;
-  --gold-dark: #8b6914;
-  --dark: #0d0d0d;
-  --dark-2: #141414;
-  --dark-3: #1c1c1c;
-  --dark-4: #242424;
-  --text: #e8e0d0;
-  --text-muted: #8a7f6e;
-  --green: #4caf7d;
-  --red: #e05252;
-  --orange: #e08c3a;
-  --blue: #4c8fd4;
+  --gold: #b8860b; --gold-light: #f0c040; --gold-bg: #fffbf0;
+  --bg: #f5f7fa; --bg-card: #ffffff; --border: #e8edf3;
+  --text: #1a2332; --text-muted: #7a8899;
+  --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
+  --yellow: #d97706; --yellow-bg: #fffbeb; --yellow-border: #fde68a;
+  --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
+  --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
+  --blue: #2563eb; --blue-bg: #eff6ff;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: 'Cairo', sans-serif;
-  background: var(--dark);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ─── HEADER ─── */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 .header {
-  background: linear-gradient(135deg, #0d0d0d 0%, #1a1200 50%, #0d0d0d 100%);
-  border-bottom: 1px solid rgba(201,168,76,0.3);
-  padding: 0 32px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(10px);
+  background:#fff; border-bottom:2px solid var(--gold-light);
+  padding:0 32px; height:68px; display:flex; align-items:center;
+  justify-content:space-between; position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 8px rgba(184,134,11,0.1);
 }
-
-.header-logo {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
+.header-logo { display:flex; align-items:center; gap:14px; }
 .logo-icon {
-  width: 42px;
-  height: 42px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 900;
-  font-size: 16px;
-  color: #000;
-  letter-spacing: -1px;
+  width:44px; height:44px;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  border-radius:12px; display:flex; align-items:center; justify-content:center;
+  font-weight:900; font-size:15px; color:#fff;
+  box-shadow:0 2px 8px rgba(184,134,11,0.3);
 }
-
-.logo-text { font-size: 18px; font-weight: 800; color: var(--gold); }
-.logo-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
+.logo-text { font-size:20px; font-weight:800; color:var(--gold); }
+.logo-sub { font-size:11px; color:var(--text-muted); }
+.header-right { display:flex; align-items:center; gap:14px; }
 .live-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(76,175,125,0.1);
-  border: 1px solid rgba(76,175,125,0.3);
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  color: var(--green);
+  display:flex; align-items:center; gap:6px;
+  background:var(--green-bg); border:1px solid var(--green-border);
+  padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; color:var(--green);
 }
-
-.live-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: blink 2s ease-in-out infinite;
-}
-
+.live-dot { width:7px; height:7px; background:var(--green); border-radius:50%; animation:blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-.last-update {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-/* ─── MAIN ─── */
-.main { padding: 28px 32px; max-width: 1600px; margin: 0 auto; }
-
-/* ─── STATS ─── */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
+.last-update { font-size:12px; color:var(--text-muted); }
+.main { padding:24px 32px; max-width:1600px; margin:0 auto; }
+.stats-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px; }
 .stat-card {
-  background: var(--dark-3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  padding: 22px;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
+  background:var(--bg-card); border-radius:16px; padding:20px;
+  box-shadow:var(--shadow); border:1.5px solid var(--border);
+  cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden;
 }
-
-.stat-card:hover { transform: translateY(-2px); border-color: rgba(201,168,76,0.3); }
-
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-}
-
-.stat-card.gold::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
-.stat-card.green::before { background: var(--green); }
-.stat-card.orange::before { background: var(--orange); }
-.stat-card.blue::before { background: var(--blue); }
-
-.stat-label {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-num {
-  font-size: 42px;
-  font-weight: 900;
-  line-height: 1;
-  color: #fff;
-}
-
-.stat-card.gold .stat-num { color: var(--gold); }
-.stat-card.green .stat-num { color: var(--green); }
-.stat-card.orange .stat-num { color: var(--orange); }
-.stat-card.blue .stat-num { color: var(--blue); }
-
-.stat-icon {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  font-size: 28px;
-  opacity: 0.15;
-}
-
-/* ─── CONTENT GRID ─── */
-.content-grid {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 20px;
-}
-
-/* ─── TABLE ─── */
-.table-section {
-  background: var(--dark-3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.section-header {
-  padding: 18px 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.section-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.section-count {
-  background: rgba(201,168,76,0.15);
-  color: var(--gold);
-  padding: 2px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--dark-4);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 8px;
-  padding: 6px 12px;
-  width: 220px;
-}
-
-.search-box input {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-family: 'Cairo', sans-serif;
-  font-size: 13px;
-  width: 100%;
-}
-
-.search-box input::placeholder { color: var(--text-muted); }
-
-.filters {
-  padding: 12px 24px;
-  display: flex;
-  gap: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  padding: 5px 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: transparent;
-  color: var(--text-muted);
-  font-family: 'Cairo', sans-serif;
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: rgba(201,168,76,0.15);
-  border-color: rgba(201,168,76,0.4);
-  color: var(--gold);
-}
-
-.table-wrap { overflow-x: auto; }
-
-table { width: 100%; border-collapse: collapse; }
-
-thead tr { background: rgba(255,255,255,0.03); }
-
-th {
-  padding: 12px 16px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-align: right;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-td {
-  padding: 14px 16px;
-  font-size: 13px;
-  color: var(--text);
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-  vertical-align: middle;
-}
-
-tr:hover td { background: rgba(255,255,255,0.02); }
-tr:last-child td { border-bottom: none; }
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.badge-active { background: rgba(76,175,125,0.15); color: var(--green); }
-.badge-closed { background: rgba(224,82,82,0.15); color: var(--red); }
-.badge-pending { background: rgba(224,140,58,0.15); color: var(--orange); }
-
-.title-cell { max-width: 280px; }
-.title-text {
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-  max-width: 260px;
-}
-
-.date-cell { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
-
-/* ─── SIDEBAR ─── */
-.sidebar { display: flex; flex-direction: column; gap: 16px; }
-
-.side-card {
-  background: var(--dark-3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.owner-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-
-.owner-row:last-child { border-bottom: none; }
-
-.owner-name {
-  font-size: 12px;
-  color: var(--text);
-  flex: 1;
-  text-align: right;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.owner-bar-wrap {
-  width: 80px;
-  height: 4px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.owner-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width 1s ease; }
-.owner-count { font-size: 12px; font-weight: 700; color: var(--gold); min-width: 20px; text-align: center; }
-
-/* ─── LOADING ─── */
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px;
-  gap: 16px;
-  color: var(--text-muted);
-}
-
-.spinner {
-  width: 36px;
-  height: 36px;
-  border: 3px solid rgba(201,168,76,0.2);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ─── EMPTY ─── */
-.empty {
-  text-align: center;
-  padding: 60px;
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-/* ─── ERROR ─── */
-.error-banner {
-  background: rgba(224,82,82,0.1);
-  border: 1px solid rgba(224,82,82,0.3);
-  border-radius: 10px;
-  padding: 14px 20px;
-  margin-bottom: 20px;
-  color: var(--red);
-  font-size: 13px;
-  display: none;
-}
-
-/* ─── DONUT CHART ─── */
-.donut-wrap {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-
-svg.donut { transform: rotate(-90deg); }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1100px) {
-  .content-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: repeat(2,1fr); }
-}
-
-@media (max-width: 600px) {
-  .main { padding: 16px; }
-  .stats-grid { grid-template-columns: repeat(2,1fr); }
-  .header { padding: 0 16px; }
-}
-
-/* ─── ANIMATIONS ─── */
-.fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
-@keyframes fadeIn { to { opacity: 1; } }
-
-tr { animation: slideIn 0.3s ease forwards; opacity: 0; }
-@keyframes slideIn { to { opacity: 1; transform: translateX(0); } from { opacity: 0; transform: translateX(10px); } }
+.stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+.stat-card.green { border-color:var(--green-border); background:var(--green-bg); }
+.stat-card.yellow { border-color:var(--yellow-border); background:var(--yellow-bg); }
+.stat-card.orange { border-color:var(--orange-border); background:var(--orange-bg); }
+.stat-card.red { border-color:var(--red-border); background:var(--red-bg); }
+.stat-card.urgent { border-color:#dc2626; background:linear-gradient(135deg,#fef2f2,#fff5f5); animation:urgentPulse 2s ease-in-out infinite; }
+@keyframes urgentPulse { 0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,0.15)} 50%{box-shadow:0 0 0 8px rgba(220,38,38,0)} }
+.stat-icon-wrap { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:12px; }
+.green .stat-icon-wrap { background:rgba(22,163,74,0.12); }
+.yellow .stat-icon-wrap { background:rgba(217,119,6,0.12); }
+.orange .stat-icon-wrap { background:rgba(234,88,12,0.12); }
+.red .stat-icon-wrap, .urgent .stat-icon-wrap { background:rgba(220,38,38,0.12); }
+.stat-num { font-size:40px; font-weight:900; line-height:1; margin-bottom:4px; }
+.green .stat-num { color:var(--green); }
+.yellow .stat-num { color:var(--yellow); }
+.orange .stat-num { color:var(--orange); }
+.red .stat-num, .urgent .stat-num { color:var(--red); }
+.stat-label { font-size:13px; font-weight:700; color:var(--text); }
+.stat-sub { font-size:11px; color:var(--text-muted); margin-top:3px; }
+.content-grid { display:grid; grid-template-columns:1fr 300px; gap:18px; }
+.table-section { background:var(--bg-card); border-radius:16px; border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.section-header { padding:16px 22px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:#fafbfc; }
+.section-title { font-size:15px; font-weight:800; color:var(--text); display:flex; align-items:center; gap:8px; }
+.section-count { background:var(--gold-light); color:#7a5500; padding:2px 10px; border-radius:20px; font-size:12px; font-weight:800; }
+.search-box { display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid var(--border); border-radius:10px; padding:7px 14px; width:230px; }
+.search-box:focus-within { border-color:var(--gold-light); }
+.search-box input { background:transparent; border:none; outline:none; color:var(--text); font-family:'Cairo',sans-serif; font-size:13px; width:100%; }
+.search-box input::placeholder { color:var(--text-muted); }
+.filters { padding:12px 22px; display:flex; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--border); background:#fafbfc; }
+.filter-btn { padding:5px 14px; border-radius:20px; border:1.5px solid var(--border); background:#fff; color:var(--text-muted); font-family:'Cairo',sans-serif; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+.filter-btn:hover { border-color:var(--gold-light); color:var(--gold); }
+.filter-btn.active { background:var(--gold-light); border-color:var(--gold); color:#7a5500; font-weight:800; }
+.filter-btn.f-today.active { background:var(--red-bg); border-color:var(--red); color:var(--red); }
+.filter-btn.f-3days.active { background:#fff1f2; border-color:#f87171; color:#e11d48; }
+.filter-btn.f-week.active { background:var(--orange-bg); border-color:var(--orange); color:var(--orange); }
+.filter-btn.f-active.active { background:var(--green-bg); border-color:var(--green); color:var(--green); }
+table { width:100%; border-collapse:collapse; }
+thead tr { background:#fafbfc; }
+th { padding:11px 14px; font-size:11px; font-weight:800; color:var(--text-muted); text-align:right; border-bottom:1px solid var(--border); white-space:nowrap; text-transform:uppercase; letter-spacing:0.5px; }
+td { padding:13px 14px; font-size:13px; color:var(--text); border-bottom:1px solid #f0f4f8; vertical-align:middle; }
+tr:hover td { background:#fafbfc; }
+tr:last-child td { border-bottom:none; }
+.title-text { font-weight:700; color:var(--text); display:block; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.owner-text { font-size:11px; color:var(--text-muted); max-width:240px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.urgency-badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:800; white-space:nowrap; }
+.u-today { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.u-3days { background:#fff1f2; color:#e11d48; border:1px solid #fda4af; }
+.u-week { background:var(--orange-bg); color:var(--orange); border:1px solid var(--orange-border); }
+.u-active { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.u-urgent { background:#fef2f2; color:#991b1b; border:1px solid #fca5a5; }
+.u-other { background:#f8fafc; color:var(--text-muted); border:1px solid var(--border); }
+.date-text { font-size:12px; color:var(--text-muted); white-space:nowrap; }
+.sidebar { display:flex; flex-direction:column; gap:16px; }
+.side-card { background:var(--bg-card); border-radius:16px; border:1.5px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.owner-row { display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid #f0f4f8; cursor:pointer; transition:background 0.15s; }
+.owner-row:hover { background:#fafbfc; }
+.owner-row:last-child { border-bottom:none; }
+.owner-name { font-size:12px; font-weight:600; color:var(--text); flex:1; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.owner-bar-wrap { width:70px; height:5px; background:#f0f4f8; border-radius:3px; overflow:hidden; }
+.owner-bar { height:100%; background:var(--gold-light); border-radius:3px; transition:width 1s ease; }
+.owner-count { font-size:12px; font-weight:800; color:var(--gold); min-width:20px; text-align:center; }
+.loading { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:50px; gap:14px; color:var(--text-muted); }
+.spinner { width:32px; height:32px; border:3px solid #f0f4f8; border-top-color:var(--gold-light); border-radius:50%; animation:spin 0.8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.empty { text-align:center; padding:50px; color:var(--text-muted); font-size:14px; }
+.fade-in { animation:fadeIn 0.4s ease forwards; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@media(max-width:1100px){.content-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
 </head>
 <body>
-
 <header class="header">
   <div class="header-logo">
-    <div class="logo-icon">الر</div>
+    <img src="data:image/png;base64,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" alt="الرواف" style="height:48px;width:auto;object-fit:contain;" />
     <div>
       <div class="logo-text">نظام الرواف</div>
       <div class="logo-sub">إدارة المناقصات والفرص</div>
     </div>
   </div>
   <div class="header-right">
-    <div class="live-badge">
-      <div class="live-dot"></div>
-      مباشر
-    </div>
+    <div class="live-badge"><div class="live-dot"></div>مباشر</div>
     <div class="last-update" id="last-update">جاري التحميل...</div>
   </div>
 </header>
-
 <main class="main">
-
-  <div class="error-banner" id="error-banner"></div>
-
-  <!-- STATS -->
   <div class="stats-grid fade-in">
-    <div class="stat-card gold" onclick="filterByStatus('')">
-      <div class="stat-icon">📋</div>
-      <div class="stat-label">إجمالي المناقصات</div>
-      <div class="stat-num" id="stat-total">—</div>
-    </div>
-    <div class="stat-card green" onclick="filterByStatus('جارية')">
-      <div class="stat-icon">✅</div>
-      <div class="stat-label">المناقصات الجارية</div>
+    <div class="stat-card green" onclick="filterBy('active')">
+      <div class="stat-icon-wrap">📋</div>
       <div class="stat-num" id="stat-active">—</div>
+      <div class="stat-label">المناقصات الجارية</div>
+      <div class="stat-sub">إجمالي النشطة</div>
     </div>
-    <div class="stat-card orange" onclick="filterByStatus('')">
-      <div class="stat-icon">🏛️</div>
-      <div class="stat-label">الجهات المالكة</div>
-      <div class="stat-num" id="stat-owners">—</div>
+    <div class="stat-card yellow" onclick="filterBy('week')">
+      <div class="stat-icon-wrap">📅</div>
+      <div class="stat-num" id="stat-week">—</div>
+      <div class="stat-label">الباقي أسبوع</div>
+      <div class="stat-sub">7 أيام أو أقل</div>
     </div>
-    <div class="stat-card blue" onclick="filterByStatus('')">
-      <div class="stat-icon">📅</div>
-      <div class="stat-label">تنتهي هذا الشهر</div>
-      <div class="stat-num" id="stat-soon">—</div>
+    <div class="stat-card orange" onclick="filterBy('3days')">
+      <div class="stat-icon-wrap">⏰</div>
+      <div class="stat-num" id="stat-3days">—</div>
+      <div class="stat-label">الباقي 3 أيام</div>
+      <div class="stat-sub">تحتاج متابعة عاجلة</div>
+    </div>
+    <div class="stat-card red" onclick="filterBy('today')">
+      <div class="stat-icon-wrap">🔥</div>
+      <div class="stat-num" id="stat-today">—</div>
+      <div class="stat-label">اليوم</div>
+      <div class="stat-sub">تنتهي اليوم</div>
+    </div>
+    <div class="stat-card urgent" onclick="filterBy('urgent')">
+      <div class="stat-icon-wrap">🚨</div>
+      <div class="stat-num" id="stat-urgent">—</div>
+      <div class="stat-label">الحرجة</div>
+      <div class="stat-sub">منتهية أو متأخرة</div>
     </div>
   </div>
-
-  <!-- CONTENT -->
   <div class="content-grid">
-
-    <!-- TABLE -->
     <div class="table-section fade-in">
       <div class="section-header">
-        <div class="section-title">
-          📊 المناقصات النشطة
-          <span class="section-count" id="table-count">0</span>
-        </div>
+        <div class="section-title">📊 قائمة المناقصات <span class="section-count" id="table-count">0</span></div>
         <div class="search-box">
           <span>🔍</span>
-          <input type="text" id="search-input" placeholder="بحث في المناقصات..." oninput="filterTable()">
+          <input type="text" id="search-input" placeholder="بحث في المناقصات..." oninput="applyFilters()">
         </div>
       </div>
-
-      <div class="filters" id="filters">
-        <button class="filter-btn active" onclick="filterByStatus('')">الكل</button>
+      <div class="filters">
+        <button class="filter-btn active" onclick="filterBy('all')">الكل</button>
+        <button class="filter-btn f-active" onclick="filterBy('active')">🟢 جارية</button>
+        <button class="filter-btn f-week" onclick="filterBy('week')">📅 باقي أسبوع</button>
+        <button class="filter-btn f-3days" onclick="filterBy('3days')">⏰ باقي 3 أيام</button>
+        <button class="filter-btn f-today" onclick="filterBy('today')">🔥 اليوم</button>
+        <button class="filter-btn f-today" onclick="filterBy('urgent')">🚨 الحرجة</button>
       </div>
-
-      <div class="table-wrap">
-        <div class="loading" id="loading">
-          <div class="spinner"></div>
-          جاري تحميل البيانات...
-        </div>
+      <div id="loading" class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
+      <div style="overflow-x:auto">
         <table id="tenders-table" style="display:none">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>اسم المناقصة</th>
-              <th>المالك</th>
-              <th>القطاع</th>
-              <th>نوع الأعمال</th>
-              <th>تاريخ التقديم</th>
-              <th>الضمان</th>
-              <th>الحالة</th>
-            </tr>
-          </thead>
+          <thead><tr><th>#</th><th>اسم المناقصة</th><th>المالك</th><th>نوع الأعمال</th><th>تاريخ التقديم</th><th>الضمان</th><th>الأولوية</th></tr></thead>
           <tbody id="tenders-tbody"></tbody>
         </table>
-        <div class="empty" id="empty" style="display:none">لا توجد مناقصات مطابقة</div>
       </div>
+      <div class="empty" id="empty" style="display:none">لا توجد مناقصات مطابقة</div>
     </div>
-
-    <!-- SIDEBAR -->
     <div class="sidebar">
-
-      <!-- OWNERS -->
       <div class="side-card fade-in">
-        <div class="section-header">
-          <div class="section-title">🏛️ توزيع الجهات المالكة</div>
-        </div>
-        <div id="owners-list">
-          <div class="loading"><div class="spinner"></div></div>
-        </div>
+        <div class="section-header"><div class="section-title">🏛️ توزيع الجهات المالكة</div></div>
+        <div id="owners-list"><div class="loading"><div class="spinner"></div></div></div>
       </div>
-
-      <!-- WORK TYPES -->
       <div class="side-card fade-in">
-        <div class="section-header">
-          <div class="section-title">⚙️ أنواع الأعمال</div>
-        </div>
-        <div id="worktypes-list">
-          <div class="loading"><div class="spinner"></div></div>
-        </div>
+        <div class="section-header"><div class="section-title">⚙️ أنواع الأعمال</div></div>
+        <div id="worktypes-list"><div class="loading"><div class="spinner"></div></div></div>
       </div>
-
     </div>
   </div>
 </main>
-
 <script>
-// ─── الإعدادات ───────────────────────────────────────────────
-const CONFIG = {
-  // رابط ملف البيانات من GitHub
-  dataUrl: 'https://raw.githubusercontent.com/edwardehab0-design/tender-dashboard/main/data.json',
-  // مدة التحديث التلقائي — 5 دقائق
-  refreshInterval: 5 * 60 * 1000,
-};
+const DATA_URL = 'https://raw.githubusercontent.com/edwardehab0-design/tender-dashboard/main/data.json';
+let allTenders = [], currentFilter = 'all';
 
-let allTenders = [];
-let currentFilter = '';
+function getUrgency(submitDate) {
+  if (!submitDate) return { level:'other', label:'—', cls:'u-other', diff:9999 };
+  const d = new Date(submitDate); d.setHours(0,0,0,0);
+  const n = new Date(); n.setHours(0,0,0,0);
+  const diff = Math.round((d - n) / 86400000);
+  if (diff < 0)  return { level:'urgent', label:'🚨 منتهية',    cls:'u-urgent', diff };
+  if (diff === 0) return { level:'today',  label:'🔥 اليوم',     cls:'u-today',  diff };
+  if (diff <= 3)  return { level:'3days',  label:`⏰ ${diff} أيام`, cls:'u-3days', diff };
+  if (diff <= 7)  return { level:'week',   label:`📅 ${diff} أيام`, cls:'u-week',  diff };
+  return { level:'active', label:`${diff} يوم`, cls:'u-active', diff };
+}
 
-// ─── جلب البيانات من GitHub ───────────────────────────────────
 async function fetchTenders() {
   try {
-    const resp = await fetch(CONFIG.dataUrl + '?t=' + Date.now());
-    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const data = await resp.json();
-    allTenders = (data.tenders || []).map(t => ({
-      Title: t["اسم المناقصة"] || '',
-      Owner: t["المالك"] || '',
-      wallet: t["القطاع"] || '',
-      WorkType: t["نوع الأعمال"] || '',
-      SubmitDate: t["تاريخ التقديم"] || '',
-      InitialGuarantee: t["تاريخ الضمان الابتدائي"] || '',
-      Status: t["الحالة"] || 'جارية',
-    }));
+    const r = await fetch(DATA_URL + '?t=' + Date.now());
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    allTenders = (data.tenders||[]).map(t=>({
+      title:    t['اسم المناقصة']||'',
+      owner:    t['المالك']||'',
+      sector:   t['القطاع']||'',
+      workType: t['نوع الأعمال']||'',
+      submitDate: t['تاريخ التقديم']||'',
+      guarantee:  t['تاريخ الضمان الابتدائي']||'',
+      status:   t['الحالة']||'جارية',
+    })).filter(t=>t.title);
     renderAll();
-    updateLastTime();
-    hideError();
-  } catch (e) {
-    console.error('Fetch error:', e);
-    showError('جاري تحميل البيانات... تأكد من تشغيل السكريبت على جهازك');
-    loadSampleData();
+    document.getElementById('last-update').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA');
+  } catch(e) {
+    document.getElementById('last-update').textContent = 'تعذر التحديث';
+    document.getElementById('loading').style.display = 'none';
   }
 }
 
-// ─── بيانات تجريبية (fallback) ───────────────────────────────
-function loadSampleData() {
-  allTenders = [
-    { Title: 'مشروع ربط محطات الكهرباء الفرعية بالمرينا', Owner: 'الشؤون الخاصة لخادم الحرمين', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'كهرباء', SubmitDate: '2026-05-11', InitialGuarantee: '2026-05-06', Status: 'جارية' },
-    { Title: 'انشاء عبارات و حواجز خرسانية بمدينة جيزان', Owner: 'أمانة منطقة جازان', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'إنشاء شبكات السيول', SubmitDate: '2026-05-12', InitialGuarantee: '2026-05-07', Status: 'جارية' },
-    { Title: 'RFP KSIA-TEN-00000129: Potable Water', Owner: 'مطار الملك سلمان', wallet: '', WorkType: 'إنشاءات، بنية تحتية', SubmitDate: '2026-05-16', InitialGuarantee: '2026-05-12', Status: 'جارية' },
-    { Title: 'Sitewide Utilities Irrigation Storage Tanks', Owner: 'مطار الملك سلمان', wallet: 'قطاع منطقة الرياض', WorkType: 'إنشاءات، بنية تحتية', SubmitDate: '2026-05-16', InitialGuarantee: '2026-05-12', Status: 'جارية' },
-    { Title: 'تنفيذ حلول تصريف مياه الأمطار (20338)', Owner: 'أمانة جدة', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'إنشاء شبكات السيول', SubmitDate: '2026-05-17', InitialGuarantee: '2026-05-12', Status: 'جارية' },
-    { Title: 'توريد وتركيب أنابيب الالياف الزجاجية', Owner: 'الهيئة السعودية للمياة', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'خطوط نقل المياة', SubmitDate: '2026-05-23', InitialGuarantee: '2026-05-19', Status: 'جارية' },
-    { Title: 'NSR Track Doubling (Phosphate 3)', Owner: 'SAR الخطوط الحديدية', wallet: 'القطاع الغربي', WorkType: 'خطوط نقل المياة', SubmitDate: '2026-06-01', InitialGuarantee: '2026-05-23', Status: 'جارية' },
-    { Title: 'Riyadh Rail Link - Design & Build', Owner: 'SAR الخطوط الحديدية', wallet: 'القطاع الغربي', WorkType: 'خطوط نقل المياة', SubmitDate: '2026-06-01', InitialGuarantee: '2026-05-27', Status: 'جارية' },
-  ];
-  renderAll();
-  updateLastTime();
-}
-
-// ─── عرض البيانات ────────────────────────────────────────────
-function renderAll() {
-  updateStats();
-  renderTable(allTenders);
-  renderOwners();
-  renderWorkTypes();
-  buildFilters();
-}
-
-function updateStats() {
-  const active = allTenders.filter(t => t.Status === 'جارية').length;
-  const owners = new Set(allTenders.map(t => t.Owner).filter(Boolean)).size;
-  const now = new Date();
-  const soon = allTenders.filter(t => {
-    if (!t.SubmitDate) return false;
-    const d = new Date(t.SubmitDate);
-    const diff = (d - now) / (1000 * 60 * 60 * 24);
-    return diff >= 0 && diff <= 30;
-  }).length;
-
-  animateNum('stat-total', allTenders.length);
-  animateNum('stat-active', active);
-  animateNum('stat-owners', owners);
-  animateNum('stat-soon', soon);
-}
-
-function animateNum(id, target) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  let current = 0;
-  const step = Math.ceil(target / 20);
-  const timer = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.textContent = current;
-    if (current >= target) clearInterval(timer);
-  }, 40);
-}
-
-function buildFilters() {
-  const statuses = [...new Set(allTenders.map(t => t.Status).filter(Boolean))];
-  const container = document.getElementById('filters');
-  container.innerHTML = `<button class="filter-btn ${currentFilter===''?'active':''}" onclick="filterByStatus('')">الكل (${allTenders.length})</button>`;
-  statuses.forEach(s => {
-    const count = allTenders.filter(t => t.Status === s).length;
-    container.innerHTML += `<button class="filter-btn ${currentFilter===s?'active':''}" onclick="filterByStatus('${s}')">${s} (${count})</button>`;
+function renderStats() {
+  const c = {active:0,week:0,'3days':0,today:0,urgent:0};
+  allTenders.forEach(t => {
+    const u = getUrgency(t.submitDate);
+    if (u.level === 'urgent') c.urgent++;
+    else if (u.level === 'today') { c.today++; c.active++; }
+    else if (u.level === '3days') { c['3days']++; c.active++; }
+    else if (u.level === 'week')  { c.week++; c.active++; }
+    else if (u.level === 'active') c.active++;
+  });
+  ['active','week','3days','today','urgent'].forEach(k => {
+    const el = document.getElementById('stat-'+k);
+    if (el) { let n=0; const t=setInterval(()=>{ n=Math.min(n+1,c[k]); el.textContent=n; if(n>=c[k])clearInterval(t); },40); }
   });
 }
 
-function filterByStatus(status) {
-  currentFilter = status;
-  buildFilters();
-  filterTable();
+function filterBy(f) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  const map = {all:0,active:1,week:2,'3days':3,today:4,urgent:5};
+  const btns = document.querySelectorAll('.filter-btn');
+  if (btns[map[f]]) btns[map[f]].classList.add('active');
+  applyFilters();
 }
 
-function filterTable() {
+function applyFilters() {
   const search = document.getElementById('search-input').value.toLowerCase();
-  const filtered = allTenders.filter(t => {
-    const matchStatus = !currentFilter || t.Status === currentFilter;
-    const matchSearch = !search ||
-      (t.Title||'').toLowerCase().includes(search) ||
-      (t.Owner||'').toLowerCase().includes(search) ||
-      (t.WorkType||'').toLowerCase().includes(search);
-    return matchStatus && matchSearch;
+  let filtered = allTenders.filter(t => {
+    const u = getUrgency(t.submitDate);
+    let ok = currentFilter==='all' ||
+      (currentFilter==='active' && ['active','week','3days','today'].includes(u.level)) ||
+      u.level === currentFilter;
+    return ok && (!search || t.title.toLowerCase().includes(search) || t.owner.toLowerCase().includes(search) || t.workType.toLowerCase().includes(search));
   });
+  filtered.sort((a,b) => getUrgency(a.submitDate).diff - getUrgency(b.submitDate).diff);
   renderTable(filtered);
 }
 
 function renderTable(tenders) {
-  const loading = document.getElementById('loading');
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('table-count').textContent = tenders.length;
   const table = document.getElementById('tenders-table');
   const empty = document.getElementById('empty');
-  const count = document.getElementById('table-count');
-
-  loading.style.display = 'none';
-  count.textContent = tenders.length;
-
-  if (!tenders.length) {
-    table.style.display = 'none';
-    empty.style.display = 'block';
-    return;
-  }
-
-  table.style.display = 'table';
-  empty.style.display = 'none';
-
-  const tbody = document.getElementById('tenders-tbody');
-  tbody.innerHTML = tenders.map((t, i) => {
-    const statusClass = t.Status === 'جارية' ? 'badge-active' : t.Status === 'ملغية' ? 'badge-closed' : 'badge-pending';
-    const submitDate = t.SubmitDate ? t.SubmitDate.split('T')[0] : '—';
-    const guarantee = t.InitialGuarantee ? t.InitialGuarantee.split('T')[0] : '—';
-    return `
-    <tr style="animation-delay:${i*0.03}s">
-      <td style="color:var(--text-muted);font-size:12px">${i+1}</td>
-      <td class="title-cell"><span class="title-text" title="${t.Title||''}">${t.Title||'—'}</span></td>
-      <td style="font-size:12px;color:var(--text-muted)">${t.Owner||'—'}</td>
-      <td style="font-size:12px;color:var(--text-muted)">${t.wallet||'—'}</td>
-      <td style="font-size:12px">${t.WorkType||'—'}</td>
-      <td class="date-cell">${submitDate}</td>
-      <td class="date-cell">${guarantee}</td>
-      <td><span class="badge ${statusClass}">${t.Status||'—'}</span></td>
-    </tr>`;
+  if (!tenders.length) { table.style.display='none'; empty.style.display='block'; return; }
+  table.style.display='table'; empty.style.display='none';
+  document.getElementById('tenders-tbody').innerHTML = tenders.map((t,i) => {
+    const u = getUrgency(t.submitDate);
+    return `<tr><td style="color:var(--text-muted);font-size:12px;font-weight:600">${i+1}</td>
+    <td><span class="title-text" title="${t.title}">${t.title}</span><span class="owner-text">${t.workType}</span></td>
+    <td><span class="owner-text" style="max-width:140px">${t.owner}</span></td>
+    <td style="font-size:12px">${t.workType||'—'}</td>
+    <td class="date-text">${t.submitDate?t.submitDate.split('T')[0]:'—'}</td>
+    <td class="date-text">${t.guarantee?t.guarantee.split('T')[0]:'—'}</td>
+    <td><span class="urgency-badge ${u.cls}">${u.label}</span></td></tr>`;
   }).join('');
 }
 
-function renderOwners() {
-  const counts = {};
-  allTenders.forEach(t => { if (t.Owner) counts[t.Owner] = (counts[t.Owner]||0)+1; });
-  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,8);
-  const max = sorted[0]?.[1] || 1;
-
-  document.getElementById('owners-list').innerHTML = sorted.map(([name, count]) => `
+function renderSide(id, data, color) {
+  const max = data[0]?.[1]||1;
+  document.getElementById(id).innerHTML = data.map(([n,c])=>`
     <div class="owner-row">
-      <div class="owner-count">${count}</div>
-      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${count/max*100}%"></div></div>
-      <div class="owner-name">${name}</div>
-    </div>
-  `).join('') || '<div class="empty">لا توجد بيانات</div>';
+      <div class="owner-count" style="color:${color}">${c}</div>
+      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${c/max*100}%;background:${color}40"></div></div>
+      <div class="owner-name">${n}</div>
+    </div>`).join('') || '<div class="empty">لا توجد بيانات</div>';
 }
 
-function renderWorkTypes() {
-  const counts = {};
-  allTenders.forEach(t => { if (t.WorkType) counts[t.WorkType] = (counts[t.WorkType]||0)+1; });
-  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,6);
-  const max = sorted[0]?.[1] || 1;
-
-  document.getElementById('worktypes-list').innerHTML = sorted.map(([name, count]) => `
-    <div class="owner-row">
-      <div class="owner-count">${count}</div>
-      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${count/max*100}%;background:var(--blue)"></div></div>
-      <div class="owner-name">${name}</div>
-    </div>
-  `).join('') || '<div class="empty">لا توجد بيانات</div>';
+function renderAll() {
+  renderStats(); applyFilters();
+  const oc={}, wc={};
+  allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1; if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
+  renderSide('owners-list', Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8), '#b8860b');
+  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,6), '#2563eb');
 }
 
-function updateLastTime() {
-  const now = new Date();
-  document.getElementById('last-update').textContent =
-    `آخر تحديث: ${now.toLocaleTimeString('ar-SA')}`;
-}
-
-function showError(msg) {
-  const el = document.getElementById('error-banner');
-  el.textContent = '⚠️ ' + msg;
-  el.style.display = 'block';
-}
-
-function hideError() {
-  document.getElementById('error-banner').style.display = 'none';
-}
-
-// ─── التشغيل ──────────────────────────────────────────────────
 fetchTenders();
-setInterval(fetchTenders, CONFIG.refreshInterval);
+setInterval(fetchTenders, 5*60*1000);
 </script>
 </body>
 </html>
