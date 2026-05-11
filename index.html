@@ -22,6 +22,9 @@
   --shadow-md: 0 4px 16px rgba(30,42,94,0.14);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  width:100%; height:100%; overflow-x:hidden;
+}
 body {
   font-family:'Cairo',sans-serif;
   background: linear-gradient(160deg, #eef2ff 0%, #f5f0ff 40%, #fffbf0 100%);
@@ -31,7 +34,7 @@ body {
   background: linear-gradient(105deg, #1a1f3c 0%, #2d3561 45%, #4a4a4a 80%, #6b6b6b 100%);
   border-bottom: 2px solid var(--gold-light);
   padding:0 32px; height:80px; display:flex; align-items:center;
-  justify-content:space-between; position:sticky; top:0; z-index:100;
+  justify-content:space-between; position:sticky; top:0; z-index:100; width:100%;
   box-shadow: 0 3px 16px rgba(30,42,94,0.25);
 }
 .header-logo { display:flex; align-items:center; gap:14px; }
@@ -46,7 +49,7 @@ body {
 .live-dot { width:7px; height:7px; background:#4ade80; border-radius:50%; animation:blink 2s ease-in-out infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 .last-update { font-size:12px; color:rgba(255,255,255,0.7); }
-.main { padding:24px 32px; max-width:1600px; margin:0 auto; }
+.main { padding:24px 32px; width:100%; margin:0 auto; }
 
 /* ===== STAT CARDS ===== */
 .stats-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:22px; }
@@ -100,8 +103,8 @@ th { padding:11px 14px; font-size:11px; font-weight:800; color:var(--text-muted)
 td { padding:13px 14px; font-size:13px; color:var(--text); border-bottom:1px solid #eef2ff; vertical-align:middle; }
 tr:hover td { background:#f8faff; }
 tr:last-child td { border-bottom:none; }
-.title-text { font-weight:700; color:var(--text); display:block; max-width:240px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.owner-text { font-size:11px; color:var(--text-muted); max-width:240px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.title-text { font-weight:700; color:var(--text); display:block; max-width:100%; white-space:normal; word-break:break-word; }
+.owner-text { font-size:11px; color:var(--text-muted); max-width:100%; display:block; white-space:normal; word-break:break-word; }
 .urgency-badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:800; white-space:nowrap; }
 .u-today { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
 .u-3days { background:#fff1f2; color:#e11d48; border:1px solid #fda4af; }
@@ -315,6 +318,15 @@ tr:last-child td { border-bottom:none; }
       <div id="loading" class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
       <div style="overflow-x:auto">
         <table id="tenders-table" style="display:none">
+          <colgroup>
+            <col style="width:40px">
+            <col style="width:35%">
+            <col style="width:15%">
+            <col style="width:12%">
+            <col style="width:11%">
+            <col style="width:11%">
+            <col style="width:10%">
+          </colgroup>
           <thead><tr><th>#</th><th>اسم المناقصة</th><th>المالك</th><th>نوع الأعمال</th><th>تاريخ التقديم</th><th>الضمان</th><th>الأولوية</th></tr></thead>
           <tbody id="tenders-tbody"></tbody>
         </table>
