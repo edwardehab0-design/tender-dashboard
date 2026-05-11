@@ -3,799 +3,804 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم المناقصات</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<title>نظام الرواف — المناقصات</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0e1a;
-    --bg2: #0f1526;
-    --card: #141929;
-    --card2: #1a2035;
-    --border: rgba(99,179,237,0.12);
-    --accent: #3b82f6;
-    --accent2: #06b6d4;
-    --gold: #f59e0b;
-    --green: #10b981;
-    --red: #ef4444;
-    --orange: #f97316;
-    --purple: #8b5cf6;
-    --text: #e2e8f0;
-    --text2: #94a3b8;
-    --glow: 0 0 30px rgba(59,130,246,0.15);
-  }
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c87a;
+  --gold-dark: #8b6914;
+  --dark: #0d0d0d;
+  --dark-2: #141414;
+  --dark-3: #1c1c1c;
+  --dark-4: #242424;
+  --text: #e8e0d0;
+  --text-muted: #8a7f6e;
+  --green: #4caf7d;
+  --red: #e05252;
+  --orange: #e08c3a;
+  --blue: #4c8fd4;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    font-family: 'Cairo', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--dark);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-  /* Background grid effect */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ─── HEADER ─── */
+.header {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1200 50%, #0d0d0d 100%);
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
 
-  .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
-  /* Header */
-  header {
-    background: linear-gradient(135deg, #0d1b3e 0%, #0a0e1a 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(20px);
-  }
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 16px;
+  color: #000;
+  letter-spacing: -1px;
+}
 
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.logo-text { font-size: 18px; font-weight: 800; color: var(--gold); }
+.logo-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-  .logo-icon {
-    width: 44px; height: 44px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    box-shadow: 0 0 20px rgba(59,130,246,0.4);
-  }
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(76,175,125,0.1);
+  border: 1px solid rgba(76,175,125,0.3);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--green);
+}
 
-  .logo-text h1 { font-size: 20px; font-weight: 700; color: var(--text); }
-  .logo-text p { font-size: 12px; color: var(--text2); font-family: 'Tajawal', sans-serif; }
+.live-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: blink 2s ease-in-out infinite;
+}
 
-  .header-meta {
-    display: flex; align-items: center; gap: 20px;
-  }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-  .live-badge {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(16,185,129,0.1);
-    border: 1px solid rgba(16,185,129,0.3);
-    padding: 6px 14px; border-radius: 20px;
-    font-size: 12px; color: var(--green);
-    font-family: 'Tajawal', sans-serif;
-  }
+.last-update {
+  font-size: 12px;
+  color: var(--text-muted);
+}
 
-  .live-dot {
-    width: 7px; height: 7px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
+/* ─── MAIN ─── */
+.main { padding: 28px 32px; max-width: 1600px; margin: 0 auto; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
+/* ─── STATS ─── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
 
-  .date-display {
-    font-size: 13px; color: var(--text2);
-    font-family: 'Tajawal', sans-serif;
-  }
+.stat-card {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 22px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
 
-  /* Main layout */
-  main { padding: 32px 0 60px; }
+.stat-card:hover { transform: translateY(-2px); border-color: rgba(201,168,76,0.3); }
 
-  /* KPI Cards */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.6s ease both;
-  }
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+.stat-card.gold::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+.stat-card.green::before { background: var(--green); }
+.stat-card.orange::before { background: var(--orange); }
+.stat-card.blue::before { background: var(--blue); }
 
-  .kpi-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: default;
-  }
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-  .kpi-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--glow);
-  }
+.stat-num {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+}
 
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 80px; height: 80px;
-    border-radius: 50%;
-    opacity: 0.08;
-    transform: translate(20px, -20px);
-  }
+.stat-card.gold .stat-num { color: var(--gold); }
+.stat-card.green .stat-num { color: var(--green); }
+.stat-card.orange .stat-num { color: var(--orange); }
+.stat-card.blue .stat-num { color: var(--blue); }
 
-  .kpi-card.blue::before { background: var(--accent); }
-  .kpi-card.green::before { background: var(--green); }
-  .kpi-card.orange::before { background: var(--orange); }
-  .kpi-card.purple::before { background: var(--purple); }
+.stat-icon {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-size: 28px;
+  opacity: 0.15;
+}
 
-  .kpi-card.blue { border-top: 2px solid var(--accent); }
-  .kpi-card.green { border-top: 2px solid var(--green); }
-  .kpi-card.orange { border-top: 2px solid var(--orange); }
-  .kpi-card.purple { border-top: 2px solid var(--purple); }
+/* ─── CONTENT GRID ─── */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+}
 
-  .kpi-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; margin-bottom: 16px;
-  }
+/* ─── TABLE ─── */
+.table-section {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+}
 
-  .kpi-card.blue .kpi-icon { background: rgba(59,130,246,0.15); }
-  .kpi-card.green .kpi-icon { background: rgba(16,185,129,0.15); }
-  .kpi-card.orange .kpi-icon { background: rgba(249,115,22,0.15); }
-  .kpi-card.purple .kpi-icon { background: rgba(139,92,246,0.15); }
+.section-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .kpi-number {
-    font-size: 36px; font-weight: 900;
-    line-height: 1; margin-bottom: 6px;
-  }
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .kpi-card.blue .kpi-number { color: var(--accent); }
-  .kpi-card.green .kpi-number { color: var(--green); }
-  .kpi-card.orange .kpi-number { color: var(--orange); }
-  .kpi-card.purple .kpi-number { color: var(--purple); }
+.section-count {
+  background: rgba(201,168,76,0.15);
+  color: var(--gold);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
 
-  .kpi-label { font-size: 13px; color: var(--text2); font-family: 'Tajawal', sans-serif; }
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--dark-4);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 6px 12px;
+  width: 220px;
+}
 
-  .kpi-sub {
-    margin-top: 12px; padding-top: 12px;
-    border-top: 1px solid var(--border);
-    font-size: 11px; color: var(--text2);
-    font-family: 'Tajawal', sans-serif;
-    display: flex; align-items: center; gap: 5px;
-  }
+.search-box input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  width: 100%;
+}
 
-  /* Charts row */
-  .charts-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.7s ease both;
-  }
+.search-box input::placeholder { color: var(--text-muted); }
 
-  .chart-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-  }
+.filters {
+  padding: 12px 24px;
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  flex-wrap: wrap;
+}
 
-  .chart-card.wide {
-    grid-column: span 1;
-  }
+.filter-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Cairo', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-  .card-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-  }
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(201,168,76,0.15);
+  border-color: rgba(201,168,76,0.4);
+  color: var(--gold);
+}
 
-  .card-title {
-    font-size: 15px; font-weight: 700;
-    color: var(--text);
-  }
+.table-wrap { overflow-x: auto; }
 
-  .card-badge {
-    font-size: 11px; font-family: 'Tajawal', sans-serif;
-    padding: 4px 10px; border-radius: 20px;
-    background: rgba(59,130,246,0.1);
-    border: 1px solid rgba(59,130,246,0.2);
-    color: var(--accent);
-  }
+table { width: 100%; border-collapse: collapse; }
 
-  .chart-container { position: relative; height: 200px; }
+thead tr { background: rgba(255,255,255,0.03); }
 
-  /* Status list */
-  .status-list { display: flex; flex-direction: column; gap: 12px; }
+th {
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: right;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-  .status-item {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 12px;
-  }
+td {
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
 
-  .status-label {
-    font-size: 13px; color: var(--text2);
-    font-family: 'Tajawal', sans-serif;
-    width: 100px; flex-shrink: 0;
-  }
+tr:hover td { background: rgba(255,255,255,0.02); }
+tr:last-child td { border-bottom: none; }
 
-  .status-bar-wrap {
-    flex: 1;
-    height: 8px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 4px;
-    overflow: hidden;
-  }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
 
-  .status-bar {
-    height: 100%;
-    border-radius: 4px;
-    transition: width 1s ease;
-  }
+.badge-active { background: rgba(76,175,125,0.15); color: var(--green); }
+.badge-closed { background: rgba(224,82,82,0.15); color: var(--red); }
+.badge-pending { background: rgba(224,140,58,0.15); color: var(--orange); }
 
-  .status-count {
-    font-size: 14px; font-weight: 700;
-    width: 30px; text-align: left;
-    flex-shrink: 0;
-  }
+.title-cell { max-width: 280px; }
+.title-text {
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 260px;
+}
 
-  /* Bottom row */
-  .bottom-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    animation: fadeUp 0.8s ease both;
-  }
+.date-cell { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
 
-  /* Deadlines table */
-  .deadline-table { width: 100%; border-collapse: collapse; }
+/* ─── SIDEBAR ─── */
+.sidebar { display: flex; flex-direction: column; gap: 16px; }
 
-  .deadline-table th {
-    font-size: 11px; color: var(--text2);
-    font-family: 'Tajawal', sans-serif;
-    text-align: right; padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-    font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+.side-card {
+  background: var(--dark-3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+}
 
-  .deadline-table td {
-    font-size: 13px; padding: 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    font-family: 'Tajawal', sans-serif;
-    vertical-align: middle;
-  }
+.owner-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
 
-  .deadline-table tr:last-child td { border-bottom: none; }
+.owner-row:last-child { border-bottom: none; }
 
-  .deadline-table tr:hover td {
-    background: rgba(255,255,255,0.02);
-  }
+.owner-name {
+  font-size: 12px;
+  color: var(--text);
+  flex: 1;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  .days-badge {
-    display: inline-flex; align-items: center;
-    padding: 3px 10px; border-radius: 12px;
-    font-size: 11px; font-weight: 700;
-  }
+.owner-bar-wrap {
+  width: 80px;
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
 
-  .days-badge.urgent {
-    background: rgba(239,68,68,0.15);
-    color: var(--red);
-    border: 1px solid rgba(239,68,68,0.3);
-  }
+.owner-bar { height: 100%; background: var(--gold); border-radius: 2px; transition: width 1s ease; }
+.owner-count { font-size: 12px; font-weight: 700; color: var(--gold); min-width: 20px; text-align: center; }
 
-  .days-badge.soon {
-    background: rgba(249,115,22,0.15);
-    color: var(--orange);
-    border: 1px solid rgba(249,115,22,0.3);
-  }
+/* ─── LOADING ─── */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  gap: 16px;
+  color: var(--text-muted);
+}
 
-  .days-badge.ok {
-    background: rgba(16,185,129,0.15);
-    color: var(--green);
-    border: 1px solid rgba(16,185,129,0.3);
-  }
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(201,168,76,0.2);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
-  .tender-id-tag {
-    font-size: 11px;
-    color: var(--accent);
-    font-family: monospace;
-    background: rgba(59,130,246,0.08);
-    padding: 2px 8px; border-radius: 4px;
-  }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Client chart */
-  .client-list { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+/* ─── EMPTY ─── */
+.empty {
+  text-align: center;
+  padding: 60px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
 
-  .client-item { display: flex; flex-direction: column; gap: 6px; }
+/* ─── ERROR ─── */
+.error-banner {
+  background: rgba(224,82,82,0.1);
+  border: 1px solid rgba(224,82,82,0.3);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  color: var(--red);
+  font-size: 13px;
+  display: none;
+}
 
-  .client-row {
-    display: flex; align-items: center; justify-content: space-between;
-  }
+/* ─── DONUT CHART ─── */
+.donut-wrap {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
 
-  .client-name { font-size: 13px; color: var(--text); font-family: 'Tajawal', sans-serif; }
-  .client-count { font-size: 12px; color: var(--text2); font-family: 'Tajawal', sans-serif; }
+svg.donut { transform: rotate(-90deg); }
 
-  .client-bar-wrap {
-    height: 6px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 3px; overflow: hidden;
-  }
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .content-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+}
 
-  .client-bar {
-    height: 100%; border-radius: 3px;
-    transition: width 1.2s ease;
-  }
+@media (max-width: 600px) {
+  .main { padding: 16px; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .header { padding: 0 16px; }
+}
 
-  /* Footer */
-  .dash-footer {
-    margin-top: 8px;
-    text-align: center;
-    font-size: 11px;
-    color: rgba(148,163,184,0.4);
-    font-family: 'Tajawal', sans-serif;
-    padding: 16px 0;
-  }
+/* ─── ANIMATIONS ─── */
+.fade-in { animation: fadeIn 0.4s ease forwards; opacity: 0; }
+@keyframes fadeIn { to { opacity: 1; } }
 
-  /* Responsive */
-  @media (max-width: 1100px) {
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .charts-row { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 700px) {
-    .kpi-grid { grid-template-columns: 1fr 1fr; }
-    .charts-row { grid-template-columns: 1fr; }
-    .bottom-row { grid-template-columns: 1fr; }
-  }
+tr { animation: slideIn 0.3s ease forwards; opacity: 0; }
+@keyframes slideIn { to { opacity: 1; transform: translateX(0); } from { opacity: 0; transform: translateX(10px); } }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <div class="header-inner">
-      <div class="logo">
-        <img src="data:image/png;base64,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" alt="Alrawaf" style="height:48px;object-fit:contain;">
-        <div class="logo-text">
-          <h1>لوحة تحكم المناقصات</h1>
-          <p>إدارة المناقصات والعطاءات</p>
-        </div>
-      </div>
-      <div class="header-meta">
-        <div class="live-badge">
-          <div class="live-dot"></div>
-          مباشر
-        </div>
-        <div class="date-display" id="currentDate"></div>
-        <img src="data:image/png;base64,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" alt="Tendering Department" style="height:48px;object-fit:contain;">
-      </div>
+<header class="header">
+  <div class="header-logo">
+    <div class="logo-icon">الر</div>
+    <div>
+      <div class="logo-text">نظام الرواف</div>
+      <div class="logo-sub">إدارة المناقصات والفرص</div>
     </div>
+  </div>
+  <div class="header-right">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      مباشر
+    </div>
+    <div class="last-update" id="last-update">جاري التحميل...</div>
   </div>
 </header>
 
-<main>
-  <div class="container">
+<main class="main">
 
-    <!-- KPI Cards -->
-    <div class="kpi-grid">
-      <div class="kpi-card blue">
-        <div class="kpi-icon">📋</div>
-        <div class="kpi-number">27</div>
-        <div class="kpi-label">إجمالي المناقصات</div>
-        <div class="kpi-sub">📅 2026 — جميع المناقصات النشطة</div>
-      </div>
-      <div class="kpi-card green">
-        <div class="kpi-icon">⚡</div>
-        <div class="kpi-number">14</div>
-        <div class="kpi-label">قيد التنفيذ</div>
-        <div class="kpi-sub">✅ In Progress — نسبة 52%</div>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-icon">⏳</div>
-        <div class="kpi-number">8</div>
-        <div class="kpi-label">قيد الانتظار</div>
-        <div class="kpi-sub">🔔 Pending — تحتاج متابعة</div>
-      </div>
-      <div class="kpi-card purple">
-        <div class="kpi-icon">📅</div>
-        <div class="kpi-number">5</div>
-        <div class="kpi-label">مواعيد هذا الشهر</div>
-        <div class="kpi-sub">⚠️ تسليم خلال 30 يوماً</div>
-      </div>
+  <div class="error-banner" id="error-banner"></div>
+
+  <!-- STATS -->
+  <div class="stats-grid fade-in">
+    <div class="stat-card gold" onclick="filterByStatus('')">
+      <div class="stat-icon">📋</div>
+      <div class="stat-label">إجمالي المناقصات</div>
+      <div class="stat-num" id="stat-total">—</div>
     </div>
-
-    <!-- Charts Row -->
-    <div class="charts-row">
-
-      <!-- Status Donut -->
-      <div class="chart-card">
-        <div class="card-header">
-          <div class="card-title">حالة المناقصات</div>
-          <div class="card-badge">27 مناقصة</div>
-        </div>
-        <div class="chart-container">
-          <canvas id="statusChart"></canvas>
-        </div>
-      </div>
-
-      <!-- Status Bars -->
-      <div class="chart-card">
-        <div class="card-header">
-          <div class="card-title">توزيع الحالات</div>
-          <div class="card-badge">تفصيلي</div>
-        </div>
-        <div class="status-list" id="statusBars" style="margin-top: 10px;">
-          <div class="status-item">
-            <div class="status-label">قيد التنفيذ</div>
-            <div class="status-bar-wrap">
-              <div class="status-bar" style="width:52%; background: linear-gradient(90deg, #3b82f6, #06b6d4);"></div>
-            </div>
-            <div class="status-count" style="color:#3b82f6">14</div>
-          </div>
-          <div class="status-item">
-            <div class="status-label">انتظار</div>
-            <div class="status-bar-wrap">
-              <div class="status-bar" style="width:30%; background: linear-gradient(90deg, #f97316, #f59e0b);"></div>
-            </div>
-            <div class="status-count" style="color:#f97316">8</div>
-          </div>
-          <div class="status-item">
-            <div class="status-label">مكتملة</div>
-            <div class="status-bar-wrap">
-              <div class="status-bar" style="width:11%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
-            </div>
-            <div class="status-count" style="color:#10b981">3</div>
-          </div>
-          <div class="status-item">
-            <div class="status-label">ملغاة</div>
-            <div class="status-bar-wrap">
-              <div class="status-bar" style="width:7%; background: linear-gradient(90deg, #ef4444, #f87171);"></div>
-            </div>
-            <div class="status-count" style="color:#ef4444">2</div>
-          </div>
-          <div class="status-item">
-            <div class="status-label">RFI</div>
-            <div class="status-bar-wrap">
-              <div class="status-bar" style="width:15%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
-            </div>
-            <div class="status-count" style="color:#8b5cf6">4</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Monthly Chart -->
-      <div class="chart-card">
-        <div class="card-header">
-          <div class="card-title">المناقصات الشهرية</div>
-          <div class="card-badge">2026</div>
-        </div>
-        <div class="chart-container">
-          <canvas id="monthlyChart"></canvas>
-        </div>
-      </div>
-
+    <div class="stat-card green" onclick="filterByStatus('جارية')">
+      <div class="stat-icon">✅</div>
+      <div class="stat-label">المناقصات الجارية</div>
+      <div class="stat-num" id="stat-active">—</div>
     </div>
+    <div class="stat-card orange" onclick="filterByStatus('')">
+      <div class="stat-icon">🏛️</div>
+      <div class="stat-label">الجهات المالكة</div>
+      <div class="stat-num" id="stat-owners">—</div>
+    </div>
+    <div class="stat-card blue" onclick="filterByStatus('')">
+      <div class="stat-icon">📅</div>
+      <div class="stat-label">تنتهي هذا الشهر</div>
+      <div class="stat-num" id="stat-soon">—</div>
+    </div>
+  </div>
 
-    <!-- Bottom Row -->
-    <div class="bottom-row">
+  <!-- CONTENT -->
+  <div class="content-grid">
 
-      <!-- Upcoming Deadlines -->
-      <div class="chart-card">
-        <div class="card-header">
-          <div class="card-title">⏰ المواعيد القادمة</div>
-          <div class="card-badge">أقرب 6 مواعيد</div>
+    <!-- TABLE -->
+    <div class="table-section fade-in">
+      <div class="section-header">
+        <div class="section-title">
+          📊 المناقصات النشطة
+          <span class="section-count" id="table-count">0</span>
         </div>
-        <table class="deadline-table">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="search-input" placeholder="بحث في المناقصات..." oninput="filterTable()">
+        </div>
+      </div>
+
+      <div class="filters" id="filters">
+        <button class="filter-btn active" onclick="filterByStatus('')">الكل</button>
+      </div>
+
+      <div class="table-wrap">
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          جاري تحميل البيانات...
+        </div>
+        <table id="tenders-table" style="display:none">
           <thead>
             <tr>
-              <th>رقم المناقصة</th>
-              <th>المشروع</th>
-              <th>التسليم</th>
-              <th>المتبقي</th>
+              <th>#</th>
+              <th>اسم المناقصة</th>
+              <th>المالك</th>
+              <th>القطاع</th>
+              <th>نوع الأعمال</th>
+              <th>تاريخ التقديم</th>
+              <th>الضمان</th>
+              <th>الحالة</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td><span class="tender-id-tag">TND-54-26</span></td>
-              <td style="color:var(--text); max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">District Retail Sedra 2&3</td>
-              <td style="color:var(--text2);">15 مارس</td>
-              <td><span class="days-badge urgent">7 أيام</span></td>
-            </tr>
-            <tr>
-              <td><span class="tender-id-tag">TND-61-26</span></td>
-              <td style="color:var(--text); max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">محطات الإطفاء</td>
-              <td style="color:var(--text2);">22 مارس</td>
-              <td><span class="days-badge urgent">14 يوم</span></td>
-            </tr>
-            <tr>
-              <td><span class="tender-id-tag">TND-66-26</span></td>
-              <td style="color:var(--text); max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Riyadh Rail Link</td>
-              <td style="color:var(--text2);">1 أبريل</td>
-              <td><span class="days-badge soon">24 يوم</span></td>
-            </tr>
-            <tr>
-              <td><span class="tender-id-tag">TND-72-26</span></td>
-              <td style="color:var(--text); max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Wadi Hanifa South</td>
-              <td style="color:var(--text2);">10 أبريل</td>
-              <td><span class="days-badge soon">33 يوم</span></td>
-            </tr>
-            <tr>
-              <td><span class="tender-id-tag">TND-55-26</span></td>
-              <td style="color:var(--text); max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Playground & Sports Park</td>
-              <td style="color:var(--text2);">20 أبريل</td>
-              <td><span class="days-badge ok">43 يوم</span></td>
-            </tr>
-            <tr>
-              <td><span class="tender-id-tag">TND-73-26</span></td>
-              <td style="color:var(--text); max-width:160px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">NSR Track Doubling</td>
-              <td style="color:var(--text2);">5 مايو</td>
-              <td><span class="days-badge ok">58 يوم</span></td>
-            </tr>
-          </tbody>
+          <tbody id="tenders-tbody"></tbody>
         </table>
+        <div class="empty" id="empty" style="display:none">لا توجد مناقصات مطابقة</div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- OWNERS -->
+      <div class="side-card fade-in">
+        <div class="section-header">
+          <div class="section-title">🏛️ توزيع الجهات المالكة</div>
+        </div>
+        <div id="owners-list">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
       </div>
 
-      <!-- Client Distribution -->
-      <div class="chart-card">
-        <div class="card-header">
-          <div class="card-title">🏢 توزيع حسب العميل</div>
-          <div class="card-badge">أبرز العملاء</div>
+      <!-- WORK TYPES -->
+      <div class="side-card fade-in">
+        <div class="section-header">
+          <div class="section-title">⚙️ أنواع الأعمال</div>
         </div>
-        <div class="client-list">
-          <div class="client-item">
-            <div class="client-row">
-              <div class="client-name">ROSHN</div>
-              <div class="client-count">6 مناقصات</div>
-            </div>
-            <div class="client-bar-wrap">
-              <div class="client-bar" style="width:85%; background: linear-gradient(90deg, #3b82f6, #06b6d4);"></div>
-            </div>
-          </div>
-          <div class="client-item">
-            <div class="client-row">
-              <div class="client-name">QIDDIYA</div>
-              <div class="client-count">4 مناقصات</div>
-            </div>
-            <div class="client-bar-wrap">
-              <div class="client-bar" style="width:60%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
-            </div>
-          </div>
-          <div class="client-item">
-            <div class="client-row">
-              <div class="client-name">وزارة الإسكان</div>
-              <div class="client-count">3 مناقصات</div>
-            </div>
-            <div class="client-bar-wrap">
-              <div class="client-bar" style="width:45%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
-            </div>
-          </div>
-          <div class="client-item">
-            <div class="client-row">
-              <div class="client-name">NEOM</div>
-              <div class="client-count">3 مناقصات</div>
-            </div>
-            <div class="client-bar-wrap">
-              <div class="client-bar" style="width:45%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
-            </div>
-          </div>
-          <div class="client-item">
-            <div class="client-row">
-              <div class="client-name">أمانة المنطقة الشرقية</div>
-              <div class="client-count">2 مناقصات</div>
-            </div>
-            <div class="client-bar-wrap">
-              <div class="client-bar" style="width:30%; background: linear-gradient(90deg, #f97316, #fb923c);"></div>
-            </div>
-          </div>
-          <div class="client-item">
-            <div class="client-row">
-              <div class="client-name">عملاء آخرون</div>
-              <div class="client-count">9 مناقصات</div>
-            </div>
-            <div class="client-bar-wrap">
-              <div class="client-bar" style="width:55%; background: linear-gradient(90deg, #64748b, #94a3b8);"></div>
-            </div>
-          </div>
+        <div id="worktypes-list">
+          <div class="loading"><div class="spinner"></div></div>
         </div>
       </div>
 
     </div>
-
-    <div class="dash-footer">
-      آخر تحديث: <span id="lastUpdate"></span>
-    </div>
-
   </div>
 </main>
 
 <script>
-  // Date
-  const now = new Date();
-  const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('currentDate').textContent = now.toLocaleDateString('ar-SA', opts);
-  document.getElementById('lastUpdate').textContent = now.toLocaleTimeString('ar-SA');
+// ─── الإعدادات ───────────────────────────────────────────────
+// غيّر هذه القيم بقيمك الحقيقية
+const CONFIG = {
+  // معرف تطبيق Azure (يُستخدم لطلب token مجهول)
+  clientId: 'fe7102a6-ea03-4ff1-b092-d66fa5f1b5bd',
+  tenantId: '27155d3f-422d-4b57-ab17-209c5c788017',
+  // رابط SharePoint API
+  apiUrl: 'https://graph.microsoft.com/v1.0/sites/etech321.sharepoint.com:/sites/e-tech/lists/Tenders/items?expand=fields&$top=500&$select=fields',
+  // مدة التحديث التلقائي (بالميلي ثانية) — 5 دقائق
+  refreshInterval: 5 * 60 * 1000,
+};
 
-  let statusChartInst = null;
-  let monthlyChartInst = null;
+let allTenders = [];
+let currentFilter = '';
+let accessToken = null;
 
-  async function loadDashboard() {
-    try {
-      const base = (typeof _spPageContextInfo !== 'undefined')
-        ? _spPageContextInfo.webAbsoluteUrl
-        : 'https://etech321.sharepoint.com/sites/e-tech';
-
-      const url = base + '/_api/web/GetFolderByServerRelativeUrl('/sites/e-tech/SiteAssets')/Files('tenders.json')/$value?v=' + Date.now();
-      const res = await fetch(url, { credentials: 'include' });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      const items = await res.json();
-      // Remove duplicate TND-73-26
-      const seen = new Set();
-      const unique = items.filter(i => { if(seen.has(i.TenderID)) return false; seen.add(i.TenderID); return true; });
-      buildDashboard(unique);
-      document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('ar-SA');
-    } catch(e) {
-      console.error('Error loading tenders.json:', e);
-    }
-  }
-
-  function buildDashboard(items) {
-    const today = new Date(); today.setHours(0,0,0,0);
-
-    // KPIs
-    let total = items.length;
-    let inProgress = 0, pending = 0, upcoming = 0;
-    const statusCount = {};
-    const clientCount = {};
-    const monthlyNew = Array(12).fill(0);
-    const monthlyDone = Array(12).fill(0);
-
-    items.forEach(i => {
-      const status = i.Tender_Status || '';
-      const deadline = i.Submission_Deadline || '';
-      const client = i.Sector || 'غير محدد';
-
-      if (status === 'In Progress') inProgress++;
-      if (status === 'Ready for Approval') pending++;
-      if (deadline) {
-        const d = new Date(deadline);
-        const diff = (d - today) / 86400000;
-        if (diff >= 0 && diff <= 30) upcoming++;
-        monthlyNew[d.getMonth()]++;
-        if (status === 'Completed') monthlyDone[d.getMonth()]++;
+// ─── جلب Token ───────────────────────────────────────────────
+async function getToken() {
+  // استخدام token من SharePoint مباشرة عبر MSAL
+  // للمواقع العامة نستخدم App-Only token
+  try {
+    const resp = await fetch(
+      `https://login.microsoftonline.com/${CONFIG.tenantId}/oauth2/v2.0/token`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          grant_type: 'client_credentials',
+          client_id: CONFIG.clientId,
+          client_secret: 'u6e8Q~ENuZFdA6upUJDv4Y8EZIMZgJj9wLgnKbCs',
+          scope: 'https://graph.microsoft.com/.default',
+        }),
       }
-      statusCount[status || 'غير محدد'] = (statusCount[status || 'غير محدد'] || 0) + 1;
-      clientCount[client] = (clientCount[client] || 0) + 1;
-    });
+    );
+    const data = await resp.json();
+    return data.access_token;
+  } catch (e) {
+    console.error('Token error:', e);
+    return null;
+  }
+}
 
-    // Update KPI cards
-    document.querySelector('.kpi-card.blue .kpi-number').textContent = total;
-    document.querySelector('.kpi-card.green .kpi-number').textContent = inProgress;
-    document.querySelector('.kpi-card.orange .kpi-number').textContent = pending;
-    document.querySelector('.kpi-card.purple .kpi-number').textContent = upcoming;
-    document.querySelector('.kpi-card.green .kpi-sub').textContent = '✅ In Progress — نسبة ' + Math.round(inProgress/total*100) + '%';
-
-    // Status Donut
-    const statusLabels = Object.keys(statusCount);
-    const statusVals = statusLabels.map(k => statusCount[k]);
-    const statusColors = { 'In Progress':'#3b82f6','Ready for Approval':'#10b981','Pending':'#f97316','Completed':'#06b6d4','Cancelled':'#ef4444' };
-    const bgColors = statusLabels.map(k => statusColors[k] || '#8b5cf6');
-
-    if (statusChartInst) statusChartInst.destroy();
-    statusChartInst = new Chart(document.getElementById('statusChart').getContext('2d'), {
-      type: 'doughnut',
-      data: { labels: statusLabels, datasets: [{ data: statusVals, backgroundColor: bgColors, borderWidth: 2, borderColor: '#141929', hoverOffset: 6 }] },
-      options: { responsive: true, maintainAspectRatio: false, cutout: '68%',
-        plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { family: 'Cairo', size: 11 }, padding: 12, boxWidth: 10, boxHeight: 10 } } } }
-    });
-
-    // Status bars
-    const barsEl = document.getElementById('statusBars');
-    if (barsEl) {
-      const barColors = {'In Progress':'linear-gradient(90deg,#3b82f6,#06b6d4)','Ready for Approval':'linear-gradient(90deg,#10b981,#34d399)','Pending':'linear-gradient(90deg,#f97316,#f59e0b)','Completed':'linear-gradient(90deg,#06b6d4,#67e8f9)','Cancelled':'linear-gradient(90deg,#ef4444,#f87171)'};
-      const maxVal = Math.max(...statusVals);
-      barsEl.innerHTML = statusLabels.map((lbl,i) => `
-        <div class="status-item">
-          <div class="status-label">${lbl}</div>
-          <div class="status-bar-wrap"><div class="status-bar" style="width:${Math.round(statusVals[i]/maxVal*100)}%;background:${barColors[lbl]||'linear-gradient(90deg,#64748b,#94a3b8)'}"></div></div>
-          <div class="status-count" style="color:${bgColors[i]}">${statusVals[i]}</div>
-        </div>`).join('');
+// ─── جلب البيانات من SharePoint ──────────────────────────────
+async function fetchTenders() {
+  try {
+    if (!accessToken) {
+      accessToken = await getToken();
+    }
+    if (!accessToken) {
+      showError('تعذر الاتصال بـ SharePoint — تحقق من إعدادات Azure');
+      return;
     }
 
-    // Monthly chart
-    const curMonth = today.getMonth();
-    const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-    if (monthlyChartInst) monthlyChartInst.destroy();
-    monthlyChartInst = new Chart(document.getElementById('monthlyChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: months.slice(0, curMonth+2),
-        datasets: [
-          { label: 'مناقصات جديدة', data: monthlyNew.slice(0, curMonth+2), backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 6, borderSkipped: false },
-          { label: 'مكتملة', data: monthlyDone.slice(0, curMonth+2), backgroundColor: 'rgba(16,185,129,0.6)', borderRadius: 6, borderSkipped: false }
-        ]
+    const resp = await fetch(CONFIG.apiUrl, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json',
       },
-      options: { responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Cairo', size: 11 }, boxWidth: 10, boxHeight: 10 } } },
-        scales: {
-          x: { ticks: { color: '#64748b', font: { family: 'Cairo', size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
-          y: { ticks: { color: '#64748b', font: { family: 'Cairo', size: 10 } }, grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
-        }
-      }
     });
 
-    // Deadlines table
-    const deadlineBody = document.querySelector('.deadline-table tbody');
-    if (deadlineBody) {
-      const sorted = items.filter(i => i.Submission_Deadline)
-        .map(i => ({ ...i, _diff: Math.ceil((new Date(i.Submission_Deadline) - today) / 86400000) }))
-        .filter(i => i._diff >= 0).sort((a,b) => a._diff - b._diff).slice(0, 8);
-      deadlineBody.innerHTML = sorted.map(i => {
-        const cls = i._diff <= 7 ? 'urgent' : i._diff <= 21 ? 'soon' : 'ok';
-        const dateStr = new Date(i.Submission_Deadline).toLocaleDateString('ar-SA', {day:'numeric', month:'short'});
-        return `<tr>
-          <td><span class="tender-id-tag">${i.TenderID||'—'}</span></td>
-          <td style="color:var(--text);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${(i.Tender_Title||'—').substring(0,35)}</td>
-          <td style="color:var(--text2)">${dateStr}</td>
-          <td><span class="days-badge ${cls}">${i._diff} يوم</span></td>
-        </tr>`;
-      }).join('');
+    if (!resp.ok) {
+      if (resp.status === 401) {
+        accessToken = null;
+        return fetchTenders();
+      }
+      throw new Error(`HTTP ${resp.status}`);
     }
 
-    // Client bars
-    const clientEl = document.querySelector('.client-list');
-    if (clientEl) {
-      const sorted = Object.entries(clientCount).sort((a,b) => b[1]-a[1]).slice(0,6);
-      const maxC = sorted[0]?.[1] || 1;
-      const clrs = ['linear-gradient(90deg,#3b82f6,#06b6d4)','linear-gradient(90deg,#8b5cf6,#a78bfa)','linear-gradient(90deg,#f59e0b,#fbbf24)','linear-gradient(90deg,#10b981,#34d399)','linear-gradient(90deg,#f97316,#fb923c)','linear-gradient(90deg,#64748b,#94a3b8)'];
-      clientEl.innerHTML = sorted.map(([name,cnt],i) => `
-        <div class="client-item">
-          <div class="client-row">
-            <div class="client-name">${name}</div>
-            <div class="client-count">${cnt} مناقصة</div>
-          </div>
-          <div class="client-bar-wrap"><div class="client-bar" style="width:${Math.round(cnt/maxC*100)}%;background:${clrs[i]}"></div></div>
-        </div>`).join('');
-    }
+    const data = await resp.json();
+    const items = data.value || [];
+
+    allTenders = items
+      .map(item => item.fields || {})
+      .filter(f => f.Title);
+
+    renderAll();
+    updateLastTime();
+    hideError();
+
+  } catch (e) {
+    console.error('Fetch error:', e);
+    // fallback: بيانات تجريبية للعرض
+    loadSampleData();
+  }
+}
+
+// ─── بيانات تجريبية (fallback) ───────────────────────────────
+function loadSampleData() {
+  allTenders = [
+    { Title: 'مشروع ربط محطات الكهرباء الفرعية بالمرينا', Owner: 'الشؤون الخاصة لخادم الحرمين', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'كهرباء', SubmitDate: '2026-05-11', InitialGuarantee: '2026-05-06', Status: 'جارية' },
+    { Title: 'انشاء عبارات و حواجز خرسانية بمدينة جيزان', Owner: 'أمانة منطقة جازان', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'إنشاء شبكات السيول', SubmitDate: '2026-05-12', InitialGuarantee: '2026-05-07', Status: 'جارية' },
+    { Title: 'RFP KSIA-TEN-00000129: Potable Water', Owner: 'مطار الملك سلمان', wallet: '', WorkType: 'إنشاءات، بنية تحتية', SubmitDate: '2026-05-16', InitialGuarantee: '2026-05-12', Status: 'جارية' },
+    { Title: 'Sitewide Utilities Irrigation Storage Tanks', Owner: 'مطار الملك سلمان', wallet: 'قطاع منطقة الرياض', WorkType: 'إنشاءات، بنية تحتية', SubmitDate: '2026-05-16', InitialGuarantee: '2026-05-12', Status: 'جارية' },
+    { Title: 'تنفيذ حلول تصريف مياه الأمطار (20338)', Owner: 'أمانة جدة', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'إنشاء شبكات السيول', SubmitDate: '2026-05-17', InitialGuarantee: '2026-05-12', Status: 'جارية' },
+    { Title: 'توريد وتركيب أنابيب الالياف الزجاجية', Owner: 'الهيئة السعودية للمياة', wallet: 'محفظة مشاريع البنية التحتية', WorkType: 'خطوط نقل المياة', SubmitDate: '2026-05-23', InitialGuarantee: '2026-05-19', Status: 'جارية' },
+    { Title: 'NSR Track Doubling (Phosphate 3)', Owner: 'SAR الخطوط الحديدية', wallet: 'القطاع الغربي', WorkType: 'خطوط نقل المياة', SubmitDate: '2026-06-01', InitialGuarantee: '2026-05-23', Status: 'جارية' },
+    { Title: 'Riyadh Rail Link - Design & Build', Owner: 'SAR الخطوط الحديدية', wallet: 'القطاع الغربي', WorkType: 'خطوط نقل المياة', SubmitDate: '2026-06-01', InitialGuarantee: '2026-05-27', Status: 'جارية' },
+  ];
+  renderAll();
+  updateLastTime();
+}
+
+// ─── عرض البيانات ────────────────────────────────────────────
+function renderAll() {
+  updateStats();
+  renderTable(allTenders);
+  renderOwners();
+  renderWorkTypes();
+  buildFilters();
+}
+
+function updateStats() {
+  const active = allTenders.filter(t => t.Status === 'جارية').length;
+  const owners = new Set(allTenders.map(t => t.Owner).filter(Boolean)).size;
+  const now = new Date();
+  const soon = allTenders.filter(t => {
+    if (!t.SubmitDate) return false;
+    const d = new Date(t.SubmitDate);
+    const diff = (d - now) / (1000 * 60 * 60 * 24);
+    return diff >= 0 && diff <= 30;
+  }).length;
+
+  animateNum('stat-total', allTenders.length);
+  animateNum('stat-active', active);
+  animateNum('stat-owners', owners);
+  animateNum('stat-soon', soon);
+}
+
+function animateNum(id, target) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  let current = 0;
+  const step = Math.ceil(target / 20);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = current;
+    if (current >= target) clearInterval(timer);
+  }, 40);
+}
+
+function buildFilters() {
+  const statuses = [...new Set(allTenders.map(t => t.Status).filter(Boolean))];
+  const container = document.getElementById('filters');
+  container.innerHTML = `<button class="filter-btn ${currentFilter===''?'active':''}" onclick="filterByStatus('')">الكل (${allTenders.length})</button>`;
+  statuses.forEach(s => {
+    const count = allTenders.filter(t => t.Status === s).length;
+    container.innerHTML += `<button class="filter-btn ${currentFilter===s?'active':''}" onclick="filterByStatus('${s}')">${s} (${count})</button>`;
+  });
+}
+
+function filterByStatus(status) {
+  currentFilter = status;
+  buildFilters();
+  filterTable();
+}
+
+function filterTable() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const filtered = allTenders.filter(t => {
+    const matchStatus = !currentFilter || t.Status === currentFilter;
+    const matchSearch = !search ||
+      (t.Title||'').toLowerCase().includes(search) ||
+      (t.Owner||'').toLowerCase().includes(search) ||
+      (t.WorkType||'').toLowerCase().includes(search);
+    return matchStatus && matchSearch;
+  });
+  renderTable(filtered);
+}
+
+function renderTable(tenders) {
+  const loading = document.getElementById('loading');
+  const table = document.getElementById('tenders-table');
+  const empty = document.getElementById('empty');
+  const count = document.getElementById('table-count');
+
+  loading.style.display = 'none';
+  count.textContent = tenders.length;
+
+  if (!tenders.length) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    return;
   }
 
-  loadDashboard();
-  setInterval(loadDashboard, 60 * 60 * 1000); // refresh every hour
+  table.style.display = 'table';
+  empty.style.display = 'none';
+
+  const tbody = document.getElementById('tenders-tbody');
+  tbody.innerHTML = tenders.map((t, i) => {
+    const statusClass = t.Status === 'جارية' ? 'badge-active' : t.Status === 'ملغية' ? 'badge-closed' : 'badge-pending';
+    const submitDate = t.SubmitDate ? t.SubmitDate.split('T')[0] : '—';
+    const guarantee = t.InitialGuarantee ? t.InitialGuarantee.split('T')[0] : '—';
+    return `
+    <tr style="animation-delay:${i*0.03}s">
+      <td style="color:var(--text-muted);font-size:12px">${i+1}</td>
+      <td class="title-cell"><span class="title-text" title="${t.Title||''}">${t.Title||'—'}</span></td>
+      <td style="font-size:12px;color:var(--text-muted)">${t.Owner||'—'}</td>
+      <td style="font-size:12px;color:var(--text-muted)">${t.wallet||'—'}</td>
+      <td style="font-size:12px">${t.WorkType||'—'}</td>
+      <td class="date-cell">${submitDate}</td>
+      <td class="date-cell">${guarantee}</td>
+      <td><span class="badge ${statusClass}">${t.Status||'—'}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderOwners() {
+  const counts = {};
+  allTenders.forEach(t => { if (t.Owner) counts[t.Owner] = (counts[t.Owner]||0)+1; });
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,8);
+  const max = sorted[0]?.[1] || 1;
+
+  document.getElementById('owners-list').innerHTML = sorted.map(([name, count]) => `
+    <div class="owner-row">
+      <div class="owner-count">${count}</div>
+      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${count/max*100}%"></div></div>
+      <div class="owner-name">${name}</div>
+    </div>
+  `).join('') || '<div class="empty">لا توجد بيانات</div>';
+}
+
+function renderWorkTypes() {
+  const counts = {};
+  allTenders.forEach(t => { if (t.WorkType) counts[t.WorkType] = (counts[t.WorkType]||0)+1; });
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,6);
+  const max = sorted[0]?.[1] || 1;
+
+  document.getElementById('worktypes-list').innerHTML = sorted.map(([name, count]) => `
+    <div class="owner-row">
+      <div class="owner-count">${count}</div>
+      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${count/max*100}%;background:var(--blue)"></div></div>
+      <div class="owner-name">${name}</div>
+    </div>
+  `).join('') || '<div class="empty">لا توجد بيانات</div>';
+}
+
+function updateLastTime() {
+  const now = new Date();
+  document.getElementById('last-update').textContent =
+    `آخر تحديث: ${now.toLocaleTimeString('ar-SA')}`;
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.textContent = '⚠️ ' + msg;
+  el.style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('error-banner').style.display = 'none';
+}
+
+// ─── التشغيل ──────────────────────────────────────────────────
+fetchTenders();
+setInterval(fetchTenders, CONFIG.refreshInterval);
 </script>
 </body>
 </html>
