@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام الرواف — المناقصات</title>
+<title>شركة الرواف — المناقصات</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -33,7 +33,7 @@ body {
 .header {
   background: linear-gradient(105deg, #1a1f3c 0%, #2d3561 45%, #4a4a4a 80%, #6b6b6b 100%);
   border-bottom: 2px solid var(--gold-light);
-  padding:0 24px; height:90px; display:flex; align-items:center;
+  padding:0 40px; height:90px; display:flex; align-items:center;
   justify-content:space-between; position:sticky; top:0; z-index:100; width:100%; left:0; right:0;
   box-shadow: 0 3px 16px rgba(30,42,94,0.25);
 }
@@ -413,6 +413,114 @@ tr:last-child td { border-bottom:none; }
 .cl-owner-item:hover { background:#eef2ff; }
 
 
+
+/* ===== DARK/LIGHT MODE ===== */
+body.light-mode {
+  --bg: #f0f4ff; --bg-card: #ffffff; --border: #d4daf5;
+  --text: #1a2332; --text-muted: #6b7a99;
+}
+body.dark-mode {
+  --bg: #0f1221; --bg-card: #1a1f3c; --border: #2d3561;
+  --text: #e8edf5; --text-muted: #8a9ab8;
+  background: linear-gradient(160deg, #0f1221 0%, #1a1f3c 40%, #1a150a 100%) !important;
+}
+body.dark-mode .table-section,
+body.dark-mode .side-card,
+body.dark-mode .chart-card-light,
+body.dark-mode .countdown-banner { filter: brightness(0.95); }
+body.dark-mode table thead tr { background:#1e2545 !important; }
+body.dark-mode td { color:var(--text); border-bottom-color:#2d3561; }
+body.dark-mode tr:hover td { background:#1e2545; }
+
+.mode-btn {
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);
+  color:#fff; font-size:16px; cursor:pointer; display:flex;
+  align-items:center; justify-content:center; transition:all 0.2s;
+  flex-shrink:0;
+}
+.mode-btn:hover { background:rgba(255,255,255,0.22); transform:scale(1.1); }
+
+/* ===== BACKGROUND PATTERN ===== */
+body::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image: radial-gradient(circle at 20% 50%, rgba(59,79,184,0.04) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(212,160,23,0.04) 0%, transparent 40%),
+                    radial-gradient(circle at 60% 80%, rgba(59,79,184,0.03) 0%, transparent 40%);
+}
+.main, .tabs-nav, header { position:relative; z-index:1; }
+
+/* ===== DAILY ALERT BANNER ===== */
+.alert-banner {
+  display:none; margin:0 40px 16px;
+  background:linear-gradient(135deg,#fef2f2,#fff5f5);
+  border:1.5px solid #fca5a5; border-radius:14px;
+  padding:14px 20px; animation:fadeIn 0.4s ease;
+  display:flex; align-items:center; gap:14px;
+}
+.alert-banner.hidden { display:none !important; }
+.alert-icon { font-size:24px; flex-shrink:0; }
+.alert-text { flex:1; }
+.alert-title { font-size:14px; font-weight:800; color:#dc2626; }
+.alert-sub { font-size:12px; color:#991b1b; margin-top:2px; }
+.alert-close { background:none; border:none; font-size:18px; color:#dc2626; cursor:pointer; flex-shrink:0; padding:4px; }
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .header, .tabs-nav, .filters, .search-box, .sidebar,
+  .export-wrap, .mode-btn, .alert-banner, .countdown-banner,
+  .stats-grid, .section-header .search-box { display:none !important; }
+  .content-grid { grid-template-columns:1fr !important; }
+  .table-section { border:none !important; box-shadow:none !important; }
+  body::before { display:none; }
+  .main { padding:0 !important; }
+}
+
+/* ===== TIMELINE CHART ===== */
+.timeline-wrap { padding:20px; }
+
+/* ===== COMPARISON TOOL ===== */
+.compare-wrap { padding:20px; display:flex; flex-direction:column; gap:16px; }
+.compare-selects { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.compare-select {
+  flex:1; min-width:200px; padding:10px 16px; border-radius:12px;
+  border:1.5px solid var(--border); background:var(--bg-card);
+  font-family:'Cairo',sans-serif; font-size:13px; font-weight:600; color:var(--text);
+  outline:none; cursor:pointer;
+}
+.compare-select:focus { border-color:var(--blue-light); }
+.compare-btn {
+  padding:10px 24px; background:linear-gradient(135deg,var(--blue-mid),var(--blue-deep));
+  border:none; border-radius:12px; color:#fff; font-family:'Cairo',sans-serif;
+  font-size:13px; font-weight:800; cursor:pointer; transition:all 0.2s;
+}
+.compare-btn:hover { transform:translateY(-2px); box-shadow:var(--shadow-md); }
+.compare-result { display:none; }
+.compare-result.show { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.compare-card {
+  background:var(--bg-card); border-radius:16px; border:1.5px solid var(--border);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.compare-card-head {
+  padding:16px 20px; font-size:14px; font-weight:800; color:#fff;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.compare-card-body { padding:16px 20px; }
+.compare-stat { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); }
+.compare-stat:last-child { border-bottom:none; }
+.compare-stat-label { font-size:12px; color:var(--text-muted); font-weight:600; }
+.compare-stat-val { font-size:16px; font-weight:900; }
+
+/* ===== PRINT BTN ===== */
+.print-btn {
+  display:flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);
+  border-radius:20px; padding:6px 14px; color:#fff;
+  font-family:'Cairo',sans-serif; font-size:12px; font-weight:700;
+  cursor:pointer; transition:all 0.2s;
+}
+.print-btn:hover { background:rgba(255,255,255,0.22); }
+
 @media(max-width:1100px){.content-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
@@ -452,6 +560,8 @@ tr:last-child td { border-bottom:none; }
         <div class="export-item" onclick="exportReport('full')" style="background:linear-gradient(90deg,#fffbf0,#fff);"><span class="ei-icon">🏆</span><span class="ei-label" style="font-weight:800;color:#b8860b">التقرير التنفيذي الكامل</span><span class="ei-tag" style="background:#fffbeb;color:#b8860b;">احترافي</span></div>
       </div>
     </div>
+    <button class="print-btn" onclick="window.print()" title="طباعة">🖨️ طباعة</button>
+    <button class="mode-btn" onclick="toggleMode()" id="mode-btn" title="تبديل الوضع">🌙</button>
     <div class="last-update" id="last-update" style="font-size:11px;color:rgba(255,255,255,0.6);">جاري التحميل...</div>
     <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgNjgwIDI2MCIgcm9sZT0iaW1nIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iIzFhMWYzYyIgcng9IjE4Ii8+CjxyZWN0IHg9IjQwIiB5PSIzMCIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZDRhMDE3IiByeD0iMiIvPgo8cmVjdCB4PSI0MjAiIHk9Ijc1IiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjIyIiBmaWxsPSIjZDRhMDE3IiByeD0iNCIvPgo8cmVjdCB4PSI0NzMiIHk9Ijc1IiB3aWR0aD0iMjIiIGhlaWdodD0iMTAwIiBmaWxsPSIjZDRhMDE3IiByeD0iNCIvPgo8cGF0aCBkPSJNNTEwIDc1IFE2MDAgNzUgNjAwIDEyMCBRNjAwIDE2NSA1MTAgMTY1IiBmaWxsPSJub25lIiBzdHJva2U9IiM4YThhOGEiIHN0cm9rZS13aWR0aD0iMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTEwIDk3IFE1NzggOTcgNTc4IDEyMCBRNTc4IDE0MyA1MTAgMTQzIiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGEwMTciIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cmVjdCB4PSI0OTUiIHk9IjEwOSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjOGE4YThhIiByeD0iNSIvPgo8dGV4dCB4PSI1NSIgeT0iMTI4IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNkNGEwMTciIGxldHRlci1zcGFjaW5nPSI2Ij5URU5ERVJJTkc8L3RleHQ+Cjx0ZXh0IHg9IjYyIiB5PSIxNjgiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIyOCIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjYTBhOGMwIiBsZXR0ZXItc3BhY2luZz0iMiI+RGVwYXJ0bWVudDwvdGV4dD4KPHJlY3QgeD0iNTUiIHk9IjE4MiIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIyLjUiIGZpbGw9IiNkNGEwMTciIHJ4PSIxIi8+CjxyZWN0IHg9IjU1IiB5PSIxODgiIHdpZHRoPSIyMDAiIGhlaWdodD0iMSIgZmlsbD0iI2Q0YTAxNyIgb3BhY2l0eT0iMC4zNSIgcng9IjEiLz4KPHJlY3QgeD0iNDAiIHk9IjIyNyIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZDRhMDE3IiByeD0iMiIgb3BhY2l0eT0iMC40Ii8+Cjwvc3ZnPg==" alt="Tendering Department" style="height:64px;width:auto;object-fit:contain;border-radius:8px;" />
   </div>
@@ -464,6 +574,14 @@ tr:last-child td { border-bottom:none; }
 </nav>
 
 <div id="tab-tenders" class="tab-panel active">
+<div class="alert-banner hidden" id="daily-alert">
+  <div class="alert-icon">🚨</div>
+  <div class="alert-text">
+    <div class="alert-title" id="alert-title">تنبيه يومي</div>
+    <div class="alert-sub" id="alert-sub"></div>
+  </div>
+  <button class="alert-close" onclick="document.getElementById('daily-alert').classList.add('hidden')">✕</button>
+</div>
 <main class="main">
   <div class="stats-grid fade-in">
     <div class="stat-card c-blue" onclick="filterBy('active')">
@@ -545,14 +663,15 @@ tr:last-child td { border-bottom:none; }
         <table id="tenders-table" style="display:none">
           <colgroup>
             <col style="width:40px">
-            <col style="width:35%">
-            <col style="width:15%">
-            <col style="width:12%">
-            <col style="width:11%">
+            <col style="width:33%">
+            <col style="width:14%">
             <col style="width:11%">
             <col style="width:10%">
+            <col style="width:10%">
+            <col style="width:9%">
+            <col style="width:48px">
           </colgroup>
-          <thead><tr><th>#</th><th>اسم المناقصة</th><th>المالك</th><th>نوع الأعمال</th><th>تاريخ التقديم</th><th>الضمان</th><th>الأولوية</th></tr></thead>
+          <thead><tr><th>#</th><th>اسم المناقصة</th><th>المالك</th><th>نوع الأعمال</th><th>تاريخ التقديم</th><th>الضمان</th><th>الأولوية</th><th>📁</th></tr></thead>
           <tbody id="tenders-tbody"></tbody>
         </table>
       </div>
@@ -653,6 +772,31 @@ tr:last-child td { border-bottom:none; }
     <div class="chart-card-title">⚙️ أنواع الأعمال — المناقصات الجارية</div>
     <canvas id="an-works-chart" height="80"></canvas>
   </div>
+  <div class="chart-card-light full">
+    <div class="chart-card-title">📅 الخط الزمني — توزيع المناقصات على الأشهر</div>
+    <canvas id="an-timeline-chart" height="80"></canvas>
+  </div>
+  <div class="chart-card-light full">
+    <div class="chart-card-title">⚖️ مقارنة الجهات المالكة</div>
+    <div class="compare-wrap">
+      <div class="compare-selects">
+        <select class="compare-select" id="compare-a"><option value="">اختر الجهة الأولى</option></select>
+        <span style="font-size:20px;color:var(--text-muted)">VS</span>
+        <select class="compare-select" id="compare-b"><option value="">اختر الجهة الثانية</option></select>
+        <button class="compare-btn" onclick="runComparison()">مقارنة ↗</button>
+      </div>
+      <div class="compare-result" id="compare-result">
+        <div class="compare-card" id="compare-card-a">
+          <div class="compare-card-head" id="compare-head-a"></div>
+          <div class="compare-card-body" id="compare-body-a"></div>
+        </div>
+        <div class="compare-card" id="compare-card-b">
+          <div class="compare-card-head" id="compare-head-b"></div>
+          <div class="compare-card-body" id="compare-body-b"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -670,6 +814,7 @@ tr:last-child td { border-bottom:none; }
 
 <script>
 const DATA_URL = 'https://raw.githubusercontent.com/edwardehab0-design/tender-dashboard/main/data.json';
+const SP_FOLDER_BASE = 'https://etech321.sharepoint.com/sites/e-tech/DocLib/Forms/AllItems.aspx?id=%2Fsites%2Fe-tech%2FDocLib%2F%D8%A7%D9%84%D9%85%D9%86%D8%A7%D9%82%D8%B5%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AD%D8%A7%D9%84%D9%8A%D8%A9%2F&viewid=d132358c-1ee3-4339-b889-07bb3849e592';
 let allTenders = [], currentFilter = 'all';
 
 function getUrgency(submitDate) {
@@ -691,6 +836,8 @@ function isGuaranteeToday(guarantee) {
   return d.getTime() === n.getTime();
 }
 
+let allSubmitted = [];
+
 async function fetchTenders() {
   try {
     const r = await fetch(DATA_URL + '?t=' + Date.now());
@@ -705,12 +852,66 @@ async function fetchTenders() {
       guarantee:  t['تاريخ الضمان الابتدائي']||'',
       status:     t['الحالة']||'جارية',
     })).filter(t=>t.title);
+
+    // Load submitted tenders
+    allSubmitted = (data.submitted||[]).map(t=>({
+      name:       t['اسم المناقصة']||'',
+      owner:      t['المالك']||'',
+      sector:     t['القطاع']||'',
+      type:       t['نوع الأعمال']||'',
+      date:       t['تاريخ التقديم']||'',
+      guarantee:  t['تاريخ الضمان الابتدائي']||'',
+      status:     'تم التقديم',
+    })).filter(t=>t.name);
+
+    // Rebuild OWNERS_DATA from live data
+    rebuildOwnersData();
+
     renderAll();
+    // Reset clients/analytics so they re-render with fresh data
+    clientsRendered = false;
+    analyticsRendered = false;
+
     document.getElementById('last-update').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA');
   } catch(e) {
     document.getElementById('last-update').textContent = 'تعذر التحديث';
     document.getElementById('loading').style.display = 'none';
   }
+}
+
+function rebuildOwnersData() {
+  // Combine in-progress tenders + submitted tenders for 2026
+  const combined = [
+    ...allTenders.map(t=>({ name:t.title, owner:t.owner, type:t.workType, sector:t.sector, date:t.submitDate, status:'جارية' })),
+    ...allSubmitted
+  ];
+  // Clear and rebuild OWNERS_DATA
+  Object.keys(OWNERS_DATA).forEach(k=>delete OWNERS_DATA[k]);
+  combined.forEach(t=>{
+    if(!t.owner) return;
+    const o = t.owner.trim();
+    if(!OWNERS_DATA[o]) OWNERS_DATA[o]=[];
+    OWNERS_DATA[o].push(t);
+  });
+
+  // Rebuild clientOwners list
+  const sorted = Object.entries(OWNERS_DATA).sort((a,b)=>b[1].length-a[1].length).slice(0,10);
+  clientOwners.length = 0;
+  sorted.forEach(([name,ts])=>clientOwners.push({name, count:ts.length}));
+
+  // Update KPI cards
+  const totalEl = document.querySelector('.client-kpi.ck1 .client-kpi-num');
+  const clientsEl = document.querySelector('.client-kpi.ck2 .client-kpi-num');
+  const jariyaEl = document.querySelector('.client-kpi.ck3 .client-kpi-num');
+  const subEl = document.querySelector('.client-kpi.ck4 .client-kpi-num');
+  const total = combined.length;
+  const jariya = allTenders.length;
+  const sub = allSubmitted.length;
+  const clients = Object.keys(OWNERS_DATA).length;
+  animateNum(totalEl, total);
+  animateNum(clientsEl, clients);
+  animateNum(jariyaEl, jariya);
+  animateNum(subEl, sub);
 }
 
 function renderStats() {
@@ -763,13 +964,15 @@ function renderTable(tenders) {
   document.getElementById('tenders-tbody').innerHTML = tenders.map((t,i) => {
     const u = getUrgency(t.submitDate);
     const gToday = isGuaranteeToday(t.guarantee);
+    const spLink = SP_FOLDER_BASE + encodeURIComponent(t.title);
     return `<tr><td style="color:var(--text-muted);font-size:12px;font-weight:600">${i+1}</td>
     <td><span class="title-text" title="${t.title}">${t.title}</span><span class="owner-text">${t.workType}</span></td>
     <td><span class="owner-text" style="max-width:140px">${t.owner}</span></td>
     <td style="font-size:12px">${t.workType||'—'}</td>
     <td class="date-text">${t.submitDate?t.submitDate.split('T')[0]:'—'}</td>
     <td class="date-text" style="${gToday?'color:var(--teal);font-weight:800;':''}">${t.guarantee?t.guarantee.split('T')[0]:'—'}${gToday?' 🔐':''}</td>
-    <td><span class="urgency-badge ${u.cls}">${u.label}</span></td></tr>`;
+    <td><span class="urgency-badge ${u.cls}">${u.label}</span></td>
+    <td style="text-align:center;"><a href="${spLink}" target="_blank" title="فتح فولدر المناقصة في SharePoint" style="text-decoration:none;font-size:18px;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">📁</a></td></tr>`;
   }).join('');
 }
 
@@ -789,11 +992,30 @@ function renderOwners(data) {
 function renderSide(id, data, color) {
   const max = data[0]?.[1]||1;
   document.getElementById(id).innerHTML = data.map(([n,c])=>`
-    <div class="owner-row">
+    <div class="owner-row" onclick="openWorkTypeModal('${n.replace(/'/g,"\'")}')">
       <div class="owner-count" style="color:${color}">${c}</div>
       <div class="owner-bar-wrap"><div class="owner-bar" style="width:${c/max*100}%;background:${color}"></div></div>
       <div class="owner-name">${n}</div>
+      <span style="font-size:11px;color:var(--blue-light)">↗</span>
     </div>`).join('') || '<div class="empty">لا توجد بيانات</div>';
+}
+
+function openWorkTypeModal(workType) {
+  const tenders = allTenders.filter(t => t.workType === workType);
+  document.getElementById('owner-modal-title').textContent = '⚙️ ' + workType;
+  document.getElementById('owner-modal-count').textContent = `عدد المناقصات: ${tenders.length}`;
+  document.getElementById('owner-modal-body').innerHTML = tenders.length
+    ? tenders.map(t => {
+        const u = getUrgency(t.submitDate);
+        return `<div class="modal-tender-row">
+          <div style="font-size:18px">${u.cls==='u-today'?'🔥':u.cls==='u-3days'?'⏰':u.cls==='u-week'?'📅':u.cls==='u-urgent'?'🚨':'📋'}</div>
+          <div class="modal-tender-title">${t.title}</div>
+          <span class="urgency-badge ${u.cls}" style="font-size:10px">${u.label}</span>
+          <div class="modal-tender-date">${t.submitDate?t.submitDate.split('T')[0]:'—'}</div>
+        </div>`;
+      }).join('')
+    : '<div class="empty">لا توجد مناقصات</div>';
+  document.getElementById('owner-modal-overlay').classList.add('open');
 }
 
 function openOwnerModal(ownerName) {
@@ -820,11 +1042,11 @@ function closeOwnerModal(e) {
 }
 
 function renderAll() {
-  renderStats(); applyFilters(); startCountdown();
+  renderStats(); applyFilters(); startCountdown(); showDailyAlert(); populateCompareSelects();
   const oc={}, wc={};
   allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1; if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
-  renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8));
-  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,6), '#3b4fb8');
+  renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]));
+  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]), '#3b4fb8');
 }
 
 
@@ -980,6 +1202,7 @@ function renderClients() {
 function renderAnalytics() {
   if(analyticsRendered) return;
   analyticsRendered=true;
+  setTimeout(renderTimeline, 200);
 
   // Owners from live data
   const oc={};
@@ -1388,6 +1611,208 @@ async function exportClientFullPro(todayStr) {
   a.href=url; a.download='التقرير_التنفيذي_العملاء_2026_'+todayStr+'.xlsx';
   a.click(); URL.revokeObjectURL(url);
   showToast('🏆 تم تصدير التقرير التنفيذي الكامل!');
+}
+
+
+// ═══════════════════════════════════════════════════════
+// DARK/LIGHT MODE
+// ═══════════════════════════════════════════════════════
+function toggleMode() {
+  const body = document.body;
+  const btn = document.getElementById('mode-btn');
+  if(body.classList.contains('dark-mode')) {
+    body.classList.remove('dark-mode');
+    body.classList.add('light-mode');
+    btn.textContent = '🌙';
+    localStorage.setItem('theme','light');
+  } else {
+    body.classList.remove('light-mode');
+    body.classList.add('dark-mode');
+    btn.textContent = '☀️';
+    localStorage.setItem('theme','dark');
+  }
+}
+// Apply saved theme
+(function() {
+  const saved = localStorage.getItem('theme');
+  if(saved === 'dark') {
+    document.body.classList.add('dark-mode');
+    setTimeout(()=>{ const b=document.getElementById('mode-btn'); if(b) b.textContent='☀️'; },100);
+  }
+})();
+
+// ═══════════════════════════════════════════════════════
+// DAILY ALERT
+// ═══════════════════════════════════════════════════════
+function showDailyAlert() {
+  const today = allTenders.filter(t => getUrgency(t.submitDate).level === 'today');
+  const urgent3 = allTenders.filter(t => getUrgency(t.submitDate).level === '3days');
+  const gToday = allTenders.filter(t => isGuaranteeToday(t.guarantee));
+  const banner = document.getElementById('daily-alert');
+  if(!banner) return;
+  if(today.length > 0 || urgent3.length > 0 || gToday.length > 0) {
+    let msg = [];
+    if(today.length)  msg.push(`${today.length} مناقصة تنتهي اليوم`);
+    if(urgent3.length) msg.push(`${urgent3.length} تنتهي خلال 3 أيام`);
+    if(gToday.length)  msg.push(`${gToday.length} ضمان مستحق اليوم`);
+    document.getElementById('alert-title').textContent = '⚠️ تنبيه يومي — يحتاج متابعة فورية';
+    document.getElementById('alert-sub').textContent = msg.join('  |  ');
+    banner.classList.remove('hidden');
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SIDEBAR FILTER ON CLICK
+// ═══════════════════════════════════════════════════════
+function renderOwners(data) {
+  const max = data[0]?.[1]||1;
+  document.getElementById('owners-list').innerHTML = data.map(([n,c],i)=>`
+    <div class="owner-row" onclick="openOwnerModal('${n.replace(/'/g,"\'")}')">
+      <div class="owner-count" style="color:${ownerColors[i%ownerColors.length]}">${c}</div>
+      <div class="owner-bar-wrap"><div class="owner-bar" style="width:${c/max*100}%;background:${ownerColors[i%ownerColors.length]}"></div></div>
+      <div class="owner-name">${n}</div>
+      <span style="font-size:11px;color:var(--blue-light)">↗</span>
+    </div>`).join('') || '<div class="empty">لا توجد بيانات</div>';
+}
+
+let ownerFilter = null;
+function filterByOwner(ownerName) {
+  if(ownerFilter === ownerName) {
+    ownerFilter = null;
+    currentFilter = 'all';
+    document.querySelectorAll('.owner-row').forEach(r=>r.classList.remove('active-owner'));
+    filterBy('all');
+  } else {
+    ownerFilter = ownerName;
+    document.querySelectorAll('.owner-row').forEach(r=>r.classList.remove('active-owner'));
+    event.currentTarget.classList.add('active-owner');
+    // Filter table by owner
+    currentFilter = 'all';
+    const search = document.getElementById('search-input').value.toLowerCase();
+    const filtered = allTenders.filter(t =>
+      t.owner === ownerName &&
+      (!search || t.title.toLowerCase().includes(search) || t.workType.toLowerCase().includes(search))
+    ).sort((a,b) => getUrgency(a.submitDate).diff - getUrgency(b.submitDate).diff);
+    renderTable(filtered);
+    document.getElementById('table-count').textContent = filtered.length;
+    // Switch to tenders tab if not already
+    switchTab('tenders', document.querySelector('.tab-btn'));
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// TIMELINE CHART
+// ═══════════════════════════════════════════════════════
+let anTimelineChart = null;
+
+function renderTimeline() {
+  const months = {};
+  const monthNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  
+  // Use combined data
+  const combined = [
+    ...allTenders.map(t=>({date:t.submitDate, status:'جارية'})),
+    ...allSubmitted.map(t=>({date:t.date, status:'تم التقديم'}))
+  ];
+  
+  combined.forEach(t => {
+    if(!t.date) return;
+    const d = new Date(t.date);
+    if(d.getFullYear() !== 2026) return;
+    const key = d.getMonth();
+    if(!months[key]) months[key] = {jariya:0, submitted:0};
+    if(t.status === 'جارية') months[key].jariya++;
+    else months[key].submitted++;
+  });
+
+  const labels = Object.keys(months).sort((a,b)=>a-b).map(m=>monthNames[m]);
+  const jariyaData = Object.keys(months).sort((a,b)=>a-b).map(m=>months[m].jariya);
+  const subData = Object.keys(months).sort((a,b)=>a-b).map(m=>months[m].submitted);
+
+  if(anTimelineChart) anTimelineChart.destroy();
+  const ctx = document.getElementById('an-timeline-chart');
+  if(!ctx) return;
+  anTimelineChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label:'جارية', data:jariyaData, borderColor:'#3b4fb8', backgroundColor:'rgba(59,79,184,0.1)', fill:true, tension:0.4, pointRadius:5, pointBackgroundColor:'#3b4fb8' },
+        { label:'تم التقديم', data:subData, borderColor:'#16a34a', backgroundColor:'rgba(22,163,74,0.1)', fill:true, tension:0.4, pointRadius:5, pointBackgroundColor:'#16a34a' }
+      ]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{ labels:{ color:'var(--text)', font:{family:'Cairo',size:11} } } },
+      scales:{
+        x:{ ticks:{color:'var(--text-muted)',font:{family:'Cairo',size:11}}, grid:{color:'rgba(0,0,0,0.05)'} },
+        y:{ ticks:{color:'var(--text-muted)',font:{family:'Cairo',size:11}}, grid:{color:'rgba(0,0,0,0.05)'}, beginAtZero:true }
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// COMPARISON TOOL
+// ═══════════════════════════════════════════════════════
+function populateCompareSelects() {
+  const oc = {};
+  allTenders.forEach(t=>{if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1;});
+  [...allSubmitted].forEach(t=>{if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1;});
+  const owners = Object.entries(oc).sort((a,b)=>b[1]-a[1]);
+  ['compare-a','compare-b'].forEach(id => {
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">اختر الجهة...</option>' + owners.map(([n,c])=>`<option value="${n}">${n} (${c})</option>`).join('');
+    if(cur) sel.value = cur;
+  });
+}
+
+const COMPARE_COLORS=['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed'];
+function runComparison() {
+  const a = document.getElementById('compare-a').value;
+  const b = document.getElementById('compare-b').value;
+  if(!a || !b || a===b) { alert('اختر جهتين مختلفتين'); return; }
+
+  const combined = [
+    ...allTenders.map(t=>({owner:t.owner, workType:t.workType, submitDate:t.submitDate, status:'جارية'})),
+    ...allSubmitted.map(t=>({owner:t.owner, workType:t.type, submitDate:t.date, status:'تم التقديم'}))
+  ];
+
+  function getStats(owner) {
+    const ts = combined.filter(t=>t.owner===owner);
+    const jariya = ts.filter(t=>t.status==='جارية').length;
+    const sub = ts.filter(t=>t.status==='تم التقديم').length;
+    const urgent = ts.filter(t=>['today','3days'].includes(getUrgency(t.submitDate).level)).length;
+    const types = {};
+    ts.forEach(t=>{if(t.workType) types[t.workType]=(types[t.workType]||0)+1;});
+    const topType = Object.entries(types).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
+    return {total:ts.length, jariya, sub, urgent, topType};
+  }
+
+  [['a',a],['b',b]].forEach(([letter,owner],idx)=>{
+    const s = getStats(owner);
+    const color = COMPARE_COLORS[idx*3];
+    document.getElementById(`compare-head-${letter}`).style.background = `linear-gradient(135deg,${color},${color}cc)`;
+    document.getElementById(`compare-head-${letter}`).innerHTML = `<span>${owner}</span><span style="font-size:20px;font-weight:900">${s.total}</span>`;
+    document.getElementById(`compare-body-${letter}`).innerHTML = `
+      <div class="compare-stat"><span class="compare-stat-label">جارية</span><span class="compare-stat-val" style="color:#16a34a">${s.jariya}</span></div>
+      <div class="compare-stat"><span class="compare-stat-label">تم التقديم</span><span class="compare-stat-val" style="color:#3b4fb8">${s.sub}</span></div>
+      <div class="compare-stat"><span class="compare-stat-label">حرجة (3 أيام)</span><span class="compare-stat-val" style="color:#dc2626">${s.urgent}</span></div>
+      <div class="compare-stat"><span class="compare-stat-label">أكثر نوع أعمال</span><span class="compare-stat-val" style="font-size:12px;color:var(--text-muted)">${s.topType}</span></div>
+    `;
+  });
+  document.getElementById('compare-result').classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════
+// ANIMATE CLIENT KPI NUMBERS
+// ═══════════════════════════════════════════════════════
+function animateNum(el, target) {
+  if(!el) return;
+  let n=0; const step=Math.max(1,Math.floor(target/30));
+  const t=setInterval(()=>{ n=Math.min(n+step,target); el.textContent=n; if(n>=target)clearInterval(t); },40);
 }
 
 fetchTenders();
