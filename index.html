@@ -573,6 +573,130 @@ body::before {
 .pw-error.show { display:block; }
 .pw-hint { font-size:11px; color:rgba(255,255,255,0.2); margin-top:24px; }
 
+
+/* ===== ANALYTICS PAGE ===== */
+.analytics-wrap {
+  padding:24px 40px; max-width:1600px; margin:0 auto;
+  display:flex; flex-direction:column; gap:20px;
+}
+
+/* KPI Strip */
+.an-kpi-strip {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+}
+.an-kpi {
+  border-radius:18px; padding:20px 18px;
+  display:flex; align-items:center; gap:14px;
+  box-shadow:0 4px 20px rgba(30,42,94,0.1);
+  border:1.5px solid rgba(255,255,255,0.6);
+  position:relative; overflow:hidden; transition:transform 0.2s;
+  cursor:default;
+}
+.an-kpi:hover { transform:translateY(-3px); }
+.an-kpi::before {
+  content:''; position:absolute; top:-20px; right:-20px;
+  width:80px; height:80px; border-radius:50%; opacity:0.12;
+  background:currentColor;
+}
+.an-kpi-icon { font-size:32px; flex-shrink:0; }
+.an-kpi-info { flex:1; }
+.an-kpi-num { font-size:34px; font-weight:900; line-height:1; }
+.an-kpi-lbl { font-size:11px; font-weight:700; color:var(--text-muted); margin-top:3px; }
+.an-kpi-trend { font-size:10px; margin-top:4px; font-weight:700; }
+
+.an-kpi.k-total { background:linear-gradient(135deg,#1a1f3c,#2d3561); color:#f0c040; border-color:#d4a017; }
+.an-kpi.k-total .an-kpi-lbl { color:rgba(255,255,255,0.6); }
+.an-kpi.k-jariya { background:linear-gradient(135deg,#eef2ff,#dbe4ff); color:var(--blue-mid); border-color:#a5b4fc; }
+.an-kpi.k-today  { background:linear-gradient(135deg,#fef2f2,#fee2e2); color:var(--red); border-color:#fca5a5; }
+.an-kpi.k-week   { background:linear-gradient(135deg,#fff7ed,#ffedd5); color:var(--orange); border-color:#fdba74; }
+.an-kpi.k-sub    { background:linear-gradient(135deg,#f0fdf4,#dcfce7); color:var(--green); border-color:#86efac; }
+
+/* Row layouts */
+.an-row { display:grid; gap:18px; }
+.an-row-2 { grid-template-columns:1fr 1fr; }
+.an-row-3 { grid-template-columns:2fr 1fr 1fr; }
+.an-row-full { grid-template-columns:1fr; }
+
+/* Cards */
+.an-card {
+  background:var(--bg-card); border-radius:20px;
+  border:1.5px solid var(--border); box-shadow:0 2px 12px rgba(30,42,94,0.08);
+  overflow:hidden; transition:box-shadow 0.2s;
+}
+.an-card:hover { box-shadow:0 6px 24px rgba(30,42,94,0.14); }
+.an-card-head {
+  padding:16px 20px 12px; display:flex; align-items:center;
+  justify-content:space-between; border-bottom:1px solid var(--border);
+  background:linear-gradient(90deg,#f8faff,#fff);
+}
+.an-card-title { font-size:13px; font-weight:800; color:var(--text); display:flex; align-items:center; gap:8px; }
+.an-card-badge { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:800; }
+.an-card-body { padding:18px 20px; }
+
+/* Gauge */
+.gauge-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; padding:10px 0; }
+.gauge-svg { width:180px; height:100px; overflow:visible; }
+.gauge-value { font-size:28px; font-weight:900; }
+.gauge-label { font-size:11px; color:var(--text-muted); font-weight:700; }
+
+/* Top 3 */
+.top3-list { display:flex; flex-direction:column; gap:10px; }
+.top3-item {
+  display:flex; align-items:center; gap:12px; padding:12px 14px;
+  border-radius:14px; border:1.5px solid var(--border);
+  background:linear-gradient(90deg,#fafbff,#fff); transition:all 0.2s;
+}
+.top3-item:hover { background:linear-gradient(90deg,#eef2ff,#f8faff); transform:translateX(-3px); }
+.top3-medal { width:32px; height:32px; border-radius:50%; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:900; }
+.top3-medal.g { background:linear-gradient(135deg,#d4a017,#f0c040); color:#fff; }
+.top3-medal.s { background:linear-gradient(135deg,#94a3b8,#64748b); color:#fff; }
+.top3-medal.b { background:linear-gradient(135deg,#c4690b,#92400e); color:#fff; }
+.top3-info { flex:1; min-width:0; }
+.top3-name { font-size:12px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.top3-bar-bg { height:5px; background:#eef2ff; border-radius:3px; margin-top:5px; overflow:hidden; }
+.top3-bar { height:100%; border-radius:3px; transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.top3-count { font-size:20px; font-weight:900; flex-shrink:0; }
+
+/* Donut center */
+.an-donut-wrap { position:relative; }
+.an-donut-center {
+  position:absolute; top:45%; left:50%; transform:translate(-50%,-50%);
+  text-align:center; pointer-events:none;
+}
+.an-donut-big { font-size:24px; font-weight:900; color:var(--text); }
+.an-donut-small { font-size:10px; color:var(--text-muted); }
+
+/* Heatmap */
+.heatmap-grid { display:flex; flex-direction:column; gap:4px; }
+.heatmap-row { display:flex; align-items:center; gap:6px; }
+.heatmap-label { font-size:10px; color:var(--text-muted); width:32px; text-align:left; font-weight:600; flex-shrink:0; }
+.heatmap-cells { display:flex; gap:4px; flex:1; }
+.heatmap-cell {
+  flex:1; height:28px; border-radius:6px; transition:transform 0.15s;
+  cursor:default; position:relative;
+}
+.heatmap-cell:hover { transform:scale(1.15); z-index:5; }
+.hm-0 { background:#eef2ff; }
+.hm-1 { background:#c7d3fa; }
+.hm-2 { background:#8fa5f4; }
+.hm-3 { background:#3b4fb8; }
+.hm-4 { background:#1e2a5e; }
+.heatmap-month-labels { display:flex; gap:4px; padding-right:38px; }
+.heatmap-month-lbl { flex:1; text-align:center; font-size:9px; color:var(--text-muted); font-weight:700; }
+
+/* Progress bars */
+.an-progress-item { margin-bottom:14px; }
+.an-progress-label { display:flex; justify-content:space-between; margin-bottom:5px; font-size:12px; font-weight:700; color:var(--text); }
+.an-progress-pct { color:var(--text-muted); font-weight:600; }
+.an-progress-bg { height:10px; background:#eef2ff; border-radius:6px; overflow:hidden; }
+.an-progress-fill { height:100%; border-radius:6px; transition:width 1.4s cubic-bezier(0.4,0,0.2,1); }
+
+/* Stat list */
+.an-stat-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eef2ff; }
+.an-stat-row:last-child { border-bottom:none; }
+.an-stat-label { font-size:12px; color:var(--text-muted); font-weight:600; }
+.an-stat-val { font-size:16px; font-weight:900; color:var(--text); }
+
 @media(max-width:1100px){.content-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
@@ -815,44 +939,184 @@ body::before {
 
 <!-- ANALYTICS TAB -->
 <div id="tab-analytics" class="tab-panel">
-<div class="clients-wrap">
-  <div class="chart-card-light" style="grid-column:span 2;">
-    <div class="chart-card-title">🏛️ توزيع المناقصات الجارية حسب الجهة</div>
-    <canvas id="an-owners-chart" height="120"></canvas>
-  </div>
-  <div class="chart-card-light half">
-    <div class="chart-card-title">⏰ توزيع الأولويات</div>
-    <canvas id="an-urgency-chart" height="220"></canvas>
-  </div>
-  <div class="chart-card-light full">
-    <div class="chart-card-title">⚙️ أنواع الأعمال — المناقصات الجارية</div>
-    <canvas id="an-works-chart" height="80"></canvas>
-  </div>
-  <div class="chart-card-light full">
-    <div class="chart-card-title">📅 الخط الزمني — توزيع المناقصات على الأشهر</div>
-    <canvas id="an-timeline-chart" height="80"></canvas>
-  </div>
-  <div class="chart-card-light full">
-    <div class="chart-card-title">⚖️ مقارنة الجهات المالكة</div>
-    <div class="compare-wrap">
-      <div class="compare-selects">
-        <select class="compare-select" id="compare-a"><option value="">اختر الجهة الأولى</option></select>
-        <span style="font-size:20px;color:var(--text-muted)">VS</span>
-        <select class="compare-select" id="compare-b"><option value="">اختر الجهة الثانية</option></select>
-        <button class="compare-btn" onclick="runComparison()">مقارنة ↗</button>
+<div class="analytics-wrap">
+
+  <!-- KPI Strip -->
+  <div class="an-kpi-strip" id="an-kpi-strip">
+    <div class="an-kpi k-total">
+      <div class="an-kpi-icon">📊</div>
+      <div class="an-kpi-info">
+        <div class="an-kpi-num" id="an-kpi-total">—</div>
+        <div class="an-kpi-lbl">إجمالي مناقصات 2026</div>
       </div>
-      <div class="compare-result" id="compare-result">
-        <div class="compare-card" id="compare-card-a">
-          <div class="compare-card-head" id="compare-head-a"></div>
-          <div class="compare-card-body" id="compare-body-a"></div>
+    </div>
+    <div class="an-kpi k-jariya">
+      <div class="an-kpi-icon">🟢</div>
+      <div class="an-kpi-info">
+        <div class="an-kpi-num" id="an-kpi-jariya">—</div>
+        <div class="an-kpi-lbl">مناقصات جارية</div>
+      </div>
+    </div>
+
+    <div class="an-kpi k-sub">
+      <div class="an-kpi-icon">✅</div>
+      <div class="an-kpi-info">
+        <div class="an-kpi-num" id="an-kpi-sub">—</div>
+        <div class="an-kpi-lbl">تم التقديم</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 1: Owners bar + Donut + Gauge -->
+  <div class="an-row an-row-3">
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">🏛️ توزيع الجهات المالكة — الجارية</div>
+      </div>
+      <div class="an-card-body">
+        <canvas id="an-owners-chart" height="180"></canvas>
+      </div>
+    </div>
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">⏰ توزيع الأولويات</div>
+      </div>
+      <div class="an-card-body">
+        <div class="an-donut-wrap" style="position:relative;height:180px;">
+          <canvas id="an-urgency-chart"></canvas>
+          <div class="an-donut-center">
+            <div class="an-donut-big" id="an-donut-total">—</div>
+            <div class="an-donut-small">مناقصة</div>
+          </div>
         </div>
-        <div class="compare-card" id="compare-card-b">
-          <div class="compare-card-head" id="compare-head-b"></div>
-          <div class="compare-card-body" id="compare-body-b"></div>
+      </div>
+    </div>
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">🎯 نسبة الإنجاز</div>
+      </div>
+      <div class="an-card-body">
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 180 100">
+            <path d="M20,90 A70,70 0 0,1 160,90" fill="none" stroke="#eef2ff" stroke-width="16" stroke-linecap="round"/>
+            <path id="gauge-path" d="M20,90 A70,70 0 0,1 160,90" fill="none" stroke="#3b4fb8" stroke-width="16" stroke-linecap="round"
+              stroke-dasharray="220" stroke-dashoffset="220"/>
+          </svg>
+          <div class="gauge-value" id="gauge-pct" style="color:var(--blue-mid);">—%</div>
+          <div class="gauge-label">من إجمالي 2026 تم تقديمه</div>
+          <div style="display:flex;gap:16px;margin-top:8px;">
+            <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:var(--green)" id="gauge-sub">—</div><div style="font-size:10px;color:var(--text-muted)">مقدمة</div></div>
+            <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:var(--blue-mid)" id="gauge-jar">—</div><div style="font-size:10px;color:var(--text-muted)">جارية</div></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Row 2: Work types + Top owners -->
+  <div class="an-row an-row-2">
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">⚙️ أنواع الأعمال — الجارية</div>
+      </div>
+      <div class="an-card-body">
+        <canvas id="an-works-chart" height="160"></canvas>
+      </div>
+    </div>
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">🏆 أبرز 5 عملاء 2026</div>
+        <span class="an-card-badge" style="background:#fffbeb;color:#b8860b;">جارية + مقدمة</span>
+      </div>
+      <div class="an-card-body">
+        <div class="top3-list" id="an-top5"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3: Timeline -->
+  <div class="an-row an-row-full">
+    <div class="an-card" style="background:linear-gradient(135deg,#1a1f3c 0%,#2d3561 60%,#0f2744 100%);border-color:rgba(212,160,23,0.3);">
+      <div class="an-card-head" style="background:transparent;border-bottom-color:rgba(255,255,255,0.1);">
+        <div class="an-card-title" style="color:#f0c040;">📅 الخط الزمني — توزيع المناقصات على أشهر 2026</div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
+            <div style="width:12px;height:12px;border-radius:50%;background:#16a34a;"></div> تم التقديم
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
+            <div style="width:12px;height:12px;border-radius:50%;background:#60a5fa;"></div> جارية
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,0.7);">
+            <div style="width:12px;height:4px;border-radius:2px;background:#d4a017;"></div> الإجمالي
+          </div>
+        </div>
+      </div>
+      <div style="padding:8px 20px 4px;display:flex;gap:24px;">
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:#f0c040;" id="tl-total-sub">—</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">إجمالي المقدمة</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:#4ade80;" id="tl-peak-month">—</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">أنشط شهر</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:22px;font-weight:900;color:#60a5fa;" id="tl-avg">—</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);">متوسط شهري</div>
+        </div>
+      </div>
+      <div class="an-card-body" style="padding-top:8px;">
+        <canvas id="an-timeline-chart" height="110"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 4: Sectors progress + Stats -->
+  <div class="an-row an-row-2">
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">📂 توزيع القطاعات 2026</div>
+      </div>
+      <div class="an-card-body" id="an-sectors-prog"></div>
+    </div>
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">📈 إحصاءات سريعة</div>
+      </div>
+      <div class="an-card-body" id="an-quick-stats"></div>
+    </div>
+
+  </div>
+
+  <!-- Row 5: Comparison -->
+  <div class="an-row an-row-full">
+    <div class="an-card">
+      <div class="an-card-head">
+        <div class="an-card-title">⚖️ مقارنة الجهات المالكة</div>
+      </div>
+      <div class="an-card-body">
+        <div class="compare-wrap" style="padding:0;">
+          <div class="compare-selects">
+            <select class="compare-select" id="compare-a"><option value="">اختر الجهة الأولى</option></select>
+            <span style="font-size:20px;color:var(--text-muted);font-weight:900;">VS</span>
+            <select class="compare-select" id="compare-b"><option value="">اختر الجهة الثانية</option></select>
+            <button class="compare-btn" onclick="runComparison()">مقارنة ↗</button>
+          </div>
+          <div class="compare-result" id="compare-result">
+            <div class="compare-card" id="compare-card-a">
+              <div class="compare-card-head" id="compare-head-a"></div>
+              <div class="compare-card-body" id="compare-body-a"></div>
+            </div>
+            <div class="compare-card" id="compare-card-b">
+              <div class="compare-card-head" id="compare-head-b"></div>
+              <div class="compare-card-body" id="compare-body-b"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 </div>
 
@@ -892,7 +1156,9 @@ function isGuaranteeToday(guarantee) {
   return d.getTime() === n.getTime();
 }
 
-let allSubmitted = [];
+// ── المناقصات المقدمة 2026 (بيانات ثابتة من Excel) ──────
+const SUBMITTED_2026 = [{"name": "Sitewide Utilities Diversion_Revision", "owner": "مطار الملك سلمان", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-03", "guarantee": "2025-12-30", "status": "تم التقديم"}, {"name": "Heros Park Main Construction Works", "owner": "الدرعية DGDA", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-06", "guarantee": "2026-01-01", "status": "تم التقديم"}, {"name": "مشروع تنفيذ لأعمال تطوير وتوسعة حراج ابن قاسم", "owner": "الرياض القابضة", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-07", "guarantee": "2026-01-04", "status": "تم التقديم"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بمنظومات إنتاج الشعيبة -004", "owner": "الهيئة السعودية للمياة", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-17", "guarantee": "2026-01-13", "status": "تم التقديم"}, {"name": "Al Ruba Sanaya - Design & Build 1840 Villas", "owner": "الشركة الوطنية للإسكان", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-01-18", "guarantee": "2026-01-13", "status": "تم التقديم"}, {"name": "مشروع إنشاء خزان مركزي بمقر الاسطول والمساندة", "owner": "الشؤون الخاصة لخادم الحرمين الشريفين", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-22", "guarantee": "2026-01-19", "status": "تم التقديم"}, {"name": "صيانة وتشغيل الطرق والشوارع بمحافظة الجبيل للاعوام 2026ــ2028م", "owner": "بلدية محافظة الجبيل", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "guarantee": "2026-01-19", "status": "تم التقديم"}, {"name": "سفلتة مخططات المنح بمحافظة الجبيل", "owner": "بلدية محافظة الجبيل", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "guarantee": "2026-01-19", "status": "تم التقديم"}, {"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الشرقي (ميناء الملك عبدالعزيز بالدمام – ميناء الجبيل التجاري – ميناء الملك فهد الصناعي بالجبيل – ميناء رأس الخير", "owner": "المؤسسة العامة للموانىء", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-26", "guarantee": "2026-01-21", "status": "تم التقديم"}, {"name": "منافسة عامة لمشروع صيانة الطرق والشوارع بمحافظة القنفذة", "owner": "بلدية محافظة القنفدة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "guarantee": "2026-01-22", "status": "تم التقديم"}, {"name": "ازالة واستبدال العبارة الصندوقية بأنابيب خرسانية جاهزة بالطريق 62 بالمدينة الصناعية 1576830", "owner": "هيئة المدن الصناعية", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "guarantee": "2026-01-22", "status": "تم التقديم"}, {"name": "البنية التحتية الشاملة لمشروع ارض الحرس الوطني (وجهة الربى)", "owner": "الشركة الوطنية للإسكان", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "guarantee": "2026-01-22", "status": "تم التقديم"}, {"name": "منافسة لمشروع إنشاء منظومة مياة الشرب بالمنطقة الصناعية (PIC I-T 7078)", "owner": "الادارة العامة لمشروع ينبع", "type": "إنشاءات", "sector": "القطاع الغربي", "date": "2026-01-28", "guarantee": "2026-01-25", "status": "تم التقديم"}, {"name": "صيانة طريق الكورنيش والارصفة الجانبية بمحافظة رأس تنورة للعام 2026م", "owner": "بلدية محافظة راس تنورة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "guarantee": "2026-01-27", "status": "تم التقديم"}, {"name": "مشروع  صيانة الطرق والشوارع في مخطط إسكان طريق الملك عبدالعزيز( مخطط الشروق) بالمدينة المنورة", "owner": "امانة منطقة المدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "guarantee": "2026-01-27", "status": "تم التقديم"}, {"name": "مبني صالة المبيعات بمشروع سدو تبوك", "owner": "الشركة الوطنية للإسكان", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-02", "guarantee": "2026-01-28", "status": "تم التقديم"}, {"name": "مشروع صيانة ومعالجة الحفر والأرصفة بنطاق بلدية غرب الدمام", "owner": "امانة المنطقة الشرقية", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "guarantee": "2026-01-29", "status": "تم التقديم"}, {"name": "مشروع تشغيل وصيانة الجسور والأنفاق للطرق المحورية للأعوام 2026-2029م", "owner": "امانة المنطقة الشرقية", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "guarantee": "2026-01-29", "status": "تم التقديم"}, {"name": "توريد وتنفيذ خط تجميع مياه ابار وادي ضمد الى محطة تنقية مياه ضمد بجازان", "owner": "الهيئة السعودية للمياة", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "guarantee": "2026-01-29", "status": "تم التقديم"}, {"name": "منافسة عامة لمشروع تطوير مرافق بالادارة العامة والمستودعات", "owner": "وزارة الدفاع", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-04", "guarantee": "2026-02-01", "status": "تم التقديم"}, {"name": "فرصة صيانة الطرق والشوارع في مخطط إسكان ضاحية العاقول (مخطط الهضبة) مخطط رقم (س-4310480)", "owner": "امانة منطقة المدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "guarantee": "2026-02-03", "status": "تم التقديم"}, {"name": "لفرصة صيانة الطرق والشوارع في مخطط اسكان طريق حائل السريع (مخطط الياسمين) بالمدينة المنورة", "owner": "امانة منطقة المدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "guarantee": "2026-02-03", "status": "تم التقديم"}, {"name": "Special Projects Delivery Framework", "owner": "المسار الرياضي", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-02-11", "guarantee": "2026-02-08", "status": "تم التقديم"}, {"name": "تنفيذ اعمال التنسيق العام لمركز مبيعات وجهة الربى", "owner": "الشركة الوطنية للإسكان", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-13", "guarantee": "2026-02-10", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل وتطوير طريق الأمير محمد بن فهد للعام 2026م", "owner": "بلدية محافظة راس تنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-14", "guarantee": "2026-02-10", "status": "تم التقديم"}, {"name": "مشروع صيانة الطرق المستلمة من وزارة النقل بنطاق بلدية محافظة رأس تنورة 2026-2029م", "owner": "بلدية محافظة راس تنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-16", "guarantee": "2026-02-11", "status": "تم التقديم"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بوحدات الإنتاج (حقل- ضباء- الوجه- أملج- الليث- القنفذة-رابغ)", "owner": "الهيئة السعودية للمياة", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-02-18", "guarantee": "2026-02-15", "status": "تم التقديم"}, {"name": "اعمال التسويات والبنية التحتية الشاملة لوجهة الجنى", "owner": "الشركة الوطنية للإسكان", "type": "بنية تحتية", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-18", "guarantee": "2026-02-15", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل شارع الأمير نايف بن عبد العزيز 2026م بمحافظة رأس تنورة", "owner": "بلدية محافظة راس تنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "guarantee": "2026-02-17", "status": "تم التقديم"}, {"name": "AMAYA Master Plan", "owner": "DAR GLOBAL Co.", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "guarantee": "2026-02-17", "status": "تم التقديم"}, {"name": "Main Contractor PQQ_FIFA World Cup 2034™️ Training Sites", "owner": "وزارة الرياضة", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-26", "guarantee": "2026-02-23", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الخامسة", "owner": "بلدية محافظة رابغ", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "guarantee": "2026-02-24", "status": "تم التقديم"}, {"name": "تنفيذ حلول تصريف مياه الامطار لمنطقة BC الحزمة الخامسة - الشاطئ المنطقة الساحلية", "owner": "أمانة جدة", "type": "بنية تحتية", "sector": "القطاع الغربي", "date": "2026-02-28", "guarantee": "2026-02-24", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة السادسة", "owner": "بلدية محافظة رابغ", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "guarantee": "2026-02-24", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الثالثة", "owner": "بلدية محافظة رابغ", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "guarantee": "2026-02-24", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الرابعة", "owner": "بلدية محافظة رابغ", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "guarantee": "2026-02-24", "status": "تم التقديم"}, {"name": "Arassi Lazord - Design & Build 1372 Villas", "owner": "الشركة الوطنية للإسكان", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "guarantee": "2026-03-01", "status": "تم التقديم"}, {"name": "إيصال خدمة المياه لمجمع الملك فهد الطبي العسكري بالظهران", "owner": "شركة المياة الوطنية", "type": "خطوط نقل المياة", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-04", "guarantee": "2026-03-01", "status": "تم التقديم"}, {"name": "Wahj Asalah - Design & Build 956 Villas", "owner": "الشركة الوطنية للإسكان", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "guarantee": "2026-03-01", "status": "تم التقديم"}, {"name": "RFI - Single Family - Gen 2.5", "owner": "ROSHN", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-06", "guarantee": "2026-03-03", "status": "تم التقديم"}, {"name": "صيانة الشوارع بنطاق بلدية شرق بريدة الفرعية", "owner": "أمانة منطقة القصيم", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-06", "guarantee": "2026-03-03", "status": "تم التقديم"}, {"name": "عملية تطوير المناطق المحيطة بمحور الأمير محمد بن سلمان", "owner": "امانة العاصمة المقدسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-07", "guarantee": "2026-03-03", "status": "تم التقديم"}, {"name": "Construction of District Retail For Sedra 2 & Sedra 3", "owner": "ROSHN", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-12", "guarantee": "2026-03-09", "status": "تم التقديم"}, {"name": "New playground and sands sports park Design and build works (P012G)", "owner": "المسار الرياضي", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-03-15", "guarantee": "2026-03-10", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل", "owner": "بلدية محافظة الجبيل", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "guarantee": "2026-03-12", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل ( الجزء الرابع عشر )", "owner": "بلدية محافظة الجبيل", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "guarantee": "2026-03-12", "status": "تم التقديم"}, {"name": "تنفيذ الأعمال الترابية لمشروع الفيصلية (الرشا)", "owner": "الشركة الوطنية للإسكان", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-30", "guarantee": "2026-03-25", "status": "تم التقديم"}, {"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الغربي (جدة الإسلامي – ميناء فرسان – ميناء ينبع التجاري)", "owner": "المؤسسة العامة للموانىء", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-30", "guarantee": "2026-03-25", "status": "تم التقديم"}, {"name": "إنشاء عدد (17) مستودع وساحة استلام وتسليم بالمديرية العامة لحرس الحدود بالبرشاعة", "owner": "حرس الحدود", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-03-31", "guarantee": "2026-03-26", "status": "تم التقديم"}, {"name": "Sitewide Utilities Wastewater Treatment Plant", "owner": "مطار الملك سلمان", "type": "محطات", "sector": "قطاع منطقة الرياض", "date": "2026-03-31", "guarantee": "2026-03-26", "status": "تم التقديم"}, {"name": "تورید وإنشاء مرافق الخدمات المشتركة في منطقة البلاسكیم", "owner": "الادارة العامة لمشروع الجبيل", "type": "إنشاءات ، بنية تحتية", "sector": "القطاع الشرقي", "date": "2026-04-06", "guarantee": "2026-04-01", "status": "تم التقديم"}, {"name": "الخدمات العامة لتوصيل المنافع (PIC I-7127 )", "owner": "الادارة العامة لمشروع ينبع", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-08", "guarantee": "2026-04-05", "status": "تم التقديم"}, {"name": "معالجة قصور الأسفلت بمدينة بريدة (مرحلة ثانية)", "owner": "أمانة منطقة القصيم", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-09", "guarantee": "2026-04-06", "status": "تم التقديم"}, {"name": "أعمال تحسين و تسوية الموقع والأعمال الترابية لمنطقة 3 و المنطقة 6 مشروع لازورد", "owner": "الشركة الوطنية للإسكان", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-14", "guarantee": "2026-04-09", "status": "تم التقديم"}, {"name": "استكمال تنفيذ طريق البيارق", "owner": "أمانة منطقة القصيم", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-15", "guarantee": "2026-04-12", "status": "تم التقديم"}, {"name": "أعمال تنفيذ مشروع القرية الرياضية – حي الأجواد بمدينة جدة", "owner": "شركة جدة للتنمية والتطوير", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-04-20", "guarantee": "2026-04-15", "status": "تم التقديم"}, {"name": "RFP - QPMO-410-CT-07776-D0 Deep Services Phase 1", "owner": "qiddya", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-25", "guarantee": "2026-04-21", "status": "تم التقديم"}, {"name": "NSR Track Doubling (Phosphate 3) Section 2 & Loops", "owner": "SAR  الخطوط الحديدية السعودية", "type": "إنشاء خطوط السكك الحديدية ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-26", "guarantee": "2026-04-21", "status": "تم التقديم"}, {"name": "WADI SAFAR MASTERPLAN, INFRA & LANDSCAPE", "owner": "DAR GLOBAL Co.", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-29", "guarantee": "2026-04-26", "status": "تم التقديم"}, {"name": "مشروع انشاء المستشفى الجامعي بجامعة حضرموت", "owner": "البرنامج السعودي لتنمية واعمار اليمن", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-05-02", "guarantee": "2026-04-28", "status": "تم التقديم"}, {"name": "مشروع إحلال واستبدال المغذيات الرئيسية لمحطات المارينا بقصر السلام", "owner": "الشؤون الخاصة لخادم الحرمين الشريفين", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "guarantee": "2026-04-28", "status": "تم التقديم"}, {"name": "Design and Build for Wadi Hanifa South(P001E)", "owner": "المسار الرياضي", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "guarantee": "2026-04-28", "status": "تم التقديم"}, {"name": "مشروع استبدال وحدات التكييف مع انظمه التحكم بمبنى ( 48أ ) بقصر السلام بجدة", "owner": "الشؤون الخاصة لخادم الحرمين الشريفين", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-04", "guarantee": "2026-04-29", "status": "تم التقديم"}, {"name": "DGII The Grand Boulevard Public Realm.", "owner": "الدرعية DGDA", "type": "تأهيل", "sector": "قطاع منطقة الرياض", "date": "2026-05-06", "guarantee": "2026-05-03", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بحي الخدمات المساندة بالدمام المرحلة الثانية", "owner": "امانة المنطقة الشرقية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي النهضة والمنتزه بالدمام المرحلة الثانية", "owner": "امانة المنطقة الشرقية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "استكمال تأهيل وصيانة بعض التقاطعات بمدينة بريدة", "owner": "أمانة منطقة القصيم", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "مشروع تطوير شوارع مخطط 1262 بضاحية الملك فهد بالدمام", "owner": "امانة المنطقة الشرقية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "مشروع ربط المحطات ( B5.B2.B1 وبكج 1) و ( SF-1. SF-2.SF-3.SF-4.SF-5.SF-6.SF-7.SF-8.SF-9.SF-10 ) بنظام التحكم والمراقبة اسكادا بقصر السلام بجدة", "owner": "الشؤون الخاصة لخادم الحرمين الشريفين", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-09", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بضاحية الملك فهد المرحلة الثالثة", "owner": "امانة المنطقة الشرقية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي الخالدية بالدمام المرحلة الثانية", "owner": "امانة المنطقة الشرقية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "guarantee": "2026-05-05", "status": "تم التقديم"}, {"name": "مشروع ربط محطات الكهرباء الفرعية بالمرينا والمحطة الرئيسية المغذية لها بنظام اسكادا بقصر السلا مبجدة", "owner": "الشؤون الخاصة لخادم الحرمين الشريفين", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "guarantee": "2026-05-06", "status": "تم التقديم"}, {"name": "الاتفاقية الاطارية لأنسنه المشاعر المقدسة وتحسين المشهد الحضري", "owner": "شركة كدانة للتنمية والتطوير", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "guarantee": "2026-05-06", "status": "تم التقديم"}, {"name": "مشروع احلال واستبدال كابلات الجهد المتوسط بين المحطات الفرعية المغذية لإنارة الاسوار البحرية والكميرات الامنية بقصر السلام بجدة", "owner": "الشؤون الخاصة لخادم الحرمين الشريفين", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-11", "guarantee": "2026-05-06", "status": "تم التقديم"}];
+let allSubmitted = [...SUBMITTED_2026];
 
 async function fetchTenders() {
   try {
@@ -920,13 +1186,17 @@ async function fetchTenders() {
       status:     'تم التقديم',
     })).filter(t=>t.name);
 
-    // Rebuild OWNERS_DATA from live data
-    rebuildOwnersData();
+    // دمج البيانات المحملة من data.json مع SUBMITTED_2026 الثابتة
+    // إذا data.json فارغة نستخدم SUBMITTED_2026 فقط
+    if(allSubmitted.length === 0) {
+      allSubmitted = [...SUBMITTED_2026];
+    }
 
-    renderAll();
-    // Reset clients/analytics so they re-render with fresh data
+    // Rebuild OWNERS_DATA from live allTenders + allSubmitted
+    rebuildOwnersData();
     clientsRendered = false;
     analyticsRendered = false;
+    renderAll();
 
     document.getElementById('last-update').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA');
   } catch(e) {
@@ -960,9 +1230,9 @@ function rebuildOwnersData() {
   const clientsEl = document.querySelector('.client-kpi.ck2 .client-kpi-num');
   const jariyaEl = document.querySelector('.client-kpi.ck3 .client-kpi-num');
   const subEl = document.querySelector('.client-kpi.ck4 .client-kpi-num');
-  const total = combined.length;
   const jariya = allTenders.length;
   const sub = allSubmitted.length;
+  const total = jariya + sub;
   const clients = Object.keys(OWNERS_DATA).length;
   animateNum(totalEl, total);
   animateNum(clientsEl, clients);
@@ -1180,11 +1450,36 @@ function switchTab(name, btn) {
 // ── CLIENTS DATA ──────────────────────────────────────
 const CLIENTS_COLORS=['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
 
-const clientOwners = [{"name": "الشركة الوطنية للإسكان", "count": 9}, {"name": "امانة المنطقة الشرقية", "count": 7}, {"name": "الشؤون الخاصة لخادم الحرمين الشريفين", "count": 6}, {"name": "بلدية محافظة الجبيل", "count": 4}, {"name": "بلدية محافظة راس تنورة", "count": 4}, {"name": "بلدية محافظة رابغ", "count": 4}, {"name": "أمانة منطقة القصيم", "count": 4}, {"name": "الهيئة السعودية للمياة", "count": 3}, {"name": "امانة منطقة المدينة المنورة", "count": 3}, {"name": "المسار الرياضي", "count": 3}, {"name": "مطار الملك سلمان", "count": 2}, {"name": "الدرعية DGDA", "count": 2}, {"name": "المؤسسة العامة للموانىء", "count": 2}, {"name": "الادارة العامة لمشروع ينبع", "count": 2}, {"name": "DAR GLOBAL Co.", "count": 2}, {"name": "ROSHN", "count": 2}, {"name": "الرياض القابضة", "count": 1}, {"name": "بلدية محافظة القنفدة", "count": 1}, {"name": "هيئة المدن الصناعية", "count": 1}, {"name": "وزارة الدفاع", "count": 1}, {"name": "وزارة الرياضة", "count": 1}, {"name": "أمانة جدة", "count": 1}, {"name": "شركة المياة الوطنية", "count": 1}, {"name": "امانة العاصمة المقدسة", "count": 1}, {"name": "حرس الحدود", "count": 1}, {"name": "الادارة العامة لمشروع الجبيل", "count": 1}, {"name": "شركة جدة للتنمية والتطوير", "count": 1}, {"name": "qiddya", "count": 1}, {"name": "SAR  الخطوط الحديدية السعودية", "count": 1}, {"name": "البرنامج السعودي لتنمية واعمار اليمن", "count": 1}, {"name": "شركة كدانة للتنمية والتطوير", "count": 1}];
+const clientOwners=[
+  {name:'الشركة الوطنية للإسكان',count:10},
+  {name:'امانة المنطقة الشرقية',count:7},
+  {name:'الشؤون الخاصة لخادم الحرمين الشريفين',count:6},
+  {name:'مطار الملك سلمان',count:4},
+  {name:'الهيئة السعودية للمياة',count:4},
+  {name:'أمانة جدة',count:4},
+  {name:'بلدية محافظة الجبيل',count:4},
+  {name:'بلدية محافظة راس تنورة',count:4},
+  {name:'بلدية محافظة رابغ',count:4},
+  {name:'أمانة منطقة القصيم',count:4},
+];
 
-const clientWorks = [{"name": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "count": 10}, {"name": "الإنشاءات العامة للمباني السكنية", "count": 7}, {"name": "البنية التحتية البسيطة", "count": 7}, {"name": "التشغيل والصيانة - طرق", "count": 7}, {"name": "صيانة الطرق", "count": 7}, {"name": "كهرباء", "count": 5}, {"name": "إنشاءات ، بنية تحتية", "count": 4}, {"name": "تركيب وصيانة الأجهزة الأمنية", "count": 4}, {"name": "البنية التحتية الشاملة", "count": 4}, {"name": "إنشاءات", "count": 4}, {"name": "الإنشاءات العامة للمرافق الحكومية", "count": 4}, {"name": "تأهيل", "count": 3}, {"name": "إنشاء خطوط النقل والخزن الإستراتيجي", "count": 2}, {"name": "بنية تحتية", "count": 2}, {"name": "محطات", "count": 1}, {"name": "إنشاء شبكات السيول ومرافقها", "count": 1}, {"name": "خطوط نقل المياة", "count": 1}, {"name": "إنشاء خطوط السكك الحديدية ومرافقها", "count": 1}];
+const clientWorks=[
+  {name:'إنشاء الطرق والشوارع',count:10},
+  {name:'البنية التحتية البسيطة',count:8},
+  {name:'مرافق حكومية',count:7},
+  {name:'مباني سكنية',count:7},
+  {name:'تشغيل وصيانة طرق',count:7},
+  {name:'صيانة الطرق',count:7},
+  {name:'إنشاءات بنية تحتية',count:6},
+];
 
-const clientSectors = [{"name": "محفظة مشاريع البنية التحتية", "count": 43}, {"name": "محفظة مشاريع المباني", "count": 17}, {"name": "محفظة مشاريع المياه والنقل", "count": 6}, {"name": "قطاع منطقة الرياض", "count": 5}, {"name": "القطاع الغربي", "count": 2}, {"name": "القطاع الشرقي", "count": 1}];
+const clientSectors=[
+  {name:'محفظة مشاريع البنية التحتية',count:49},
+  {name:'محفظة مشاريع المباني',count:20},
+  {name:'محفظة مشاريع المياه والنقل',count:8},
+  {name:'قطاع منطقة الرياض',count:6},
+  {name:'القطاع الغربي',count:3},
+];
 
 let clWorksChart=null, anOwnersChart=null, anUrgencyChart=null, anWorksChart=null;
 let clientsRendered=false, analyticsRendered=false;
@@ -1232,62 +1527,203 @@ function renderClients() {
 
 function renderAnalytics() {
   if(analyticsRendered) return;
-  analyticsRendered=true;
-  setTimeout(renderTimeline, 200);
+  analyticsRendered = true;
+  setTimeout(_buildAnalytics, 100);
+}
 
-  // Owners from live data
+function _buildAnalytics() {
+  const AC = ['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
+  const combined = [
+    ...allTenders.map(t=>({owner:t.owner,type:t.workType,sector:t.sector,date:t.submitDate,status:'جارية'})),
+    ...allSubmitted.map(t=>({owner:t.owner,type:t.type,sector:t.sector,date:t.date,status:'تم التقديم'}))
+  ];
+
+  // ── KPI Strip ──────────────────────────────────
+  const todayC  = allTenders.filter(t=>getUrgency(t.submitDate).level==='today').length;
+  const weekC   = allTenders.filter(t=>['today','3days','week'].includes(getUrgency(t.submitDate).level)).length;
+  const totalC  = combined.length;
+  const subC    = allSubmitted.length;
+  const jarC    = allTenders.length;
+  animateNum(document.getElementById('an-kpi-total'),  totalC);
+  animateNum(document.getElementById('an-kpi-jariya'), jarC);
+  animateNum(document.getElementById('an-kpi-sub'),    subC);
+
+  // ── Gauge ──────────────────────────────────────
+  const pct = totalC ? Math.round(subC/totalC*100) : 0;
+  document.getElementById('gauge-pct').textContent = pct + '%';
+  document.getElementById('gauge-sub').textContent = subC;
+  document.getElementById('gauge-jar').textContent = jarC;
+  setTimeout(()=>{
+    const path = document.getElementById('gauge-path');
+    if(path) { path.style.strokeDashoffset = 220 - (220*pct/100); path.style.transition='stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)'; }
+  }, 200);
+
+  // ── Owners bar chart ───────────────────────────
   const oc={};
   allTenders.forEach(t=>{if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1;});
   const ownerEntries=Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8);
-
   if(anOwnersChart) anOwnersChart.destroy();
   anOwnersChart=new Chart(document.getElementById('an-owners-chart'),{
     type:'bar',
     data:{
-      labels:ownerEntries.map(([n])=>n.length>16?n.slice(0,16)+'…':n),
-      datasets:[{data:ownerEntries.map(([,c])=>c),backgroundColor:CLIENTS_COLORS,borderRadius:6}]
+      labels:ownerEntries.map(([n])=>n.length>14?n.slice(0,14)+'…':n),
+      datasets:[{
+        data:ownerEntries.map(([,c])=>c),
+        backgroundColor:AC, borderRadius:8, borderSkipped:false,
+      }]
     },
-    options:{responsive:true,maintainAspectRatio:true,
-      plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#1a2332',font:{family:'Cairo',size:10}},grid:{display:false}},
-               y:{ticks:{color:'#6b7a99',font:{family:'Cairo',size:10}},grid:{color:'rgba(0,0,0,0.05)'}}}}
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>` ${ctx.raw} مناقصة`},backgroundColor:'rgba(26,31,60,0.9)',titleFont:{family:'Cairo'},bodyFont:{family:'Cairo'}}
+      },
+      scales:{
+        x:{ticks:{color:'#1a2332',font:{family:'Cairo',size:10}},grid:{display:false}},
+        y:{ticks:{color:'#6b7a99',font:{family:'Cairo',size:10}},grid:{color:'rgba(0,0,0,0.05)'},beginAtZero:true}
+      }
+    }
   });
 
-  // Urgency doughnut
+  // ── Urgency donut ──────────────────────────────
   const urg={
-    'اليوم':allTenders.filter(t=>getUrgency(t.submitDate).level==='today').length,
-    '3 أيام':allTenders.filter(t=>getUrgency(t.submitDate).level==='3days').length,
-    'أسبوع':allTenders.filter(t=>getUrgency(t.submitDate).level==='week').length,
-    'جارية':allTenders.filter(t=>getUrgency(t.submitDate).level==='active').length,
-    'منتهية':allTenders.filter(t=>getUrgency(t.submitDate).level==='urgent').length,
+    'اليوم🔥':  allTenders.filter(t=>getUrgency(t.submitDate).level==='today').length,
+    '3 أيام⏰': allTenders.filter(t=>getUrgency(t.submitDate).level==='3days').length,
+    'أسبوع📅':  allTenders.filter(t=>getUrgency(t.submitDate).level==='week').length,
+    'نشطة🟢':   allTenders.filter(t=>getUrgency(t.submitDate).level==='active').length,
+    'منتهية🚨':  allTenders.filter(t=>getUrgency(t.submitDate).level==='urgent').length,
   };
+  document.getElementById('an-donut-total').textContent = allTenders.length;
   if(anUrgencyChart) anUrgencyChart.destroy();
   anUrgencyChart=new Chart(document.getElementById('an-urgency-chart'),{
     type:'doughnut',
     data:{labels:Object.keys(urg),datasets:[{data:Object.values(urg),
-      backgroundColor:['#dc2626','#ea580c','#d97706','#16a34a','#7c3aed'],borderWidth:2,borderColor:'#fff'}]},
-    options:{responsive:true,maintainAspectRatio:true,cutout:'60%',
-      plugins:{legend:{position:'bottom',labels:{color:'#1a2332',font:{family:'Cairo',size:11},boxWidth:10,padding:8}}}}
+      backgroundColor:['#dc2626','#ea580c','#d97706','#16a34a','#7c3aed'],
+      borderWidth:3, borderColor:'#fff', hoverOffset:8}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+      plugins:{legend:{position:'bottom',labels:{color:'#1a2332',font:{family:'Cairo',size:10},boxWidth:10,padding:6}},
+               tooltip:{callbacks:{label:ctx=>` ${ctx.raw} مناقصة`},backgroundColor:'rgba(26,31,60,0.9)',titleFont:{family:'Cairo'},bodyFont:{family:'Cairo'}}}}
   });
 
-  // Work types from live data
+  // ── Works bar horizontal ───────────────────────
   const wc={};
   allTenders.forEach(t=>{if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1;});
-  const wtEntries=Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const wtE=Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,8);
   if(anWorksChart) anWorksChart.destroy();
   anWorksChart=new Chart(document.getElementById('an-works-chart'),{
     type:'bar',
-    data:{labels:wtEntries.map(([n])=>n),datasets:[{data:wtEntries.map(([,c])=>c),backgroundColor:CLIENTS_COLORS,borderRadius:6,borderSkipped:false}]},
-    options:{responsive:true,maintainAspectRatio:true,indexAxis:'y',
-      plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#6b7a99',font:{family:'Cairo',size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
-               y:{ticks:{color:'#1a2332',font:{family:'Cairo',size:11,weight:'700'}},grid:{display:false}}}}
+    data:{
+      labels:wtE.map(([n])=>n),
+      datasets:[{data:wtE.map(([,c])=>c),backgroundColor:AC,borderRadius:8,borderSkipped:false}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',
+      plugins:{legend:{display:false},
+               tooltip:{callbacks:{label:ctx=>` ${ctx.raw} مناقصة`},backgroundColor:'rgba(26,31,60,0.9)',titleFont:{family:'Cairo'},bodyFont:{family:'Cairo'}}},
+      scales:{
+        x:{ticks:{color:'#6b7a99',font:{family:'Cairo',size:10}},grid:{color:'rgba(0,0,0,0.05)'}},
+        y:{ticks:{color:'#1a2332',font:{family:'Cairo',size:11,weight:'700'}},grid:{display:false}}
+      }}
   });
+
+  // ── Top 5 combined owners ─────────────────────
+  const oc2={};
+  combined.forEach(t=>{if(t.owner) oc2[t.owner]=(oc2[t.owner]||0)+1;});
+  const top5=Object.entries(oc2).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const maxO=top5[0]?.[1]||1;
+  const medals=['g','s','b','',''];
+  document.getElementById('an-top5').innerHTML = top5.map(([n,c],i)=>`
+    <div class="top3-item">
+      <div class="top3-medal ${medals[i]}">${i<3?['🥇','🥈','🥉'][i]:i+1}</div>
+      <div class="top3-info">
+        <div class="top3-name">${n}</div>
+        <div class="top3-bar-bg"><div class="top3-bar" style="width:0%;background:${AC[i%AC.length]}" data-w="${c/maxO*100}"></div></div>
+      </div>
+      <div class="top3-count" style="color:${AC[i%AC.length]}">${c}</div>
+    </div>`).join('');
+  setTimeout(()=>{ document.querySelectorAll('.top3-bar').forEach(b=>{ b.style.width=b.dataset.w+'%'; }); },200);
+
+  // ── Timeline ───────────────────────────────────
+  setTimeout(renderTimeline, 100);
+
+  // ── Sectors progress bars ──────────────────────
+  const sc={};
+  combined.forEach(t=>{if(t.sector&&t.sector!=='—') sc[t.sector]=(sc[t.sector]||0)+1;});
+  const sectors=Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+  const maxS=sectors[0]?.[1]||1;
+  document.getElementById('an-sectors-prog').innerHTML = sectors.map(([n,c],i)=>`
+    <div class="an-progress-item">
+      <div class="an-progress-label"><span>${n}</span><span class="an-progress-pct">${c} (${Math.round(c/totalC*100)}%)</span></div>
+      <div class="an-progress-bg"><div class="an-progress-fill" style="width:0%;background:${AC[i%AC.length]}" data-w="${c/maxS*100}"></div></div>
+    </div>`).join('');
+  setTimeout(()=>{ document.querySelectorAll('.an-progress-fill').forEach(b=>{ b.style.width=b.dataset.w+'%'; }); },200);
+
+  // ── Quick Stats ────────────────────────────────
+  const uniqueOwners = new Set(combined.map(t=>t.owner).filter(Boolean)).size;
+  const uniqueTypes  = new Set(combined.map(t=>t.type).filter(Boolean)).size;
+  const urgentCount  = allTenders.filter(t=>['today','3days'].includes(getUrgency(t.submitDate).level)).length;
+  const guaCount     = allTenders.filter(t=>isGuaranteeToday(t.guarantee)).length;
+  const successRate  = totalC ? Math.round(subC/totalC*100) : 0;
+  document.getElementById('an-quick-stats').innerHTML = [
+    {l:'إجمالي الجهات المالكة', v: uniqueOwners + ' جهة'},
+    {l:'أنواع الأعمال المختلفة', v: uniqueTypes + ' نوع'},
+    {l:'مناقصات حرجة (3 أيام)', v: urgentCount},
+    {l:'ضمانات مستحقة اليوم', v: guaCount},
+    {l:'نسبة التقديم من الإجمالي', v: successRate + '%'},
+    {l:'متوسط المناقصات شهرياً', v: Math.round(subC/5) + ' مناقصة'},
+  ].map(({l,v})=>`
+    <div class="an-stat-row">
+      <span class="an-stat-label">${l}</span>
+      <span class="an-stat-val">${v}</span>
+    </div>`).join('');
+
+  // ── Heatmap ────────────────────────────────────
+  const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  const mData=Array(12).fill(0);
+  combined.forEach(t=>{
+    if(!t.date) return;
+    const d=new Date(t.date);
+    if(d.getFullYear()===2026) mData[d.getMonth()]++;
+  });
+  const maxM=Math.max(...mData,1);
+  const hmLevel = n => n===0?0:n<=maxM*0.25?1:n<=maxM*0.5?2:n<=maxM*0.75?3:4;
+  document.getElementById('an-heatmap').innerHTML = `
+    <div class="heatmap-grid">
+      <div class="heatmap-row">
+        <div class="heatmap-label"></div>
+        <div class="heatmap-cells">
+          ${months.slice(0,6).map((m,i)=>`<div class="heatmap-cell hm-${hmLevel(mData[i])}" title="${m}: ${mData[i]} مناقصة"></div>`).join('')}
+        </div>
+      </div>
+      <div class="heatmap-row">
+        <div class="heatmap-label"></div>
+        <div class="heatmap-cells">
+          ${months.slice(6).map((m,i)=>`<div class="heatmap-cell hm-${hmLevel(mData[i+6])}" title="${m}: ${mData[i+6]} مناقصة"></div>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+          ${months.map((m,i)=>`<div style="text-align:center;min-width:40px;">
+            <div style="font-size:16px;font-weight:900;color:${AC[i%AC.length]}">${mData[i]}</div>
+            <div style="font-size:9px;color:var(--text-muted)">${m.slice(0,3)}</div>
+          </div>`).join('')}
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-top:12px;font-size:10px;color:var(--text-muted);">
+        <span>أقل</span>
+        <div class="heatmap-cell hm-0" style="flex:none;width:18px;height:18px;border-radius:4px;"></div>
+        <div class="heatmap-cell hm-1" style="flex:none;width:18px;height:18px;border-radius:4px;"></div>
+        <div class="heatmap-cell hm-2" style="flex:none;width:18px;height:18px;border-radius:4px;"></div>
+        <div class="heatmap-cell hm-3" style="flex:none;width:18px;height:18px;border-radius:4px;"></div>
+        <div class="heatmap-cell hm-4" style="flex:none;width:18px;height:18px;border-radius:4px;"></div>
+        <span>أكثر</span>
+      </div>
+    </div>`;
 }
 
 
+
 // ── CLIENT MODAL ─────────────────────────────────────
-const OWNERS_DATA = {"مطار الملك سلمان": [{"name": "Sitewide Utilities Diversion_Revision", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-03", "status": "تم التقديم"}, {"name": "Sitewide Utilities Wastewater Treatment Plant", "type": "محطات", "sector": "قطاع منطقة الرياض", "date": "2026-03-31", "status": "تم التقديم"}], "الدرعية DGDA": [{"name": "Heros Park Main Construction Works", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-06", "status": "تم التقديم"}, {"name": "DGII The Grand Boulevard Public Realm.", "type": "تأهيل", "sector": "قطاع منطقة الرياض", "date": "2026-05-06", "status": "تم التقديم"}], "الرياض القابضة": [{"name": "مشروع تنفيذ لأعمال تطوير وتوسعة حراج ابن قاسم", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-07", "status": "تم التقديم"}], "الهيئة السعودية للمياة": [{"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بمنظومات إنتاج الشعيبة -004", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-17", "status": "تم التقديم"}, {"name": "توريد وتنفيذ خط تجميع مياه ابار وادي ضمد الى محطة تنقية مياه ضمد بجازان", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بوحدات الإنتاج (حقل- ضباء- الوجه- أملج- الليث- القنفذة-رابغ)", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-02-18", "status": "تم التقديم"}], "الشركة الوطنية للإسكان": [{"name": "Al Ruba Sanaya - Design & Build 1840 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-01-18", "status": "تم التقديم"}, {"name": "البنية التحتية الشاملة لمشروع ارض الحرس الوطني (وجهة الربى)", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}, {"name": "مبني صالة المبيعات بمشروع سدو تبوك", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-02", "status": "تم التقديم"}, {"name": "تنفيذ اعمال التنسيق العام لمركز مبيعات وجهة الربى", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-13", "status": "تم التقديم"}, {"name": "اعمال التسويات والبنية التحتية الشاملة لوجهة الجنى", "type": "بنية تحتية", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-18", "status": "تم التقديم"}, {"name": "Arassi Lazord - Design & Build 1372 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "status": "تم التقديم"}, {"name": "Wahj Asalah - Design & Build 956 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "status": "تم التقديم"}, {"name": "تنفيذ الأعمال الترابية لمشروع الفيصلية (الرشا)", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-30", "status": "تم التقديم"}, {"name": "أعمال تحسين و تسوية الموقع والأعمال الترابية لمنطقة 3 و المنطقة 6 مشروع لازورد", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-14", "status": "تم التقديم"}], "الشؤون الخاصة لخادم الحرمين الشريفين": [{"name": "مشروع إنشاء خزان مركزي بمقر الاسطول والمساندة", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "مشروع إحلال واستبدال المغذيات الرئيسية لمحطات المارينا بقصر السلام", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "status": "تم التقديم"}, {"name": "مشروع استبدال وحدات التكييف مع انظمه التحكم بمبنى ( 48أ ) بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-04", "status": "تم التقديم"}, {"name": "مشروع ربط المحطات ( B5.B2.B1 وبكج 1) و ( SF-1. SF-2.SF-3.SF-4.SF-5.SF-6.SF-7.SF-8.SF-9.SF-10 ) بنظام التحكم والمراقبة اسكادا بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-09", "status": "تم التقديم"}, {"name": "مشروع ربط محطات الكهرباء الفرعية بالمرينا والمحطة الرئيسية المغذية لها بنظام اسكادا بقصر السلا مبجدة", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "status": "تم التقديم"}, {"name": "مشروع احلال واستبدال كابلات الجهد المتوسط بين المحطات الفرعية المغذية لإنارة الاسوار البحرية والكميرات الامنية بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-11", "status": "تم التقديم"}], "بلدية محافظة الجبيل": [{"name": "صيانة وتشغيل الطرق والشوارع بمحافظة الجبيل للاعوام 2026ــ2028م", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "سفلتة مخططات المنح بمحافظة الجبيل", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل ( الجزء الرابع عشر )", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "status": "تم التقديم"}], "المؤسسة العامة للموانىء": [{"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الشرقي (ميناء الملك عبدالعزيز بالدمام – ميناء الجبيل التجاري – ميناء الملك فهد الصناعي بالجبيل – ميناء رأس الخير", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-26", "status": "تم التقديم"}, {"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الغربي (جدة الإسلامي – ميناء فرسان – ميناء ينبع التجاري)", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-30", "status": "تم التقديم"}], "بلدية محافظة القنفدة": [{"name": "منافسة عامة لمشروع صيانة الطرق والشوارع بمحافظة القنفذة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}], "هيئة المدن الصناعية": [{"name": "ازالة واستبدال العبارة الصندوقية بأنابيب خرسانية جاهزة بالطريق 62 بالمدينة الصناعية 1576830", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}], "الادارة العامة لمشروع ينبع": [{"name": "منافسة لمشروع إنشاء منظومة مياة الشرب بالمنطقة الصناعية (PIC I-T 7078)", "type": "إنشاءات", "sector": "القطاع الغربي", "date": "2026-01-28", "status": "تم التقديم"}, {"name": "الخدمات العامة لتوصيل المنافع (PIC I-7127 )", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-08", "status": "تم التقديم"}], "بلدية محافظة راس تنورة": [{"name": "صيانة طريق الكورنيش والارصفة الجانبية بمحافظة رأس تنورة للعام 2026م", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل وتطوير طريق الأمير محمد بن فهد للعام 2026م", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-14", "status": "تم التقديم"}, {"name": "مشروع صيانة الطرق المستلمة من وزارة النقل بنطاق بلدية محافظة رأس تنورة 2026-2029م", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-16", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل شارع الأمير نايف بن عبد العزيز 2026م بمحافظة رأس تنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "status": "تم التقديم"}], "امانة منطقة المدينة المنورة": [{"name": "مشروع  صيانة الطرق والشوارع في مخطط إسكان طريق الملك عبدالعزيز( مخطط الشروق) بالمدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "status": "تم التقديم"}, {"name": "فرصة صيانة الطرق والشوارع في مخطط إسكان ضاحية العاقول (مخطط الهضبة) مخطط رقم (س-4310480)", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "status": "تم التقديم"}, {"name": "لفرصة صيانة الطرق والشوارع في مخطط اسكان طريق حائل السريع (مخطط الياسمين) بالمدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "status": "تم التقديم"}], "امانة المنطقة الشرقية": [{"name": "مشروع صيانة ومعالجة الحفر والأرصفة بنطاق بلدية غرب الدمام", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تشغيل وصيانة الجسور والأنفاق للطرق المحورية للأعوام 2026-2029م", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بحي الخدمات المساندة بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي النهضة والمنتزه بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "status": "تم التقديم"}, {"name": "مشروع تطوير شوارع مخطط 1262 بضاحية الملك فهد بالدمام", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بضاحية الملك فهد المرحلة الثالثة", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي الخالدية بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "status": "تم التقديم"}], "وزارة الدفاع": [{"name": "منافسة عامة لمشروع تطوير مرافق بالادارة العامة والمستودعات", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-04", "status": "تم التقديم"}], "المسار الرياضي": [{"name": "Special Projects Delivery Framework", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-02-11", "status": "تم التقديم"}, {"name": "New playground and sands sports park Design and build works (P012G)", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-03-15", "status": "تم التقديم"}, {"name": "Design and Build for Wadi Hanifa South(P001E)", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "status": "تم التقديم"}], "DAR GLOBAL Co.": [{"name": "AMAYA Master Plan", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "status": "تم التقديم"}, {"name": "WADI SAFAR MASTERPLAN, INFRA & LANDSCAPE", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-29", "status": "تم التقديم"}], "وزارة الرياضة": [{"name": "Main Contractor PQQ_FIFA World Cup 2034™️ Training Sites", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-26", "status": "تم التقديم"}], "بلدية محافظة رابغ": [{"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الخامسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة السادسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الثالثة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الرابعة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}], "أمانة جدة": [{"name": "تنفيذ حلول تصريف مياه الامطار لمنطقة BC الحزمة الخامسة - الشاطئ المنطقة الساحلية", "type": "بنية تحتية", "sector": "القطاع الغربي", "date": "2026-02-28", "status": "تم التقديم"}], "شركة المياة الوطنية": [{"name": "إيصال خدمة المياه لمجمع الملك فهد الطبي العسكري بالظهران", "type": "خطوط نقل المياة", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-04", "status": "تم التقديم"}], "ROSHN": [{"name": "RFI - Single Family - Gen 2.5", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-06", "status": "تم التقديم"}, {"name": "Construction of District Retail For Sedra 2 & Sedra 3", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-12", "status": "تم التقديم"}], "أمانة منطقة القصيم": [{"name": "صيانة الشوارع بنطاق بلدية شرق بريدة الفرعية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-06", "status": "تم التقديم"}, {"name": "معالجة قصور الأسفلت بمدينة بريدة (مرحلة ثانية)", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-09", "status": "تم التقديم"}, {"name": "استكمال تنفيذ طريق البيارق", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-15", "status": "تم التقديم"}, {"name": "استكمال تأهيل وصيانة بعض التقاطعات بمدينة بريدة", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "status": "تم التقديم"}], "امانة العاصمة المقدسة": [{"name": "عملية تطوير المناطق المحيطة بمحور الأمير محمد بن سلمان", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-07", "status": "تم التقديم"}], "حرس الحدود": [{"name": "إنشاء عدد (17) مستودع وساحة استلام وتسليم بالمديرية العامة لحرس الحدود بالبرشاعة", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-03-31", "status": "تم التقديم"}], "الادارة العامة لمشروع الجبيل": [{"name": "تورید وإنشاء مرافق الخدمات المشتركة في منطقة البلاسكیم", "type": "إنشاءات ، بنية تحتية", "sector": "القطاع الشرقي", "date": "2026-04-06", "status": "تم التقديم"}], "شركة جدة للتنمية والتطوير": [{"name": "أعمال تنفيذ مشروع القرية الرياضية – حي الأجواد بمدينة جدة", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-04-20", "status": "تم التقديم"}], "qiddya": [{"name": "RFP - QPMO-410-CT-07776-D0 Deep Services Phase 1", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-25", "status": "تم التقديم"}], "SAR  الخطوط الحديدية السعودية": [{"name": "NSR Track Doubling (Phosphate 3) Section 2 & Loops", "type": "إنشاء خطوط السكك الحديدية ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-26", "status": "تم التقديم"}], "البرنامج السعودي لتنمية واعمار اليمن": [{"name": "مشروع انشاء المستشفى الجامعي بجامعة حضرموت", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-05-02", "status": "تم التقديم"}], "شركة كدانة للتنمية والتطوير": [{"name": "الاتفاقية الاطارية لأنسنه المشاعر المقدسة وتحسين المشهد الحضري", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "status": "تم التقديم"}]};
+const OWNERS_DATA = {"أمانة منطقة جازان": [{"name": "⁠انشاء عبارات و حواجز خرسانية وعقوم لدرء اخطار السيول بمدينة جيزان", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-12", "status": "جارية"}], "الشركة الوطنية للإسكان": [{"name": "تنفيذ و تشغيل وصيانة الحدائق العامة والسقيا لوجهة (قمره) صفوى2 ( عدد ) 3 حدائق", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-12", "status": "جارية"}, {"name": "Al Ruba Sanaya - Design & Build 1840 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-01-18", "status": "تم التقديم"}, {"name": "البنية التحتية الشاملة لمشروع ارض الحرس الوطني (وجهة الربى)", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}, {"name": "مبني صالة المبيعات بمشروع سدو تبوك", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-02", "status": "تم التقديم"}, {"name": "تنفيذ اعمال التنسيق العام لمركز مبيعات وجهة الربى", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-13", "status": "تم التقديم"}, {"name": "اعمال التسويات والبنية التحتية الشاملة لوجهة الجنى", "type": "بنية تحتية", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-18", "status": "تم التقديم"}, {"name": "Arassi Lazord - Design & Build 1372 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "status": "تم التقديم"}, {"name": "Wahj Asalah - Design & Build 956 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "status": "تم التقديم"}, {"name": "تنفيذ الأعمال الترابية لمشروع الفيصلية (الرشا)", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-30", "status": "تم التقديم"}, {"name": "أعمال تحسين و تسوية الموقع والأعمال الترابية لمنطقة 3 و المنطقة 6 مشروع لازورد", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-14", "status": "تم التقديم"}], "القوات الجوية": [{"name": "إنشاء مرافق إضافية بقاعدة الملك سلمان الجوية بالقطاع الأوسط وكلية الملك فيصل الجوية", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-05-13", "status": "جارية"}], "مطار الملك سلمان": [{"name": "RFP KSIA-TEN-00000129: Potable Water & Fire Water Tanks and Pumping Station", "type": "إنشاءات ، بنية تحتية", "sector": "—", "date": "2026-05-16", "status": "جارية"}, {"name": "Sitewide Utilities Irrigation Storage Tanks Pumping Station", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-05-16", "status": "جارية"}, {"name": "Sitewide Utilities Diversion_Revision", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-03", "status": "تم التقديم"}, {"name": "Sitewide Utilities Wastewater Treatment Plant", "type": "محطات", "sector": "قطاع منطقة الرياض", "date": "2026-03-31", "status": "تم التقديم"}], "الهيئة السعودية للمياة": [{"name": "توريد وتركيب أنابيب الالياف الزجاجية لنظام نقل الرياض القصيم", "type": "خطوط نقل المياة", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-05-23", "status": "جارية"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بمنظومات إنتاج الشعيبة -004", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-17", "status": "تم التقديم"}, {"name": "توريد وتنفيذ خط تجميع مياه ابار وادي ضمد الى محطة تنقية مياه ضمد بجازان", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بوحدات الإنتاج (حقل- ضباء- الوجه- أملج- الليث- القنفذة-رابغ)", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-02-18", "status": "تم التقديم"}], "SAR  الخطوط الحديدية السعودية": [{"name": "NSR Track Doubling (Phosphate 3) Depot & Loops 1-3", "type": "إنشاء خطوط السكك الحديدية ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-01", "status": "جارية"}, {"name": "Riyadh Rail Link - Design & Build Contractor Package", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-06-01", "status": "جارية"}, {"name": "NSR Track Doubling (Phosphate 3) Section 2 & Loops", "type": "إنشاء خطوط السكك الحديدية ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-26", "status": "تم التقديم"}], "وزارة الداخلية -الديوان العام": [{"name": "مشروع إنشاء ثلاث دور إيواء في كل من مناطق (مكة المكرمة ، والرياض، وعسير)", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-06-02", "status": "جارية"}], "الادارة العامة لمشروع ينبع": [{"name": "تصميم وإنشاء أنابيب التبريد بمياه البحر إلى منطقة البتروكيماويات (بي آي سي آي-تي-7068)", "type": "إنشاء محطات التحلية Ro", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-06-05", "status": "جارية"}, {"name": "منافسة لمشروع إنشاء منظومة مياة الشرب بالمنطقة الصناعية (PIC I-T 7078)", "type": "إنشاءات", "sector": "القطاع الغربي", "date": "2026-01-28", "status": "تم التقديم"}, {"name": "الخدمات العامة لتوصيل المنافع (PIC I-7127 )", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-08", "status": "تم التقديم"}], "أمانة جدة": [{"name": "تنفيذ حلول تصريف مياه الأمطار لمنطقة الرياض (20338)", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-05", "status": "جارية"}, {"name": "تنفيذ حلول تصريف مياه الأمطار للمنطقة H الحزمة الثانية- الوفاء", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-10", "status": "جارية"}, {"name": "تنفيذ حلول لتصريف مياه الأمطار للمنطقة (H) الحزمة الأولى – الفروسية (20317)", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-14", "status": "جارية"}, {"name": "تنفيذ حلول تصريف مياه الامطار لمنطقة BC الحزمة الخامسة - الشاطئ المنطقة الساحلية", "type": "بنية تحتية", "sector": "القطاع الغربي", "date": "2026-02-28", "status": "تم التقديم"}], "Wittco": [{"name": "تنفيذ مشروع نظام نقل المياه الجبيل بريدة المرحلة الثانية", "type": "خطوط نقل المياة", "sector": "القطاع الشرقي", "date": "2026-06-12", "status": "جارية"}, {"name": "تنفيذ مشروع نظام نقل مياه رأس محيسن-الباحة-مكة", "type": "خطوط نقل المياة", "sector": "القطاع الغربي", "date": "2026-06-18", "status": "جارية"}], "الدرعية DGDA": [{"name": "Heros Park Main Construction Works", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-06", "status": "تم التقديم"}, {"name": "DGII The Grand Boulevard Public Realm.", "type": "تأهيل", "sector": "قطاع منطقة الرياض", "date": "2026-05-06", "status": "تم التقديم"}], "الرياض القابضة": [{"name": "مشروع تنفيذ لأعمال تطوير وتوسعة حراج ابن قاسم", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-07", "status": "تم التقديم"}], "الشؤون الخاصة لخادم الحرمين الشريفين": [{"name": "مشروع إنشاء خزان مركزي بمقر الاسطول والمساندة", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "مشروع إحلال واستبدال المغذيات الرئيسية لمحطات المارينا بقصر السلام", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "status": "تم التقديم"}, {"name": "مشروع استبدال وحدات التكييف مع انظمه التحكم بمبنى ( 48أ ) بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-04", "status": "تم التقديم"}, {"name": "مشروع ربط المحطات ( B5.B2.B1 وبكج 1) و ( SF-1. SF-2.SF-3.SF-4.SF-5.SF-6.SF-7.SF-8.SF-9.SF-10 ) بنظام التحكم والمراقبة اسكادا بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-09", "status": "تم التقديم"}, {"name": "مشروع ربط محطات الكهرباء الفرعية بالمرينا والمحطة الرئيسية المغذية لها بنظام اسكادا بقصر السلا مبجدة", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "status": "تم التقديم"}, {"name": "مشروع احلال واستبدال كابلات الجهد المتوسط بين المحطات الفرعية المغذية لإنارة الاسوار البحرية والكميرات الامنية بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-11", "status": "تم التقديم"}], "بلدية محافظة الجبيل": [{"name": "صيانة وتشغيل الطرق والشوارع بمحافظة الجبيل للاعوام 2026ــ2028م", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "سفلتة مخططات المنح بمحافظة الجبيل", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل ( الجزء الرابع عشر )", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "status": "تم التقديم"}], "المؤسسة العامة للموانىء": [{"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الشرقي (ميناء الملك عبدالعزيز بالدمام – ميناء الجبيل التجاري – ميناء الملك فهد الصناعي بالجبيل – ميناء رأس الخير", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-26", "status": "تم التقديم"}, {"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الغربي (جدة الإسلامي – ميناء فرسان – ميناء ينبع التجاري)", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-30", "status": "تم التقديم"}], "بلدية محافظة القنفدة": [{"name": "منافسة عامة لمشروع صيانة الطرق والشوارع بمحافظة القنفذة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}], "هيئة المدن الصناعية": [{"name": "ازالة واستبدال العبارة الصندوقية بأنابيب خرسانية جاهزة بالطريق 62 بالمدينة الصناعية 1576830", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}], "بلدية محافظة راس تنورة": [{"name": "صيانة طريق الكورنيش والارصفة الجانبية بمحافظة رأس تنورة للعام 2026م", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل وتطوير طريق الأمير محمد بن فهد للعام 2026م", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-14", "status": "تم التقديم"}, {"name": "مشروع صيانة الطرق المستلمة من وزارة النقل بنطاق بلدية محافظة رأس تنورة 2026-2029م", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-16", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل شارع الأمير نايف بن عبد العزيز 2026م بمحافظة رأس تنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "status": "تم التقديم"}], "امانة منطقة المدينة المنورة": [{"name": "مشروع  صيانة الطرق والشوارع في مخطط إسكان طريق الملك عبدالعزيز( مخطط الشروق) بالمدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "status": "تم التقديم"}, {"name": "فرصة صيانة الطرق والشوارع في مخطط إسكان ضاحية العاقول (مخطط الهضبة) مخطط رقم (س-4310480)", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "status": "تم التقديم"}, {"name": "لفرصة صيانة الطرق والشوارع في مخطط اسكان طريق حائل السريع (مخطط الياسمين) بالمدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "status": "تم التقديم"}], "امانة المنطقة الشرقية": [{"name": "مشروع صيانة ومعالجة الحفر والأرصفة بنطاق بلدية غرب الدمام", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تشغيل وصيانة الجسور والأنفاق للطرق المحورية للأعوام 2026-2029م", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بحي الخدمات المساندة بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي النهضة والمنتزه بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "status": "تم التقديم"}, {"name": "مشروع تطوير شوارع مخطط 1262 بضاحية الملك فهد بالدمام", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بضاحية الملك فهد المرحلة الثالثة", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي الخالدية بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "status": "تم التقديم"}], "وزارة الدفاع": [{"name": "منافسة عامة لمشروع تطوير مرافق بالادارة العامة والمستودعات", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-04", "status": "تم التقديم"}], "المسار الرياضي": [{"name": "Special Projects Delivery Framework", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-02-11", "status": "تم التقديم"}, {"name": "New playground and sands sports park Design and build works (P012G)", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-03-15", "status": "تم التقديم"}, {"name": "Design and Build for Wadi Hanifa South(P001E)", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "status": "تم التقديم"}], "DAR GLOBAL Co.": [{"name": "AMAYA Master Plan", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "status": "تم التقديم"}, {"name": "WADI SAFAR MASTERPLAN, INFRA & LANDSCAPE", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-29", "status": "تم التقديم"}], "وزارة الرياضة": [{"name": "Main Contractor PQQ_FIFA World Cup 2034™️ Training Sites", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-26", "status": "تم التقديم"}], "بلدية محافظة رابغ": [{"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الخامسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة السادسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الثالثة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الرابعة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}], "شركة المياة الوطنية": [{"name": "إيصال خدمة المياه لمجمع الملك فهد الطبي العسكري بالظهران", "type": "خطوط نقل المياة", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-04", "status": "تم التقديم"}], "ROSHN": [{"name": "RFI - Single Family - Gen 2.5", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-06", "status": "تم التقديم"}, {"name": "Construction of District Retail For Sedra 2 & Sedra 3", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-12", "status": "تم التقديم"}], "أمانة منطقة القصيم": [{"name": "صيانة الشوارع بنطاق بلدية شرق بريدة الفرعية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-06", "status": "تم التقديم"}, {"name": "معالجة قصور الأسفلت بمدينة بريدة (مرحلة ثانية)", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-09", "status": "تم التقديم"}, {"name": "استكمال تنفيذ طريق البيارق", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-15", "status": "تم التقديم"}, {"name": "استكمال تأهيل وصيانة بعض التقاطعات بمدينة بريدة", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "status": "تم التقديم"}], "امانة العاصمة المقدسة": [{"name": "عملية تطوير المناطق المحيطة بمحور الأمير محمد بن سلمان", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-07", "status": "تم التقديم"}], "حرس الحدود": [{"name": "إنشاء عدد (17) مستودع وساحة استلام وتسليم بالمديرية العامة لحرس الحدود بالبرشاعة", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-03-31", "status": "تم التقديم"}], "الادارة العامة لمشروع الجبيل": [{"name": "تورید وإنشاء مرافق الخدمات المشتركة في منطقة البلاسكیم", "type": "إنشاءات ، بنية تحتية", "sector": "القطاع الشرقي", "date": "2026-04-06", "status": "تم التقديم"}], "شركة جدة للتنمية والتطوير": [{"name": "أعمال تنفيذ مشروع القرية الرياضية – حي الأجواد بمدينة جدة", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-04-20", "status": "تم التقديم"}], "qiddya": [{"name": "RFP - QPMO-410-CT-07776-D0 Deep Services Phase 1", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-25", "status": "تم التقديم"}], "البرنامج السعودي لتنمية واعمار اليمن": [{"name": "مشروع انشاء المستشفى الجامعي بجامعة حضرموت", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-05-02", "status": "تم التقديم"}], "شركة كدانة للتنمية والتطوير": [{"name": "الاتفاقية الاطارية لأنسنه المشاعر المقدسة وتحسين المشهد الحضري", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "status": "تم التقديم"}]};
 let cmCurrentOwner = null, cmCurrentFilter = 'all';
 const CM_COLORS = ['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
 
@@ -1914,6 +2350,8 @@ function printFull() {
   }, 1000);
 }
 
+// Initialize with static submitted data immediately
+rebuildOwnersData();
 fetchTenders();
 setInterval(fetchTenders, 5*60*1000);
 
