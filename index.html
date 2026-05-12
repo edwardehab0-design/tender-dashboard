@@ -521,6 +521,52 @@ body::before {
 }
 .print-btn:hover { background:rgba(255,255,255,0.22); }
 
+
+/* ===== PASSWORD SCREEN ===== */
+.pw-overlay {
+  position:fixed; inset:0; z-index:9999;
+  background:linear-gradient(135deg, #1a1f3c 0%, #2d3561 50%, #1a150a 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.pw-box {
+  background:rgba(255,255,255,0.05); border:1.5px solid rgba(212,160,23,0.3);
+  border-radius:24px; padding:48px 40px; width:380px; text-align:center;
+  box-shadow:0 24px 64px rgba(0,0,0,0.4); backdrop-filter:blur(10px);
+  animation:modalIn 0.3s ease;
+}
+.pw-logo { font-size:48px; margin-bottom:16px; }
+.pw-title { font-size:22px; font-weight:900; color:#f0c040; margin-bottom:6px; }
+.pw-sub { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:32px; }
+.pw-input-wrap { position:relative; margin-bottom:16px; }
+.pw-input {
+  width:100%; padding:14px 48px 14px 16px; border-radius:14px;
+  background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.15);
+  color:#fff; font-family:'Cairo',sans-serif; font-size:15px;
+  outline:none; text-align:center; letter-spacing:4px;
+  transition:border-color 0.2s;
+}
+.pw-input:focus { border-color:#d4a017; }
+.pw-input::placeholder { letter-spacing:1px; color:rgba(255,255,255,0.3); }
+.pw-toggle {
+  position:absolute; left:14px; top:50%; transform:translateY(-50%);
+  background:none; border:none; color:rgba(255,255,255,0.4); cursor:pointer;
+  font-size:16px; padding:4px;
+}
+.pw-btn {
+  width:100%; padding:14px; border-radius:14px;
+  background:linear-gradient(135deg,#d4a017,#b8860b);
+  border:none; color:#fff; font-family:'Cairo',sans-serif;
+  font-size:15px; font-weight:800; cursor:pointer;
+  transition:all 0.2s; box-shadow:0 4px 16px rgba(184,134,11,0.3);
+}
+.pw-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(184,134,11,0.4); }
+.pw-error {
+  color:#f87171; font-size:12px; margin-top:10px;
+  display:none; animation:fadeIn 0.2s ease;
+}
+.pw-error.show { display:block; }
+.pw-hint { font-size:11px; color:rgba(255,255,255,0.2); margin-top:24px; }
+
 @media(max-width:1100px){.content-grid{grid-template-columns:1fr}.stats-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.main{padding:14px}.stats-grid{grid-template-columns:repeat(2,1fr)}.header{padding:0 16px}}
 </style>
@@ -1815,6 +1861,51 @@ function animateNum(el, target) {
   const t=setInterval(()=>{ n=Math.min(n+step,target); el.textContent=n; if(n>=target)clearInterval(t); },40);
 }
 
+
+// ── PASSWORD PROTECTION ──────────────────────────────
+const PW_HASH = '076077e07fb2eee222dcc07354b127449b03ecf09c6f1c311ae1a4bc9b59223c';
+
+async function hashString(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPassword() {
+  const val = document.getElementById('pw-input').value;
+  if(!val) return;
+  const hash = await hashString(val);
+  if(hash === PW_HASH) {
+    sessionStorage.setItem('pw_ok','1');
+    document.getElementById('pw-overlay').style.animation = 'fadeOut 0.3s ease forwards';
+    setTimeout(()=>{ document.getElementById('pw-overlay').style.display='none'; }, 300);
+  } else {
+    const err = document.getElementById('pw-error');
+    err.classList.add('show');
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').style.borderColor='#ef4444';
+    setTimeout(()=>{ err.classList.remove('show'); document.getElementById('pw-input').style.borderColor='rgba(255,255,255,0.15)'; }, 2500);
+  }
+}
+
+function togglePwVisibility() {
+  const input = document.getElementById('pw-input');
+  const eye = document.getElementById('pw-eye');
+  if(input.type === 'password') { input.type='text'; eye.textContent='🙈'; }
+  else { input.type='password'; eye.textContent='👁️'; }
+}
+
+// Check session on load
+(function() {
+  if(sessionStorage.getItem('pw_ok') === '1') {
+    document.getElementById('pw-overlay').style.display='none';
+  }
+})();
+
+// Add fadeOut keyframe
+const styleEl = document.createElement('style');
+styleEl.textContent = '@keyframes fadeOut { to { opacity:0; } }';
+document.head.appendChild(styleEl);
+
 fetchTenders();
 setInterval(fetchTenders, 5*60*1000);
 
@@ -2327,6 +2418,25 @@ function download(wb, name) {
       </div>
       <div id="cm-body"></div>
     </div>
+  </div>
+</div>
+
+
+<!-- Password Screen -->
+<div class="pw-overlay" id="pw-overlay">
+  <div class="pw-box">
+    <div class="pw-logo">🔐</div>
+    <div class="pw-title">الإدارة العامة للمناقصات</div>
+    <div class="pw-sub">أدخل كلمة المرور للوصول إلى النظام</div>
+    <div class="pw-input-wrap">
+      <input class="pw-input" type="password" id="pw-input"
+        placeholder="● ● ● ● ● ●"
+        onkeydown="if(event.key==='Enter') checkPassword()">
+      <button class="pw-toggle" onclick="togglePwVisibility()" id="pw-eye">👁️</button>
+    </div>
+    <button class="pw-btn" onclick="checkPassword()">دخول ←</button>
+    <div class="pw-error" id="pw-error">❌ كلمة المرور غير صحيحة</div>
+    <div class="pw-hint">Tendering Department — الرواف للمقاولات</div>
   </div>
 </div>
 
