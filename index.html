@@ -1197,6 +1197,9 @@ async function fetchTenders() {
     clientsRendered = false;
     analyticsRendered = false;
     renderAll();
+    // If a tab is currently active, re-render it
+    if(document.getElementById('tab-clients')?.classList.contains('active')) renderClients();
+    if(document.getElementById('tab-analytics')?.classList.contains('active')) { analyticsRendered=false; renderAnalytics(); }
 
     document.getElementById('last-update').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-SA');
   } catch(e) {
@@ -1206,10 +1209,10 @@ async function fetchTenders() {
 }
 
 function rebuildOwnersData() {
-  // Combine in-progress tenders + submitted tenders for 2026
+  // Combine in-progress tenders + submitted tenders for 2026 ONLY
   const combined = [
     ...allTenders.map(t=>({ name:t.title, owner:t.owner, type:t.workType, sector:t.sector, date:t.submitDate, status:'جارية' })),
-    ...allSubmitted
+    ...allSubmitted.filter(t=>{ const d=new Date(t.date||''); return d.getFullYear()===2026; })
   ];
   // Clear and rebuild OWNERS_DATA
   Object.keys(OWNERS_DATA).forEach(k=>delete OWNERS_DATA[k]);
@@ -1225,13 +1228,13 @@ function rebuildOwnersData() {
   clientOwners.length = 0;
   sorted.forEach(([name,ts])=>clientOwners.push({name, count:ts.length}));
 
-  // Update KPI cards
+  // Update KPI cards — 2026 only
   const totalEl = document.querySelector('.client-kpi.ck1 .client-kpi-num');
   const clientsEl = document.querySelector('.client-kpi.ck2 .client-kpi-num');
   const jariyaEl = document.querySelector('.client-kpi.ck3 .client-kpi-num');
   const subEl = document.querySelector('.client-kpi.ck4 .client-kpi-num');
   const jariya = allTenders.length;
-  const sub = allSubmitted.length;
+  const sub = allSubmitted.filter(t=>{ const d=new Date(t.date||''); return d.getFullYear()===2026; }).length;
   const total = jariya + sub;
   const clients = Object.keys(OWNERS_DATA).length;
   animateNum(totalEl, total);
@@ -1443,8 +1446,8 @@ function switchTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
   btn.classList.add('active');
-  if(name==='clients') renderClients();
-  if(name==='analytics') renderAnalytics();
+  if(name==='clients') { clientsRendered=false; renderClients(); }
+  if(name==='analytics') { analyticsRendered=false; renderAnalytics(); }
 }
 
 // ── CLIENTS DATA ──────────────────────────────────────
@@ -1485,13 +1488,18 @@ let clWorksChart=null, anOwnersChart=null, anUrgencyChart=null, anWorksChart=nul
 let clientsRendered=false, analyticsRendered=false;
 
 function renderClients() {
-  if(clientsRendered) return;
-  clientsRendered=true;
+  // Always re-render with live data (remove caching so KPIs stay fresh)
+  clientsRendered = true;
 
-  // Owner bars
-  const max=clientOwners[0].count;
+  // Build live data from OWNERS_DATA (2026 only — all records are 2026)
+  const allT2026 = Object.entries(OWNERS_DATA).flatMap(([owner,tenders])=>tenders.map(t=>({...t,owner})));
+  const allT2026Total = allT2026.length;
+
+  // Owner bars — from live clientOwners
+  if(!clientOwners.length) return;
+  const max = clientOwners[0].count;
   document.getElementById('cl-owner-bars').innerHTML = clientOwners.map((o,i)=>`
-    <div class="cl-owner-item" onclick="openClientModal('${o.name}','${CLIENTS_COLORS[i%CLIENTS_COLORS.length]}')" title="اضغط لعرض مناقصات ${o.name}">
+    <div class="cl-owner-item" onclick="openClientModal('${o.name.replace(/'/g,"\\'")}','${CLIENTS_COLORS[i%CLIENTS_COLORS.length]}')" title="اضغط لعرض مناقصات ${o.name}">
       <div class="cl-rank ${i===0?'gold':i===1?'silver':i===2?'bronze':''}">${i+1}</div>
       <div class="cl-info">
         <div class="cl-name">${o.name}</div>
@@ -1501,22 +1509,28 @@ function renderClients() {
     </div>`).join('');
   setTimeout(()=>{ document.querySelectorAll('.cl-bar-fill').forEach(el=>{ el.style.width=el.dataset.w+'%'; }); },100);
 
-  // Sectors
-  const maxS=clientSectors[0].count;
-  document.getElementById('cl-sectors').innerHTML = clientSectors.map(s=>`
+  // Sectors — built from live data
+  const scMap={};
+  allT2026.forEach(t=>{ if(t.sector&&t.sector!=='—') scMap[t.sector]=(scMap[t.sector]||0)+1; });
+  const liveSectors = Object.entries(scMap).sort((a,b)=>b[1]-a[1]);
+  const maxS = liveSectors[0]?.[1]||1;
+  document.getElementById('cl-sectors').innerHTML = liveSectors.map(([name,count])=>`
     <div class="cl-sector-item">
-      <div class="cl-sector-name">${s.name}</div>
-      <div class="cl-sector-bar-bg"><div class="cl-sector-fill" style="width:${s.count/maxS*100}%"></div></div>
-      <div class="cl-sector-pct">${Math.round(s.count/89*100)}%</div>
+      <div class="cl-sector-name">${name}</div>
+      <div class="cl-sector-bar-bg"><div class="cl-sector-fill" style="width:${count/maxS*100}%"></div></div>
+      <div class="cl-sector-pct">${allT2026Total?Math.round(count/allT2026Total*100):0}%</div>
     </div>`).join('');
 
-  // Works bar chart
+  // Works bar chart — built from live data
+  const wcMap={};
+  allT2026.forEach(t=>{ if(t.type&&t.type!=='—') wcMap[t.type]=(wcMap[t.type]||0)+1; });
+  const liveWorks = Object.entries(wcMap).sort((a,b)=>b[1]-a[1]);
   if(clWorksChart) clWorksChart.destroy();
   clWorksChart=new Chart(document.getElementById('cl-works-chart'),{
     type:'bar',
     data:{
-      labels:clientWorks.map(w=>w.name),
-      datasets:[{data:clientWorks.map(w=>w.count),backgroundColor:CLIENTS_COLORS,borderRadius:6,borderSkipped:false}]
+      labels:liveWorks.map(([n])=>n),
+      datasets:[{data:liveWorks.map(([,c])=>c),backgroundColor:CLIENTS_COLORS,borderRadius:6,borderSkipped:false}]
     },
     options:{responsive:true,maintainAspectRatio:true,indexAxis:'y',
       plugins:{legend:{display:false}},
@@ -1526,24 +1540,26 @@ function renderClients() {
 }
 
 function renderAnalytics() {
-  if(analyticsRendered) return;
   analyticsRendered = true;
   setTimeout(_buildAnalytics, 100);
 }
 
 function _buildAnalytics() {
   const AC = ['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
+
+  // combined = كل مناقصات 2026 فقط (جارية + مقدمة)
   const combined = [
     ...allTenders.map(t=>({owner:t.owner,type:t.workType,sector:t.sector,date:t.submitDate,status:'جارية'})),
-    ...allSubmitted.map(t=>({owner:t.owner,type:t.type,sector:t.sector,date:t.date,status:'تم التقديم'}))
+    ...allSubmitted.filter(t=> { const d=new Date(t.date||''); return d.getFullYear()===2026; })
+                   .map(t=>({owner:t.owner,type:t.type,sector:t.sector,date:t.date,status:'تم التقديم'}))
   ];
 
   // ── KPI Strip ──────────────────────────────────
   const todayC  = allTenders.filter(t=>getUrgency(t.submitDate).level==='today').length;
   const weekC   = allTenders.filter(t=>['today','3days','week'].includes(getUrgency(t.submitDate).level)).length;
   const totalC  = combined.length;
-  const subC    = allSubmitted.length;
-  const jarC    = allTenders.length;
+  const subC    = combined.filter(t=>t.status==='تم التقديم').length;
+  const jarC    = combined.filter(t=>t.status==='جارية').length;
   animateNum(document.getElementById('an-kpi-total'),  totalC);
   animateNum(document.getElementById('an-kpi-jariya'), jarC);
   animateNum(document.getElementById('an-kpi-sub'),    subC);
@@ -1558,9 +1574,9 @@ function _buildAnalytics() {
     if(path) { path.style.strokeDashoffset = 220 - (220*pct/100); path.style.transition='stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)'; }
   }, 200);
 
-  // ── Owners bar chart ───────────────────────────
+  // ── Owners bar chart — 2026 الجارية فقط ───────────────────────────
   const oc={};
-  allTenders.forEach(t=>{if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1;});
+  combined.filter(t=>t.status==='جارية').forEach(t=>{if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1;});
   const ownerEntries=Object.entries(oc).sort((a,b)=>b[1]-a[1]).slice(0,8);
   if(anOwnersChart) anOwnersChart.destroy();
   anOwnersChart=new Chart(document.getElementById('an-owners-chart'),{
@@ -1605,9 +1621,9 @@ function _buildAnalytics() {
                tooltip:{callbacks:{label:ctx=>` ${ctx.raw} مناقصة`},backgroundColor:'rgba(26,31,60,0.9)',titleFont:{family:'Cairo'},bodyFont:{family:'Cairo'}}}}
   });
 
-  // ── Works bar horizontal ───────────────────────
+  // ── Works bar horizontal — الجارية 2026 ───────────────────────
   const wc={};
-  allTenders.forEach(t=>{if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1;});
+  combined.filter(t=>t.status==='جارية').forEach(t=>{if(t.type) wc[t.type]=(wc[t.type]||0)+1;});
   const wtE=Object.entries(wc).sort((a,b)=>b[1]-a[1]).slice(0,8);
   if(anWorksChart) anWorksChart.destroy();
   anWorksChart=new Chart(document.getElementById('an-works-chart'),{
