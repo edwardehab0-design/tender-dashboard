@@ -722,29 +722,6 @@ body::before {
 .welcome-sub { font-size:12px; color:rgba(255,255,255,0.5); line-height:1.7; margin-bottom:28px; }
 .welcome-enter-btn { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#d4a017,#b8860b); border:none; color:#fff; font-family:'Cairo',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:all 0.2s; }
 .welcome-enter-btn:hover { transform:translateY(-2px); }
-
-#welcome-screen {
-  position:fixed; inset:0; z-index:9998;
-  background:linear-gradient(135deg, #1a1f3c 0%, #2d3561 50%, #1a150a 100%);
-  display:none; align-items:center; justify-content:center;
-}
-#welcome-screen.active { display:flex !important; }
-.welcome-box {
-  background:rgba(255,255,255,0.06); border:1.5px solid rgba(212,160,23,0.3);
-  border-radius:24px; padding:44px 40px; width:420px; text-align:center;
-  box-shadow:0 24px 64px rgba(0,0,0,0.4); backdrop-filter:blur(10px);
-  animation:modalIn 0.4s ease;
-}
-.welcome-avatar { width:110px; height:110px; border-radius:50%; margin:0 auto 18px; overflow:hidden; border:3px solid #d4a017; box-shadow:0 4px 20px rgba(212,160,23,0.35); }
-.welcome-avatar img { width:100%; height:100%; object-fit:cover; object-position:top; }
-.welcome-avatar-icon { width:110px; height:110px; border-radius:50%; margin:0 auto 18px; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; font-size:48px; border:3px solid #d4a017; }
-.welcome-greeting { font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:6px; letter-spacing:1px; }
-.welcome-name { font-size:20px; font-weight:900; color:#f0c040; margin-bottom:10px; }
-.welcome-divider { width:50px; height:2px; background:linear-gradient(90deg,#d4a017,#f0c040); border-radius:2px; margin:0 auto 12px; }
-.welcome-msg { font-size:14px; color:rgba(255,255,255,0.85); font-weight:700; margin-bottom:6px; }
-.welcome-sub { font-size:12px; color:rgba(255,255,255,0.5); line-height:1.7; margin-bottom:28px; }
-.welcome-enter-btn { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#d4a017,#b8860b); border:none; color:#fff; font-family:'Cairo',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:all 0.2s; }
-.welcome-enter-btn:hover { transform:translateY(-2px); }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
@@ -785,7 +762,6 @@ body::before {
     <button class="print-btn" onclick="printFull()" title="طباعة">🖨️ طباعة</button>
     <button class="mode-btn" onclick="toggleMode()" id="mode-btn" title="تبديل الوضع">🌙</button>
     <button onclick="doLogout()" style="padding:7px 16px;background:transparent;border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;color:rgba(255,255,255,0.8);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='transparent'">🚪 خروج</button>
-    <button onclick="doLogout()" style="padding:7px 16px;background:transparent;border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;color:rgba(255,255,255,0.8);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='transparent'">🚪 خروج</button>
     <div class="last-update" id="last-update" style="font-size:11px;color:rgba(255,255,255,0.6);">جاري التحميل...</div>
     <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgNjgwIDI2MCIgcm9sZT0iaW1nIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iIzFhMWYzYyIgcng9IjE4Ii8+CjxyZWN0IHg9IjQwIiB5PSIzMCIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZDRhMDE3IiByeD0iMiIvPgo8cmVjdCB4PSI0MjAiIHk9Ijc1IiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjIyIiBmaWxsPSIjZDRhMDE3IiByeD0iNCIvPgo8cmVjdCB4PSI0NzMiIHk9Ijc1IiB3aWR0aD0iMjIiIGhlaWdodD0iMTAwIiBmaWxsPSIjZDRhMDE3IiByeD0iNCIvPgo8cGF0aCBkPSJNNTEwIDc1IFE2MDAgNzUgNjAwIDEyMCBRNjAwIDE2NSA1MTAgMTY1IiBmaWxsPSJub25lIiBzdHJva2U9IiM4YThhOGEiIHN0cm9rZS13aWR0aD0iMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTEwIDk3IFE1NzggOTcgNTc4IDEyMCBRNTc4IDE0MyA1MTAgMTQzIiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGEwMTciIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cmVjdCB4PSI0OTUiIHk9IjEwOSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjOGE4YThhIiByeD0iNSIvPgo8dGV4dCB4PSI1NSIgeT0iMTI4IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNkNGEwMTciIGxldHRlci1zcGFjaW5nPSI2Ij5URU5ERVJJTkc8L3RleHQ+Cjx0ZXh0IHg9IjYyIiB5PSIxNjgiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIyOCIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjYTBhOGMwIiBsZXR0ZXItc3BhY2luZz0iMiI+RGVwYXJ0bWVudDwvdGV4dD4KPHJlY3QgeD0iNTUiIHk9IjE4MiIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIyLjUiIGZpbGw9IiNkNGEwMTciIHJ4PSIxIi8+CjxyZWN0IHg9IjU1IiB5PSIxODgiIHdpZHRoPSIyMDAiIGhlaWdodD0iMSIgZmlsbD0iI2Q0YTAxNyIgb3BhY2l0eT0iMC4zNSIgcng9IjEiLz4KPHJlY3QgeD0iNDAiIHk9IjIyNyIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZDRhMDE3IiByeD0iMiIgb3BhY2l0eT0iMC40Ii8+Cjwvc3ZnPg==" alt="Tendering Department" style="height:64px;width:auto;object-fit:contain;border-radius:8px;" />
   </div>
@@ -793,8 +769,8 @@ body::before {
 
 <nav class="tabs-nav">
   <button class="tab-btn active" onclick="switchTab('tenders',this)">📋 المناقصات الجارية</button>
-  <button class="tab-btn" id="tab-btn-clients" id="tab-btn-clients" onclick="switchTab('clients',this)">🏆 أهم العملاء 2026</button>
-  <button class="tab-btn" id="tab-btn-analytics" id="tab-btn-analytics" onclick="switchTab('analytics',this)">📊 التحليلات</button>
+  <button class="tab-btn" id="tab-btn-clients" onclick="switchTab('clients',this)">🏆 أهم العملاء 2026</button>
+  <button class="tab-btn" id="tab-btn-analytics" onclick="switchTab('analytics',this)">📊 التحليلات</button>
 </nav>
 
 <div id="tab-tenders" class="tab-panel active">
@@ -929,7 +905,7 @@ body::before {
     <div style="font-size:20px;font-weight:900;color:var(--text);display:flex;align-items:center;gap:10px;">
       🏆 أهم العملاء والمشاريع — 2026
     </div>
-    <div class="export-wrap" id="export-wrap-main">
+    <div class="export-wrap">
       <button class="export-btn" onclick="toggleClientExport(event)">📊 تصدير تقرير العملاء ▾</button>
       <div class="export-dropdown" id="client-export-dropdown">
         <div class="export-group-title">📋 تقارير العملاء</div>
@@ -1185,6 +1161,7 @@ const DATA_URL = 'https://raw.githubusercontent.com/edwardehab0-design/tender-da
 const DATA_URL_CDN = 'https://cdn.jsdelivr.net/gh/edwardehab0-design/tender-dashboard@main/data.json';
 const SP_FOLDER_BASE = 'https://etech321.sharepoint.com/sites/e-tech/DocLib/Forms/AllItems.aspx?id=%2Fsites%2Fe-tech%2FDocLib%2F%D8%A7%D9%84%D9%85%D9%86%D8%A7%D9%82%D8%B5%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AD%D8%A7%D9%84%D9%8A%D8%A9%2F&viewid=d132358c-1ee3-4339-b889-07bb3849e592';
 let allTenders = [], currentFilter = 'all';
+let visibleTenders = [];
 
 function getUrgency(submitDate) {
   if (!submitDate) return { level:'other', label:'—', cls:'u-other', diff:9999 };
@@ -1203,6 +1180,11 @@ function isGuaranteeToday(guarantee) {
   const d = new Date(guarantee); d.setHours(0,0,0,0);
   const n = new Date(); n.setHours(0,0,0,0);
   return d.getTime() === n.getTime();
+}
+
+function getCurrentTenders() {
+  const current = allTenders.filter(t => (t.status || 'جارية').trim() !== 'تم التقديم');
+  return current.length ? current : allTenders;
 }
 
 // ── المناقصات المقدمة 2026 (بيانات ثابتة من Excel) ──────
@@ -1350,8 +1332,10 @@ function applyFilters() {
 }
 
 function renderTable(tenders) {
+  visibleTenders = tenders;
   document.getElementById('loading').style.display = 'none';
   document.getElementById('table-count').textContent = tenders.length;
+  renderTenderSidebar(visibleTenders);
   const table = document.getElementById('tenders-table');
   const empty = document.getElementById('empty');
   if (!tenders.length) { table.style.display='none'; empty.style.display='block'; return; }
@@ -1372,6 +1356,16 @@ function renderTable(tenders) {
 }
 
 const ownerColors = ['#3b4fb8','#16a34a','#d97706','#ea580c','#7c3aed','#0891b2','#dc2626','#b8860b'];
+
+function renderTenderSidebar(tenders) {
+  const oc = {}, wc = {};
+  tenders.forEach(t => {
+    if (t.owner) oc[t.owner] = (oc[t.owner] || 0) + 1;
+    if (t.workType) wc[t.workType] = (wc[t.workType] || 0) + 1;
+  });
+  renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]));
+  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]), '#3b4fb8');
+}
 
 function renderOwners(data) {
   const max = data[0]?.[1]||1;
@@ -1396,7 +1390,7 @@ function renderSide(id, data, color) {
 }
 
 function openWorkTypeModal(workType) {
-  const tenders = allTenders.filter(t => t.workType === workType);
+  const tenders = (visibleTenders.length ? visibleTenders : getCurrentTenders()).filter(t => t.workType === workType);
   document.getElementById('owner-modal-title').textContent = '⚙️ ' + workType;
   document.getElementById('owner-modal-count').textContent = `عدد المناقصات: ${tenders.length}`;
   document.getElementById('owner-modal-body').innerHTML = tenders.length
@@ -1414,7 +1408,7 @@ function openWorkTypeModal(workType) {
 }
 
 function openOwnerModal(ownerName) {
-  const tenders = allTenders.filter(t => t.owner === ownerName);
+  const tenders = (visibleTenders.length ? visibleTenders : getCurrentTenders()).filter(t => t.owner === ownerName);
   document.getElementById('owner-modal-title').textContent = '🏛️ ' + ownerName;
   document.getElementById('owner-modal-count').textContent = `عدد المناقصات: ${tenders.length}`;
   document.getElementById('owner-modal-body').innerHTML = tenders.length
@@ -1438,10 +1432,6 @@ function closeOwnerModal(e) {
 
 function renderAll() {
   renderStats(); applyFilters(); startCountdown(); showDailyAlert(); populateCompareSelects();
-  const oc={}, wc={};
-  allTenders.forEach(t=>{ if(t.owner) oc[t.owner]=(oc[t.owner]||0)+1; if(t.workType) wc[t.workType]=(wc[t.workType]||0)+1; });
-  renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]));
-  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]), '#3b4fb8');
 }
 
 
@@ -2442,37 +2432,6 @@ function applyRolePermissions(role) {
 
 function doLogout() { location.reload(); }
 
-
-function showWelcome(role) {
-  const user = USERS[role];
-  document.getElementById('welcome-name').textContent = user.name;
-  document.getElementById('welcome-msg').textContent = user.msg;
-  document.getElementById('welcome-sub').textContent = user.sub;
-  const wrap = document.getElementById('welcome-avatar-wrap');
-  wrap.innerHTML = user.avatar
-    ? '<div class="welcome-avatar"><img src="' + user.avatar + '" alt="' + user.name + '" /></div>'
-    : '<div class="welcome-avatar-icon">🏛️</div>';
-  document.getElementById('welcome-screen').classList.add('active');
-}
-
-function enterDashboard() {
-  document.getElementById('welcome-screen').classList.remove('active');
-  applyRolePermissions(currentRole);
-}
-
-function applyRolePermissions(role) {
-  if(role === 'general') {
-    const btnC = document.getElementById('tab-btn-clients');
-    const btnA = document.getElementById('tab-btn-analytics');
-    const exp  = document.getElementById('export-wrap-main');
-    if(btnC) btnC.style.display = 'none';
-    if(btnA) btnA.style.display = 'none';
-    if(exp)  exp.style.display  = 'none';
-  }
-}
-
-function doLogout() { location.reload(); }
-
 // Add fadeOut keyframe
 const styleEl = document.createElement('style');
 styleEl.textContent = '@keyframes fadeOut { to { opacity:0; } }';
@@ -2505,16 +2464,6 @@ function printFull() {
 allSubmitted = [...SUBMITTED_2026];
 rebuildOwnersData();
 renderAll();
-// بناء الـ sidebar من OWNERS_DATA الثابتة فوراً (قبل اكتمال fetch)
-(function() {
-  const oc={}, wc={};
-  Object.entries(OWNERS_DATA).forEach(([owner,tenders])=>{
-    oc[owner] = tenders.length;
-    tenders.forEach(t=>{ const wt=t.type||t.workType||''; if(wt) wc[wt]=(wc[wt]||0)+1; });
-  });
-  if(typeof renderOwners==='function') renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]));
-  if(typeof renderSide==='function') renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]), '#3b4fb8');
-})();
 document.getElementById('last-update').textContent = 'جاري التحميل...';
 // ثم جلب البيانات الحية
 fetchTenders();
@@ -3048,20 +2997,6 @@ function download(wb, name) {
     <button class="pw-btn" onclick="checkPassword()">دخول ←</button>
     <div class="pw-error" id="pw-error">❌ كلمة المرور غير صحيحة</div>
     <div class="pw-hint">Tendering Department — الرواف للمقاولات</div>
-  </div>
-</div>
-
-
-<!-- Welcome Screen -->
-<div id="welcome-screen">
-  <div class="welcome-box">
-    <div id="welcome-avatar-wrap"></div>
-    <div class="welcome-greeting">أهلاً وسهلاً</div>
-    <div class="welcome-name" id="welcome-name"></div>
-    <div class="welcome-divider"></div>
-    <div class="welcome-msg" id="welcome-msg"></div>
-    <div class="welcome-sub" id="welcome-sub"></div>
-    <button class="welcome-enter-btn" onclick="enterDashboard()">الدخول إلى لوحة التحكم ◀</button>
   </div>
 </div>
 
