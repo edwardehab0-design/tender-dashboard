@@ -7,19 +7,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
+  --primary: #1b3a6b;
+  --primary-2: #254d8f;
+  --primary-3: #1a2e54;
   --gold: #b8860b; --gold-light: #d4a017; --gold-bg: #fffbf0;
-  --blue-deep: #1e2a5e; --blue-mid: #3b4fb8; --blue-light: #5b7be8;
-  --blue-pale: #eef2ff;
-  --bg: #f0f4ff; --bg-card: #ffffff; --border: #d4daf5;
-  --text: #1a2332; --text-muted: #6b7a99;
+  --blue-deep: #1b3a6b; --blue-mid: #254d8f; --blue-light: #3a6fc4;
+  --blue-pale: #eef4ff;
+  --bg: #f4f7fb; --bg-card: #ffffff; --border: #d1dae8;
+  --text: #1a2332; --text-muted: #5e7191;
   --green: #16a34a; --green-bg: #f0fdf4; --green-border: #bbf7d0;
   --yellow: #d97706; --yellow-bg: #fffbeb; --yellow-border: #fde68a;
   --orange: #ea580c; --orange-bg: #fff7ed; --orange-border: #fed7aa;
   --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
   --purple: #7c3aed; --purple-bg: #f5f3ff; --purple-border: #ddd6fe;
   --teal: #0891b2; --teal-bg: #ecfeff; --teal-border: #a5f3fc;
-  --shadow: 0 1px 3px rgba(30,42,94,0.08);
-  --shadow-md: 0 4px 16px rgba(30,42,94,0.14);
+  --shadow: 0 1px 3px rgba(27,58,107,0.08);
+  --shadow-md: 0 4px 16px rgba(27,58,107,0.14);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html, body {
@@ -27,11 +30,11 @@ html, body {
 }
 body {
   font-family:'Cairo',sans-serif;
-  background: linear-gradient(160deg, #eef2ff 0%, #f5f0ff 40%, #fffbf0 100%);
+  background: linear-gradient(160deg, #eef4ff 0%, #f4f7fb 50%, #fffbf0 100%);
   color:var(--text); min-height:100vh;
 }
 .header {
-  background: linear-gradient(105deg, #1a1f3c 0%, #2d3561 45%, #4a4a4a 80%, #6b6b6b 100%);
+  background: linear-gradient(105deg, var(--primary-3,#1a2e54) 0%, var(--primary,#1b3a6b) 55%, var(--primary-2,#254d8f) 100%);
   border-bottom: 2px solid var(--gold-light);
   padding:0 40px; height:90px; display:flex; align-items:center;
   justify-content:space-between; position:sticky; top:0; z-index:100; width:100%; left:0; right:0;
@@ -271,7 +274,7 @@ tr:last-child td { border-bottom:none; }
 /* ===== TABS NAV ===== */
 .tabs-nav {
   display:flex; gap:4px; padding:0 16px;
-  background:linear-gradient(105deg,#1a1f3c,#2d3561,#4a4a4a);
+  background:linear-gradient(105deg,var(--primary-3,#1a2e54),var(--primary,#1b3a6b),var(--primary-2,#254d8f));
   border-bottom:2px solid var(--gold-light);
 }
 .tab-btn {
@@ -722,56 +725,314 @@ body::before {
 .welcome-sub { font-size:12px; color:rgba(255,255,255,0.5); line-height:1.7; margin-bottom:28px; }
 .welcome-enter-btn { width:100%; padding:14px; border-radius:14px; background:linear-gradient(135deg,#d4a017,#b8860b); border:none; color:#fff; font-family:'Cairo',sans-serif; font-size:15px; font-weight:800; cursor:pointer; transition:all 0.2s; }
 .welcome-enter-btn:hover { transform:translateY(-2px); }
+
+/* ===== PREMIUM OFFICIAL PALETTE ===== */
+:root {
+  --primary: #1b314f;
+  --primary-2: #28476d;
+  --primary-3: #121d31;
+  --gold: #a8792a;
+  --gold-light: #c59a46;
+  --gold-bg: #fbf3e3;
+  --blue-deep: #1b314f;
+  --blue-mid: #315b8f;
+  --blue-light: #557aa9;
+  --blue-pale: #edf3fa;
+  --bg: #f4f6f9;
+  --bg-card: #ffffff;
+  --border: #d8dee8;
+  --text: #172232;
+  --text-muted: #66758b;
+  --green: #2f7d62;
+  --green-bg: #eef8f3;
+  --green-border: #b9ddcf;
+  --yellow: #af7d26;
+  --yellow-bg: #fbf3df;
+  --yellow-border: #e6c987;
+  --orange: #b86b37;
+  --orange-bg: #fbefe6;
+  --orange-border: #e4ba9b;
+  --red: #a84b54;
+  --red-bg: #fbebed;
+  --red-border: #e6b8bd;
+  --purple: #665a92;
+  --purple-bg: #f1eff8;
+  --purple-border: #cfc8e3;
+  --teal: #2a7f86;
+  --teal-bg: #edf8f8;
+  --teal-border: #b5dde1;
+  --shadow: 0 1px 3px rgba(23,34,50,0.07);
+  --shadow-md: 0 12px 28px rgba(23,34,50,0.12);
+}
+
+body {
+  background:
+    linear-gradient(155deg, #eef3f8 0%, #f7f8fa 42%, #f7f1e7 100%);
+}
+
+body::before {
+  background-image:
+    radial-gradient(circle at 16% 24%, rgba(49,91,143,0.055) 0%, transparent 38%),
+    radial-gradient(circle at 84% 18%, rgba(197,154,70,0.06) 0%, transparent 34%),
+    radial-gradient(circle at 62% 86%, rgba(42,127,134,0.045) 0%, transparent 36%);
+}
+
+.header,
+.tabs-nav {
+  background:
+    linear-gradient(108deg, #111b2e 0%, #1b314f 50%, #384459 78%, #5c5545 100%) !important;
+  border-bottom-color: rgba(197,154,70,0.92) !important;
+  box-shadow: 0 4px 18px rgba(17,27,46,0.20) !important;
+}
+
+.logo-text,
+.tab-btn.active,
+.countdown-name,
+.welcome-name {
+  color: #e3b85a !important;
+}
+
+.stat-card {
+  border-color: rgba(216,222,232,0.95);
+  box-shadow: 0 2px 10px rgba(23,34,50,0.06);
+}
+
+.stat-card.c-blue {
+  background: linear-gradient(135deg,#eef3fa,#dce7f3);
+  border-color: #b8c8dc;
+  color: #315b8f;
+}
+.stat-card.c-green {
+  background: linear-gradient(135deg,#eef8f3,#dcefe7);
+  border-color: #aed6c7;
+  color: #2f7d62;
+}
+.stat-card.c-yellow {
+  background: linear-gradient(135deg,#fbf3df,#f4e5be);
+  border-color: #e3c886;
+  color: #a8792a;
+}
+.stat-card.c-orange {
+  background: linear-gradient(135deg,#fbefe6,#f1dccc);
+  border-color: #e0b89b;
+  color: #b86b37;
+}
+.stat-card.c-red,
+.stat-card.c-urgent {
+  background: linear-gradient(135deg,#fbebed,#f3dfe2);
+  border-color: #e3b4ba;
+  color: #a84b54;
+}
+.stat-card.c-teal {
+  background: linear-gradient(135deg,#edf8f8,#d9eeee);
+  border-color: #afd9dc;
+  color: #2a7f86;
+}
+
+.section-header,
+thead tr {
+  background: linear-gradient(90deg,#f7f9fc,#ffffff);
+}
+
+.table-section,
+.side-card,
+.chart-card-light,
+.client-kpi,
+.an-card,
+.compare-card {
+  border-color: rgba(216,222,232,0.95);
+  box-shadow: 0 2px 14px rgba(23,34,50,0.055);
+}
+
+tr:hover td,
+.owner-row:hover,
+.modal-tender-row:hover,
+.cm-tender-row:hover,
+.cl-owner-item:hover,
+.top3-item:hover {
+  background: #f3f7fb !important;
+}
+
+.filter-btn.active,
+.cm-filter.active {
+  background: #315b8f;
+  border-color: #1b314f;
+}
+
+.export-btn,
+.welcome-enter-btn {
+  background: linear-gradient(135deg,#c59a46,#a8792a) !important;
+  box-shadow: 0 6px 18px rgba(168,121,42,0.22);
+}
+
+.countdown-banner {
+  background:
+    linear-gradient(135deg, #111b2e 0%, #1b314f 58%, #6f5c2f 100%);
+  border-color: rgba(197,154,70,0.36);
+  box-shadow: 0 8px 24px rgba(17,27,46,0.18);
+}
+
+.welcome-screen,
+#pw-overlay {
+  background: var(--solid-navy,#203a5a) !important;
+}
+
+.an-kpi.k-total,
+.an-card[style*="#1a1f3c"] {
+  background: linear-gradient(135deg,#111b2e,#1b314f 58%,#223d60) !important;
+  border-color: rgba(197,154,70,0.35) !important;
+}
+
+body.dark-mode {
+  --bg: #101622;
+  --bg-card: #172235;
+  --border: #2c3a4e;
+  --text: #edf2f7;
+  --text-muted: #a7b2c1;
+  background: linear-gradient(160deg, #0d1320 0%, #152033 48%, #1b1a16 100%) !important;
+}
+
+.export-toast {
+  background: linear-gradient(135deg,#1b314f,#315b8f) !important;
+}
+
+.alert-title,
+.alert-close {
+  color: #a84b54 !important;
+}
+
+.hm-3 {
+  background: #315b8f !important;
+}
+
+/* ===== USER REQUESTED SOLID NAVY AREAS ===== */
+:root {
+  --solid-navy: #203a5a;
+}
+
+.header,
+.tabs-nav,
+.countdown-banner {
+  background: var(--solid-navy) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+  box-shadow: 0 4px 16px rgba(32,58,90,0.18) !important;
+}
+
+.countdown-banner::before {
+  display: none !important;
+}
+
+.live-badge {
+  display: none !important;
+}
+
+.home-btn {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.20);
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  font-family: 'Cairo', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.home-btn:hover {
+  background: rgba(255,255,255,0.17);
+  transform: translateY(-1px);
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
 </head>
 <body>
-<header class="header" style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 24px;height:90px;position:sticky;top:0;z-index:100;width:100%;background:linear-gradient(105deg,#1a1f3c 0%,#2d3561 45%,#4a4a4a 80%,#6b6b6b 100%);border-bottom:2px solid #d4a017;box-shadow:0 3px 16px rgba(30,42,94,0.25);">
-  <!-- Right: Company logo + title -->
-  <div class="header-logo" style="display:flex;align-items:center;gap:14px;">
-    <img src="data:image/png;base64,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" alt="الرواف" style="height:68px;width:auto;object-fit:contain;" />
-    <div class="logo-text">الإدارة العامة للمناقصات</div>
-  </div>
-
-  <!-- Center: empty (logo moved to right controls) -->
-  <div></div>
-
-  <!-- Left: controls -->
-  <div class="header-right" style="display:flex;align-items:center;gap:10px;justify-content:flex-end;">
-    <div class="export-wrap" id="export-wrap-main">
-      <button class="export-btn" onclick="toggleExport(event)">📊 تصدير تقرير ▾</button>
-      <div class="export-dropdown" id="export-dropdown">
-        <div class="export-group-title">📋 تقارير المناقصات</div>
-        <div class="export-item" onclick="exportReport('all')"><span class="ei-icon">📋</span><span class="ei-label">كل المناقصات</span><span class="ei-tag">الكل</span></div>
-        <div class="export-item" onclick="exportReport('active')"><span class="ei-icon">🟢</span><span class="ei-label">المناقصات الجارية</span><span class="ei-tag">جارية</span></div>
-        <div class="export-item" onclick="exportReport('critical')"><span class="ei-icon">🔥</span><span class="ei-label">المناقصات الحرجة (3 أيام)</span><span class="ei-tag orange">عاجل</span></div>
-        <div class="export-item" onclick="exportReport('today')"><span class="ei-icon">⚡</span><span class="ei-label">تنتهي اليوم</span><span class="ei-tag orange">اليوم</span></div>
-        <div class="export-group-title">🔐 تقارير الضمانات</div>
-        <div class="export-item" onclick="exportReport('guarantee_today')"><span class="ei-icon">🔐</span><span class="ei-label">الضمانات المستحقة اليوم</span><span class="ei-tag orange">اليوم</span></div>
-        <div class="export-item" onclick="exportReport('guarantee_all')"><span class="ei-icon">📆</span><span class="ei-label">كل الضمانات مرتبة بالتاريخ</span><span class="ei-tag">كل</span></div>
-        <div class="export-group-title">📊 تقارير تحليلية</div>
-        <div class="export-item" onclick="exportReport('by_owner')"><span class="ei-icon">🏛️</span><span class="ei-label">توزيع الجهات المالكة</span><span class="ei-tag">تحليل</span></div>
-        <div class="export-item" onclick="exportReport('by_worktype')"><span class="ei-icon">⚙️</span><span class="ei-label">توزيع أنواع الأعمال</span><span class="ei-tag">تحليل</span></div>
-        <div class="export-item" onclick="exportReport('monthly')"><span class="ei-icon">📈</span><span class="ei-label">الملخص الإحصائي الشهري</span><span class="ei-tag">ملخص</span></div>
-        <div class="export-group-title">⭐ التقرير الشامل</div>
-        <div class="export-item" onclick="exportReport('full')" style="background:linear-gradient(90deg,#fffbf0,#fff);"><span class="ei-icon">🏆</span><span class="ei-label" style="font-weight:800;color:#b8860b">التقرير التنفيذي الكامل</span><span class="ei-tag" style="background:#fffbeb;color:#b8860b;">احترافي</span></div>
-      </div>
+<header class="header" style="display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:72px;position:sticky;top:0;z-index:100;width:100%;background:linear-gradient(105deg,var(--primary-3,#1a2e54) 0%,var(--primary,#1b3a6b) 55%,var(--primary-2,#254d8f) 100%);border-bottom:2px solid var(--gold-light,#d4a017);box-shadow:0 2px 12px rgba(27,58,107,0.22);">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <img src="data:image/png;base64,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" alt="الرواف" style="height:52px;width:auto;object-fit:contain;" />
+    <div>
+      <div style="font-size:16px;font-weight:900;color:#f0c040;line-height:1.2;">الإدارة العامة للمناقصات</div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.55);">الرواف للمقاولات — نظام المناقصات</div>
     </div>
-    <button class="print-btn" onclick="printFull()" title="طباعة">🖨️ طباعة</button>
-    <button class="mode-btn" onclick="toggleMode()" id="mode-btn" title="تبديل الوضع">🌙</button>
-    <button onclick="doLogout()" style="padding:7px 16px;background:transparent;border:1.5px solid rgba(255,255,255,0.3);border-radius:20px;color:rgba(255,255,255,0.8);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='transparent'">🚪 خروج</button>
-    <div class="last-update" id="last-update" style="font-size:11px;color:rgba(255,255,255,0.6);">جاري التحميل...</div>
-    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjIwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgNjgwIDI2MCIgcm9sZT0iaW1nIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iNjgwIiBoZWlnaHQ9IjI2MCIgZmlsbD0iIzFhMWYzYyIgcng9IjE4Ii8+CjxyZWN0IHg9IjQwIiB5PSIzMCIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZDRhMDE3IiByeD0iMiIvPgo8cmVjdCB4PSI0MjAiIHk9Ijc1IiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjIyIiBmaWxsPSIjZDRhMDE3IiByeD0iNCIvPgo8cmVjdCB4PSI0NzMiIHk9Ijc1IiB3aWR0aD0iMjIiIGhlaWdodD0iMTAwIiBmaWxsPSIjZDRhMDE3IiByeD0iNCIvPgo8cGF0aCBkPSJNNTEwIDc1IFE2MDAgNzUgNjAwIDEyMCBRNjAwIDE2NSA1MTAgMTY1IiBmaWxsPSJub25lIiBzdHJva2U9IiM4YThhOGEiIHN0cm9rZS13aWR0aD0iMjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTEwIDk3IFE1NzggOTcgNTc4IDEyMCBRNTc4IDE0MyA1MTAgMTQzIiBmaWxsPSJub25lIiBzdHJva2U9IiNkNGEwMTciIHN0cm9rZS13aWR0aD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cmVjdCB4PSI0OTUiIHk9IjEwOSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjEwIiBmaWxsPSIjOGE4YThhIiByeD0iNSIvPgo8dGV4dCB4PSI1NSIgeT0iMTI4IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iNDIiIGZvbnQtd2VpZ2h0PSI5MDAiIGZpbGw9IiNkNGEwMTciIGxldHRlci1zcGFjaW5nPSI2Ij5URU5ERVJJTkc8L3RleHQ+Cjx0ZXh0IHg9IjYyIiB5PSIxNjgiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIyOCIgZm9udC1zdHlsZT0iaXRhbGljIiBmb250LXdlaWdodD0iNDAwIiBmaWxsPSIjYTBhOGMwIiBsZXR0ZXItc3BhY2luZz0iMiI+RGVwYXJ0bWVudDwvdGV4dD4KPHJlY3QgeD0iNTUiIHk9IjE4MiIgd2lkdGg9IjMyMCIgaGVpZ2h0PSIyLjUiIGZpbGw9IiNkNGEwMTciIHJ4PSIxIi8+CjxyZWN0IHg9IjU1IiB5PSIxODgiIHdpZHRoPSIyMDAiIGhlaWdodD0iMSIgZmlsbD0iI2Q0YTAxNyIgb3BhY2l0eT0iMC4zNSIgcng9IjEiLz4KPHJlY3QgeD0iNDAiIHk9IjIyNyIgd2lkdGg9IjYwMCIgaGVpZ2h0PSIzIiBmaWxsPSIjZDRhMDE3IiByeD0iMiIgb3BhY2l0eT0iMC40Ii8+Cjwvc3ZnPg==" alt="Tendering Department" style="height:64px;width:auto;object-fit:contain;border-radius:8px;" />
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="home-btn" type="button" onclick="goHome()">Home</button>
+    <div class="last-update" id="last-update">جاري التحميل...</div>
   </div>
 </header>
 
-<nav class="tabs-nav">
-  <button class="tab-btn active" onclick="switchTab('tenders',this)">📋 المناقصات الجارية</button>
-  <button class="tab-btn" id="tab-btn-clients" onclick="switchTab('clients',this)">🏆 أهم العملاء 2026</button>
-  <button class="tab-btn" id="tab-btn-analytics" onclick="switchTab('analytics',this)">📊 التحليلات</button>
-</nav>
+<div style="display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 72px);">
+
+<!-- ===== SIDEBAR ===== -->
+<aside id="app-sidebar" style="background:linear-gradient(180deg,#fff 0%,#f8faff 100%);border-left:1px solid var(--border,#d1dae8);padding:20px 14px;display:flex;flex-direction:column;gap:8px;position:sticky;top:72px;height:calc(100vh - 72px);overflow-y:auto;">
+
+  <!-- Brand -->
+  <div style="padding:10px 10px 16px;border-bottom:1px solid var(--border,#d1dae8);margin-bottom:8px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div>
+        <div style="font-size:13px;font-weight:900;color:var(--text,#1a2332);">الرواف</div>
+        <div style="font-size:10px;color:var(--text-muted,#5e7191);">نظام المناقصات</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <button id="nav-btn-tenders" onclick="switchTab('tenders',this)"
+    style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;border:none;background:var(--solid-navy,#203a5a);color:#fff;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(32,58,90,0.20);margin-bottom:2px;">
+    <span>📋 المناقصات الجارية</span><small style="opacity:0.6;font-size:10px;">01</small>
+  </button>
+
+  <button id="nav-btn-clients" onclick="switchTab('clients',this)"
+    style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;border:none;background:transparent;color:var(--text,#1a2332);font-family:Cairo,sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:2px;transition:background 0.15s;">
+    <span>🏆 أهم العملاء</span><small style="opacity:0.5;font-size:10px;">02</small>
+  </button>
+
+  <button id="nav-btn-analytics" onclick="switchTab('analytics',this)"
+    style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;border:none;background:transparent;color:var(--text,#1a2332);font-family:Cairo,sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:2px;transition:background 0.15s;">
+    <span>📊 التحليلات</span><small style="opacity:0.5;font-size:10px;">03</small>
+  </button>
+
+  <!-- Divider -->
+  <div style="border-top:1px solid var(--border,#d1dae8);margin:8px 0;"></div>
+
+  <!-- Export in sidebar -->
+  <div class="export-wrap" id="export-wrap-main">
+    <button class="export-btn" onclick="toggleExport(event)" style="width:100%;justify-content:center;">📊 تصدير تقرير ▾</button>
+    <div class="export-dropdown" id="export-dropdown">
+      <div class="export-group-title">📋 تقارير المناقصات</div>
+      <div class="export-item" onclick="exportReport('all')"><span class="ei-icon">📋</span><span class="ei-label">كل المناقصات</span></div>
+      <div class="export-item" onclick="exportReport('active')"><span class="ei-icon">🟢</span><span class="ei-label">المناقصات الجارية</span></div>
+      <div class="export-item" onclick="exportReport('critical')"><span class="ei-icon">🔥</span><span class="ei-label">الحرجة (3 أيام)</span></div>
+      <div class="export-item" onclick="exportReport('today')"><span class="ei-icon">⚡</span><span class="ei-label">تنتهي اليوم</span></div>
+      <div class="export-group-title">🔐 الضمانات</div>
+      <div class="export-item" onclick="exportReport('guarantee_today')"><span class="ei-icon">🔐</span><span class="ei-label">الضمانات اليوم</span></div>
+      <div class="export-item" onclick="exportReport('guarantee_all')"><span class="ei-icon">📆</span><span class="ei-label">كل الضمانات</span></div>
+      <div class="export-group-title">📊 تحليلية</div>
+      <div class="export-item" onclick="exportReport('by_owner')"><span class="ei-icon">🏛️</span><span class="ei-label">توزيع الجهات</span></div>
+      <div class="export-item" onclick="exportReport('by_worktype')"><span class="ei-icon">⚙️</span><span class="ei-label">أنواع الأعمال</span></div>
+      <div class="export-item" onclick="exportReport('monthly')"><span class="ei-icon">📈</span><span class="ei-label">الملخص الإحصائي</span></div>
+      <div class="export-group-title">⭐ التقرير الشامل</div>
+      <div class="export-item" onclick="exportReport('full')" style="background:linear-gradient(90deg,#fffbf0,#fff);"><span class="ei-icon">🏆</span><span class="ei-label" style="font-weight:800;color:#b8860b;">التقرير التنفيذي الكامل</span></div>
+    </div>
+  </div>
+
+  <button onclick="printFull()" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border-radius:10px;border:1px solid var(--border,#d1dae8);background:#fff;color:var(--text,#1a2332);font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🖨️ طباعة</button>
+
+  <!-- Status -->
+  <div style="margin-top:auto;padding:12px;border-radius:10px;background:var(--solid-navy,#203a5a);color:#fff;">
+    <div style="font-size:10px;font-weight:800;color:rgba(255,255,255,0.6);margin-bottom:4px;">حالة النظام</div>
+    <div id="sidebar-status" style="font-size:11px;color:rgba(255,255,255,0.85);line-height:1.6;">جاري التحميل...</div>
+  </div>
+
+  <button onclick="doLogout()" style="padding:9px 12px;border:1px solid var(--border,#d1dae8);border-radius:10px;background:#fff;color:var(--text-muted,#5e7191);font-family:Cairo,sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🚪 خروج</button>
+
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div style="min-width:0;overflow-y:auto;">
 
 <div id="tab-tenders" class="tab-panel active">
 <div class="print-header" style="text-align:center;padding:16px 0 8px;border-bottom:2px solid #d4a017;margin-bottom:16px;">
@@ -860,7 +1121,7 @@ body::before {
         <button class="filter-btn f-3days" onclick="filterBy('3days')">⏰ باقي 3 أيام</button>
         <button class="filter-btn f-today" onclick="filterBy('today')">🔥 اليوم</button>
         <button class="filter-btn f-today" onclick="filterBy('urgent')">🚨 الحرجة</button>
-        <button class="filter-btn" onclick="filterBy('guarantee')" style="border-color:#a5f3fc;color:#0891b2;">🔐 ضمان اليوم</button>
+        <button class="filter-btn" onclick="filterBy('guarantee')" style="border-color:#b5dde1;color:#2a7f86;">🔐 ضمان اليوم</button>
       </div>
       <div id="loading" class="loading"><div class="spinner"></div>جاري تحميل البيانات...</div>
       <div style="overflow-x:auto">
@@ -1023,7 +1284,7 @@ body::before {
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 180 100">
             <path d="M20,90 A70,70 0 0,1 160,90" fill="none" stroke="#eef2ff" stroke-width="16" stroke-linecap="round"/>
-            <path id="gauge-path" d="M20,90 A70,70 0 0,1 160,90" fill="none" stroke="#3b4fb8" stroke-width="16" stroke-linecap="round"
+            <path id="gauge-path" d="M20,90 A70,70 0 0,1 160,90" fill="none" stroke="#315b8f" stroke-width="16" stroke-linecap="round"
               stroke-dasharray="220" stroke-dashoffset="220"/>
           </svg>
           <div class="gauge-value" id="gauge-pct" style="color:var(--blue-mid);">—%</div>
@@ -1143,6 +1404,9 @@ body::before {
 
 </div>
 </div>
+
+</div><!-- /main content -->
+</div><!-- /layout grid -->
 
 <!-- Owner Modal -->
 <div class="owner-modal-overlay" id="owner-modal-overlay" onclick="closeOwnerModal(event)">
@@ -1355,7 +1619,7 @@ function renderTable(tenders) {
   }).join('');
 }
 
-const ownerColors = ['#3b4fb8','#16a34a','#d97706','#ea580c','#7c3aed','#0891b2','#dc2626','#b8860b'];
+const ownerColors = ['#315b8f','#2f7d62','#a8792a','#b86b37','#665a92','#2a7f86','#a84b54','#7b6a4a'];
 
 function renderTenderSidebar(tenders) {
   const oc = {}, wc = {};
@@ -1364,7 +1628,7 @@ function renderTenderSidebar(tenders) {
     if (t.workType) wc[t.workType] = (wc[t.workType] || 0) + 1;
   });
   renderOwners(Object.entries(oc).sort((a,b)=>b[1]-a[1]));
-  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]), '#3b4fb8');
+  renderSide('worktypes-list', Object.entries(wc).sort((a,b)=>b[1]-a[1]), '#315b8f');
 }
 
 function renderOwners(data) {
@@ -1438,17 +1702,52 @@ function renderAll() {
 // ── COUNTDOWN ─────────────────────────────────────────
 let cdInterval = null;
 
+function parseCountdownDate(value) {
+  if (!value) return null;
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return new Date(value);
+
+  const raw = String(value).trim();
+  const isoLike = raw.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  if (isoLike) {
+    return new Date(Number(isoLike[1]), Number(isoLike[2]) - 1, Number(isoLike[3]), 23, 59, 59, 999);
+  }
+
+  const dmy = raw.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})/);
+  if (dmy) {
+    return new Date(Number(dmy[3]), Number(dmy[2]) - 1, Number(dmy[1]), 23, 59, 59, 999);
+  }
+
+  const parsed = new Date(raw);
+  if (Number.isNaN(parsed.getTime())) return null;
+  parsed.setHours(23, 59, 59, 999);
+  return parsed;
+}
+
+function restoreCountdownUnits() {
+  const timer = document.getElementById('cd-timer');
+  if (!timer) return;
+  timer.innerHTML = `
+      <div class="countdown-unit"><div class="countdown-num" id="cd-days">--</div><div class="countdown-label">يوم</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-label">ساعة</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-label">دقيقة</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-label">ثانية</div></div>`;
+}
+
 function startCountdown() {
   if (cdInterval) clearInterval(cdInterval);
+  restoreCountdownUnits();
   
   // Find nearest upcoming tender
   const upcoming = allTenders
     .filter(t => t.submitDate)
     .map(t => {
-      const d = new Date(t.submitDate); d.setHours(23,59,59,0);
+      const d = parseCountdownDate(t.submitDate);
       return { ...t, target: d };
     })
-    .filter(t => t.target >= new Date())
+    .filter(t => t.target && t.target >= new Date())
     .sort((a,b) => a.target - b.target);
 
   if (!upcoming.length) {
@@ -1497,17 +1796,38 @@ function startCountdown() {
 
 
 // ── TABS ─────────────────────────────────────────────
+function goHome() {
+  const homeButton = document.getElementById('nav-btn-tenders');
+  switchTab('tenders', homeButton);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function switchTab(name, btn) {
+  // إخفاء كل التابات
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+name).classList.add('active');
-  btn.classList.add('active');
+  // تحديث أزرار الـ sidebar
+  ['tenders','clients','analytics'].forEach(n => {
+    const b = document.getElementById('nav-btn-'+n);
+    if (!b) return;
+    if (n === name) {
+      b.style.background = 'var(--solid-navy,#203a5a)';
+      b.style.color = '#fff';
+      b.style.fontWeight = '700';
+      b.style.boxShadow = '0 3px 10px rgba(32,58,90,0.20)';
+    } else {
+      b.style.background = 'transparent';
+      b.style.color = 'var(--text,#1a2332)';
+      b.style.fontWeight = '600';
+      b.style.boxShadow = 'none';
+    }
+  });
   if(name==='clients') { clientsRendered=false; renderClients(); }
   if(name==='analytics') { analyticsRendered=false; renderAnalytics(); }
 }
 
 // ── CLIENTS DATA ──────────────────────────────────────
-const CLIENTS_COLORS=['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
+const CLIENTS_COLORS=['#315b8f','#2f7d62','#c59a46','#b86b37','#2a7f86','#665a92','#a84b54','#8a6f3f','#35756f','#765f9a'];
 
 const clientOwners=[
   {name:'الشركة الوطنية للإسكان',count:10},
@@ -1601,7 +1921,7 @@ function renderAnalytics() {
 }
 
 function _buildAnalytics() {
-  const AC = ['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
+  const AC = ['#315b8f','#2f7d62','#c59a46','#b86b37','#2a7f86','#665a92','#a84b54','#8a6f3f','#35756f','#765f9a'];
 
   // combined = كل مناقصات 2026 فقط (جارية + مقدمة)
   const combined = [
@@ -1670,7 +1990,7 @@ function _buildAnalytics() {
   anUrgencyChart=new Chart(document.getElementById('an-urgency-chart'),{
     type:'doughnut',
     data:{labels:Object.keys(urg),datasets:[{data:Object.values(urg),
-      backgroundColor:['#dc2626','#ea580c','#d97706','#16a34a','#7c3aed'],
+      backgroundColor:['#a84b54','#b86b37','#af7d26','#2f7d62','#665a92'],
       borderWidth:3, borderColor:'#fff', hoverOffset:8}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
       plugins:{legend:{position:'bottom',labels:{color:'#1a2332',font:{family:'Cairo',size:10},boxWidth:10,padding:6}},
@@ -1797,7 +2117,7 @@ function _buildAnalytics() {
 // ── CLIENT MODAL ─────────────────────────────────────
 const OWNERS_DATA = {"أمانة منطقة جازان": [{"name": "⁠انشاء عبارات و حواجز خرسانية وعقوم لدرء اخطار السيول بمدينة جيزان", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-12", "status": "جارية"}], "الشركة الوطنية للإسكان": [{"name": "تنفيذ و تشغيل وصيانة الحدائق العامة والسقيا لوجهة (قمره) صفوى2 ( عدد ) 3 حدائق", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-12", "status": "جارية"}, {"name": "Al Ruba Sanaya - Design & Build 1840 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-01-18", "status": "تم التقديم"}, {"name": "البنية التحتية الشاملة لمشروع ارض الحرس الوطني (وجهة الربى)", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}, {"name": "مبني صالة المبيعات بمشروع سدو تبوك", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-02", "status": "تم التقديم"}, {"name": "تنفيذ اعمال التنسيق العام لمركز مبيعات وجهة الربى", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-02-13", "status": "تم التقديم"}, {"name": "اعمال التسويات والبنية التحتية الشاملة لوجهة الجنى", "type": "بنية تحتية", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-18", "status": "تم التقديم"}, {"name": "Arassi Lazord - Design & Build 1372 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "status": "تم التقديم"}, {"name": "Wahj Asalah - Design & Build 956 Villas", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-04", "status": "تم التقديم"}, {"name": "تنفيذ الأعمال الترابية لمشروع الفيصلية (الرشا)", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-30", "status": "تم التقديم"}, {"name": "أعمال تحسين و تسوية الموقع والأعمال الترابية لمنطقة 3 و المنطقة 6 مشروع لازورد", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-14", "status": "تم التقديم"}], "القوات الجوية": [{"name": "إنشاء مرافق إضافية بقاعدة الملك سلمان الجوية بالقطاع الأوسط وكلية الملك فيصل الجوية", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-05-13", "status": "جارية"}], "مطار الملك سلمان": [{"name": "RFP KSIA-TEN-00000129: Potable Water & Fire Water Tanks and Pumping Station", "type": "إنشاءات ، بنية تحتية", "sector": "—", "date": "2026-05-16", "status": "جارية"}, {"name": "Sitewide Utilities Irrigation Storage Tanks Pumping Station", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-05-16", "status": "جارية"}, {"name": "Sitewide Utilities Diversion_Revision", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-03", "status": "تم التقديم"}, {"name": "Sitewide Utilities Wastewater Treatment Plant", "type": "محطات", "sector": "قطاع منطقة الرياض", "date": "2026-03-31", "status": "تم التقديم"}], "الهيئة السعودية للمياة": [{"name": "توريد وتركيب أنابيب الالياف الزجاجية لنظام نقل الرياض القصيم", "type": "خطوط نقل المياة", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-05-23", "status": "جارية"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بمنظومات إنتاج الشعيبة -004", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-17", "status": "تم التقديم"}, {"name": "توريد وتنفيذ خط تجميع مياه ابار وادي ضمد الى محطة تنقية مياه ضمد بجازان", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تركيب أنظمة المراقبة والحواجز البحرية بوحدات الإنتاج (حقل- ضباء- الوجه- أملج- الليث- القنفذة-رابغ)", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-02-18", "status": "تم التقديم"}], "SAR  الخطوط الحديدية السعودية": [{"name": "NSR Track Doubling (Phosphate 3) Depot & Loops 1-3", "type": "إنشاء خطوط السكك الحديدية ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-01", "status": "جارية"}, {"name": "Riyadh Rail Link - Design & Build Contractor Package", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-06-01", "status": "جارية"}, {"name": "NSR Track Doubling (Phosphate 3) Section 2 & Loops", "type": "إنشاء خطوط السكك الحديدية ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-26", "status": "تم التقديم"}], "وزارة الداخلية -الديوان العام": [{"name": "مشروع إنشاء ثلاث دور إيواء في كل من مناطق (مكة المكرمة ، والرياض، وعسير)", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-06-02", "status": "جارية"}], "الادارة العامة لمشروع ينبع": [{"name": "تصميم وإنشاء أنابيب التبريد بمياه البحر إلى منطقة البتروكيماويات (بي آي سي آي-تي-7068)", "type": "إنشاء محطات التحلية Ro", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-06-05", "status": "جارية"}, {"name": "منافسة لمشروع إنشاء منظومة مياة الشرب بالمنطقة الصناعية (PIC I-T 7078)", "type": "إنشاءات", "sector": "القطاع الغربي", "date": "2026-01-28", "status": "تم التقديم"}, {"name": "الخدمات العامة لتوصيل المنافع (PIC I-7127 )", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-08", "status": "تم التقديم"}], "أمانة جدة": [{"name": "تنفيذ حلول تصريف مياه الأمطار لمنطقة الرياض (20338)", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-05", "status": "جارية"}, {"name": "تنفيذ حلول تصريف مياه الأمطار للمنطقة H الحزمة الثانية- الوفاء", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-10", "status": "جارية"}, {"name": "تنفيذ حلول لتصريف مياه الأمطار للمنطقة (H) الحزمة الأولى – الفروسية (20317)", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-06-14", "status": "جارية"}, {"name": "تنفيذ حلول تصريف مياه الامطار لمنطقة BC الحزمة الخامسة - الشاطئ المنطقة الساحلية", "type": "بنية تحتية", "sector": "القطاع الغربي", "date": "2026-02-28", "status": "تم التقديم"}], "Wittco": [{"name": "تنفيذ مشروع نظام نقل المياه الجبيل بريدة المرحلة الثانية", "type": "خطوط نقل المياة", "sector": "القطاع الشرقي", "date": "2026-06-12", "status": "جارية"}, {"name": "تنفيذ مشروع نظام نقل مياه رأس محيسن-الباحة-مكة", "type": "خطوط نقل المياة", "sector": "القطاع الغربي", "date": "2026-06-18", "status": "جارية"}], "الدرعية DGDA": [{"name": "Heros Park Main Construction Works", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-06", "status": "تم التقديم"}, {"name": "DGII The Grand Boulevard Public Realm.", "type": "تأهيل", "sector": "قطاع منطقة الرياض", "date": "2026-05-06", "status": "تم التقديم"}], "الرياض القابضة": [{"name": "مشروع تنفيذ لأعمال تطوير وتوسعة حراج ابن قاسم", "type": "إنشاءات ، بنية تحتية", "sector": "قطاع منطقة الرياض", "date": "2026-01-07", "status": "تم التقديم"}], "الشؤون الخاصة لخادم الحرمين الشريفين": [{"name": "مشروع إنشاء خزان مركزي بمقر الاسطول والمساندة", "type": "إنشاء خطوط النقل والخزن الإستراتيجي", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "مشروع إحلال واستبدال المغذيات الرئيسية لمحطات المارينا بقصر السلام", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "status": "تم التقديم"}, {"name": "مشروع استبدال وحدات التكييف مع انظمه التحكم بمبنى ( 48أ ) بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-04", "status": "تم التقديم"}, {"name": "مشروع ربط المحطات ( B5.B2.B1 وبكج 1) و ( SF-1. SF-2.SF-3.SF-4.SF-5.SF-6.SF-7.SF-8.SF-9.SF-10 ) بنظام التحكم والمراقبة اسكادا بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-09", "status": "تم التقديم"}, {"name": "مشروع ربط محطات الكهرباء الفرعية بالمرينا والمحطة الرئيسية المغذية لها بنظام اسكادا بقصر السلا مبجدة", "type": "كهرباء", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "status": "تم التقديم"}, {"name": "مشروع احلال واستبدال كابلات الجهد المتوسط بين المحطات الفرعية المغذية لإنارة الاسوار البحرية والكميرات الامنية بقصر السلام بجدة", "type": "كهرباء", "sector": "محفظة مشاريع المباني", "date": "2026-05-11", "status": "تم التقديم"}], "بلدية محافظة الجبيل": [{"name": "صيانة وتشغيل الطرق والشوارع بمحافظة الجبيل للاعوام 2026ــ2028م", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "سفلتة مخططات المنح بمحافظة الجبيل", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-22", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "status": "تم التقديم"}, {"name": "مشروع ردم وتسوية وسفلتة بضاحية الملك فهد بمحافظة الجبيل ( الجزء الرابع عشر )", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-17", "status": "تم التقديم"}], "المؤسسة العامة للموانىء": [{"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الشرقي (ميناء الملك عبدالعزيز بالدمام – ميناء الجبيل التجاري – ميناء الملك فهد الصناعي بالجبيل – ميناء رأس الخير", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-01-26", "status": "تم التقديم"}, {"name": "توريد وتركيب الحواجز البحرية (الدفاع السلبي) لموانئ الساحل الغربي (جدة الإسلامي – ميناء فرسان – ميناء ينبع التجاري)", "type": "تركيب وصيانة الأجهزة الأمنية", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-30", "status": "تم التقديم"}], "بلدية محافظة القنفدة": [{"name": "منافسة عامة لمشروع صيانة الطرق والشوارع بمحافظة القنفذة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}], "هيئة المدن الصناعية": [{"name": "ازالة واستبدال العبارة الصندوقية بأنابيب خرسانية جاهزة بالطريق 62 بالمدينة الصناعية 1576830", "type": "إنشاء شبكات السيول ومرافقها", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-27", "status": "تم التقديم"}], "بلدية محافظة راس تنورة": [{"name": "صيانة طريق الكورنيش والارصفة الجانبية بمحافظة رأس تنورة للعام 2026م", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل وتطوير طريق الأمير محمد بن فهد للعام 2026م", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-14", "status": "تم التقديم"}, {"name": "مشروع صيانة الطرق المستلمة من وزارة النقل بنطاق بلدية محافظة رأس تنورة 2026-2029م", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-16", "status": "تم التقديم"}, {"name": "منافسة عامة لفرصة إعادة تأهيل شارع الأمير نايف بن عبد العزيز 2026م بمحافظة رأس تنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "status": "تم التقديم"}], "امانة منطقة المدينة المنورة": [{"name": "مشروع  صيانة الطرق والشوارع في مخطط إسكان طريق الملك عبدالعزيز( مخطط الشروق) بالمدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-01-30", "status": "تم التقديم"}, {"name": "فرصة صيانة الطرق والشوارع في مخطط إسكان ضاحية العاقول (مخطط الهضبة) مخطط رقم (س-4310480)", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "status": "تم التقديم"}, {"name": "لفرصة صيانة الطرق والشوارع في مخطط اسكان طريق حائل السريع (مخطط الياسمين) بالمدينة المنورة", "type": "صيانة الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-06", "status": "تم التقديم"}], "امانة المنطقة الشرقية": [{"name": "مشروع صيانة ومعالجة الحفر والأرصفة بنطاق بلدية غرب الدمام", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تشغيل وصيانة الجسور والأنفاق للطرق المحورية للأعوام 2026-2029م", "type": "تأهيل", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-03", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بحي الخدمات المساندة بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي النهضة والمنتزه بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-08", "status": "تم التقديم"}, {"name": "مشروع تطوير شوارع مخطط 1262 بضاحية الملك فهد بالدمام", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "status": "تم التقديم"}, {"name": "مشروع تأهيل الشوارع الرئيسية بضاحية الملك فهد المرحلة الثالثة", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "status": "تم التقديم"}, {"name": "مشروع تأهيل شوارع بحي الخالدية بالدمام المرحلة الثانية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-10", "status": "تم التقديم"}], "وزارة الدفاع": [{"name": "منافسة عامة لمشروع تطوير مرافق بالادارة العامة والمستودعات", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-04", "status": "تم التقديم"}], "المسار الرياضي": [{"name": "Special Projects Delivery Framework", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-02-11", "status": "تم التقديم"}, {"name": "New playground and sands sports park Design and build works (P012G)", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-03-15", "status": "تم التقديم"}, {"name": "Design and Build for Wadi Hanifa South(P001E)", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-02", "status": "تم التقديم"}], "DAR GLOBAL Co.": [{"name": "AMAYA Master Plan", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-21", "status": "تم التقديم"}, {"name": "WADI SAFAR MASTERPLAN, INFRA & LANDSCAPE", "type": "البنية التحتية الشاملة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-29", "status": "تم التقديم"}], "وزارة الرياضة": [{"name": "Main Contractor PQQ_FIFA World Cup 2034™️ Training Sites", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-02-26", "status": "تم التقديم"}], "بلدية محافظة رابغ": [{"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الخامسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة السادسة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الثالثة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}, {"name": "تشغيل وصيانة الطرق والجسور والعبارات المستلمة من وزارة النقل بمحافظة رابغ المرحلة الرابعة", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-02-28", "status": "تم التقديم"}], "شركة المياة الوطنية": [{"name": "إيصال خدمة المياه لمجمع الملك فهد الطبي العسكري بالظهران", "type": "خطوط نقل المياة", "sector": "محفظة مشاريع المياه والنقل", "date": "2026-03-04", "status": "تم التقديم"}], "ROSHN": [{"name": "RFI - Single Family - Gen 2.5", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-06", "status": "تم التقديم"}, {"name": "Construction of District Retail For Sedra 2 & Sedra 3", "type": "الإنشاءات العامة للمباني السكنية", "sector": "محفظة مشاريع المباني", "date": "2026-03-12", "status": "تم التقديم"}], "أمانة منطقة القصيم": [{"name": "صيانة الشوارع بنطاق بلدية شرق بريدة الفرعية", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-06", "status": "تم التقديم"}, {"name": "معالجة قصور الأسفلت بمدينة بريدة (مرحلة ثانية)", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-09", "status": "تم التقديم"}, {"name": "استكمال تنفيذ طريق البيارق", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-15", "status": "تم التقديم"}, {"name": "استكمال تأهيل وصيانة بعض التقاطعات بمدينة بريدة", "type": "إنشاء الطرق والشوارع والأرصفة ومستلزمات الطرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-09", "status": "تم التقديم"}], "امانة العاصمة المقدسة": [{"name": "عملية تطوير المناطق المحيطة بمحور الأمير محمد بن سلمان", "type": "التشغيل والصيانة - طرق", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-03-07", "status": "تم التقديم"}], "حرس الحدود": [{"name": "إنشاء عدد (17) مستودع وساحة استلام وتسليم بالمديرية العامة لحرس الحدود بالبرشاعة", "type": "إنشاءات", "sector": "محفظة مشاريع المباني", "date": "2026-03-31", "status": "تم التقديم"}], "الادارة العامة لمشروع الجبيل": [{"name": "تورید وإنشاء مرافق الخدمات المشتركة في منطقة البلاسكیم", "type": "إنشاءات ، بنية تحتية", "sector": "القطاع الشرقي", "date": "2026-04-06", "status": "تم التقديم"}], "شركة جدة للتنمية والتطوير": [{"name": "أعمال تنفيذ مشروع القرية الرياضية – حي الأجواد بمدينة جدة", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-04-20", "status": "تم التقديم"}], "qiddya": [{"name": "RFP - QPMO-410-CT-07776-D0 Deep Services Phase 1", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-04-25", "status": "تم التقديم"}], "البرنامج السعودي لتنمية واعمار اليمن": [{"name": "مشروع انشاء المستشفى الجامعي بجامعة حضرموت", "type": "الإنشاءات العامة للمرافق الحكومية", "sector": "محفظة مشاريع المباني", "date": "2026-05-02", "status": "تم التقديم"}], "شركة كدانة للتنمية والتطوير": [{"name": "الاتفاقية الاطارية لأنسنه المشاعر المقدسة وتحسين المشهد الحضري", "type": "البنية التحتية البسيطة", "sector": "محفظة مشاريع البنية التحتية", "date": "2026-05-11", "status": "تم التقديم"}]};
 let cmCurrentOwner = null, cmCurrentFilter = 'all';
-const CM_COLORS = ['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed','#dc2626','#c4690b','#0f766e','#9333ea'];
+const CM_COLORS = ['#315b8f','#2f7d62','#c59a46','#b86b37','#2a7f86','#665a92','#a84b54','#8a6f3f','#35756f','#765f9a'];
 
 function openClientModal(ownerName, color) {
   cmCurrentOwner = ownerName;
@@ -1857,7 +2177,7 @@ function openClientListModal(filter) {
   if (filter === 'all') {
     filtered = allT;
     title = '📋 كل مناقصات 2026';
-    color = '#3b4fb8';
+    color = '#315b8f';
   } else if (filter === 'clients') {
     // Show clients summary
     const owners = Object.entries(OWNERS_DATA)
@@ -1882,7 +2202,7 @@ function openClientListModal(filter) {
   } else {
     filtered = allT.filter(t => t.status === filter);
     title = filter === 'جارية' ? '🟢 المناقصات الجارية 2026' : '📋 المناقصات المقدمة 2026';
-    color = filter === 'جارية' ? '#16a34a' : '#3b4fb8';
+    color = filter === 'جارية' ? '#2f7d62' : '#315b8f';
   }
 
   document.getElementById('cm-head').style.background = `linear-gradient(135deg,${color},${color}cc)`;
@@ -2276,7 +2596,7 @@ function renderTimeline() {
     data: {
       labels,
       datasets: [
-        { label:'جارية', data:jariyaData, borderColor:'#3b4fb8', backgroundColor:'rgba(59,79,184,0.1)', fill:true, tension:0.4, pointRadius:5, pointBackgroundColor:'#3b4fb8' },
+        { label:'جارية', data:jariyaData, borderColor:'#315b8f', backgroundColor:'rgba(49,91,143,0.10)', fill:true, tension:0.4, pointRadius:5, pointBackgroundColor:'#315b8f' },
         { label:'تم التقديم', data:subData, borderColor:'#16a34a', backgroundColor:'rgba(22,163,74,0.1)', fill:true, tension:0.4, pointRadius:5, pointBackgroundColor:'#16a34a' }
       ]
     },
@@ -2308,7 +2628,7 @@ function populateCompareSelects() {
   });
 }
 
-const COMPARE_COLORS=['#3b4fb8','#16a34a','#d4a017','#ea580c','#0891b2','#7c3aed'];
+const COMPARE_COLORS=['#315b8f','#2f7d62','#c59a46','#b86b37','#2a7f86','#665a92'];
 function runComparison() {
   const a = document.getElementById('compare-a').value;
   const b = document.getElementById('compare-b').value;
@@ -2337,8 +2657,8 @@ function runComparison() {
     document.getElementById(`compare-head-${letter}`).innerHTML = `<span>${owner}</span><span style="font-size:20px;font-weight:900">${s.total}</span>`;
     document.getElementById(`compare-body-${letter}`).innerHTML = `
       <div class="compare-stat"><span class="compare-stat-label">جارية</span><span class="compare-stat-val" style="color:#16a34a">${s.jariya}</span></div>
-      <div class="compare-stat"><span class="compare-stat-label">تم التقديم</span><span class="compare-stat-val" style="color:#3b4fb8">${s.sub}</span></div>
-      <div class="compare-stat"><span class="compare-stat-label">حرجة (3 أيام)</span><span class="compare-stat-val" style="color:#dc2626">${s.urgent}</span></div>
+      <div class="compare-stat"><span class="compare-stat-label">تم التقديم</span><span class="compare-stat-val" style="color:#315b8f">${s.sub}</span></div>
+      <div class="compare-stat"><span class="compare-stat-label">حرجة (3 أيام)</span><span class="compare-stat-val" style="color:#a84b54">${s.urgent}</span></div>
       <div class="compare-stat"><span class="compare-stat-label">أكثر نوع أعمال</span><span class="compare-stat-val" style="font-size:12px;color:var(--text-muted)">${s.topType}</span></div>
     `;
   });
@@ -2421,8 +2741,8 @@ function enterDashboard() {
 
 function applyRolePermissions(role) {
   if(role === 'general') {
-    const btnC = document.getElementById('tab-btn-clients');
-    const btnA = document.getElementById('tab-btn-analytics');
+    const btnC = document.getElementById('nav-btn-clients');
+    const btnA = document.getElementById('nav-btn-analytics');
     const exp  = document.getElementById('export-wrap-main');
     if(btnC) btnC.style.display = 'none';
     if(btnA) btnA.style.display = 'none';
