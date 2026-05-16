@@ -1523,10 +1523,10 @@ async function fetchTenders() {
     fetchRetryCount = 0;
   }
 
-  // jsDelivr أولاً (أسرع وcache أقل) ← GitHub Raw ثانياً
+  // GitHub Raw أولاً (بدون cache) ← jsDelivr ثانياً كاحتياطي
   const sources = [
-    { url: DATA_URL_CDN, timeout: 5000 },
     { url: DATA_URL,     timeout: 8000 },
+    { url: DATA_URL_CDN, timeout: 5000 },
   ];
   for (const src of sources) {
     try { applyData(await tryFetch(src.url, src.timeout)); return; } catch(e) {}
