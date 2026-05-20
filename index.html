@@ -1149,15 +1149,16 @@ body.dark-mode {
         <table id="tenders-table" style="display:none">
           <colgroup>
             <col style="width:40px">
-            <col style="width:33%">
-            <col style="width:14%">
-            <col style="width:11%">
-            <col style="width:10%">
+            <col style="width:28%">
+            <col style="width:13%">
             <col style="width:10%">
             <col style="width:9%">
+            <col style="width:9%">
+            <col style="width:12%">
+            <col style="width:8%">
             <col style="width:48px">
           </colgroup>
-          <thead><tr><th>#</th><th>اسم المناقصة</th><th>المالك</th><th>نوع الأعمال</th><th>تاريخ التقديم</th><th>الضمان</th><th>الأولوية</th><th>📁</th></tr></thead>
+          <thead><tr><th>#</th><th>اسم المناقصة</th><th>المالك</th><th>نوع الأعمال</th><th>تاريخ التقديم</th><th>الضمان</th><th>المحتوى المحلي</th><th>الأولوية</th><th>📁</th></tr></thead>
           <tbody id="tenders-tbody"></tbody>
         </table>
       </div>
@@ -1451,7 +1452,15 @@ body.dark-mode {
 <script>
 const DATA_URL = 'https://raw.githubusercontent.com/edwardehab0-design/tender-dashboard/main/data.json';
 const DATA_URL_CDN = 'https://cdn.jsdelivr.net/gh/edwardehab0-design/tender-dashboard@main/data.json';
-const SP_FOLDER_BASE = 'https://etech321.sharepoint.com/sites/e-tech/DocLib/Forms/AllItems.aspx?id=%2Fsites%2Fe-tech%2FDocLib%2F%D8%A7%D9%84%D9%85%D9%86%D8%A7%D9%82%D8%B5%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AD%D8%A7%D9%84%D9%8A%D8%A9%2F&viewid=d132358c-1ee3-4339-b889-07bb3849e592';
+const SP_FOLDER_ROOT = '/sites/e-tech/DocLib/المناقصات الحالية';
+const SP_VIEW_ID = 'd132358c-1ee3-4339-b889-07bb3849e592';
+function buildSpLink(title) {
+  const folderPath = SP_FOLDER_ROOT + '/' + (title || '');
+  return 'https://etech321.sharepoint.com/sites/e-tech/DocLib/Forms/AllItems.aspx'
+       + '?id='     + encodeURIComponent(folderPath)
+       + '&parent=' + encodeURIComponent(SP_FOLDER_ROOT)
+       + '&viewid=' + SP_VIEW_ID;
+}
 let allTenders = [], currentFilter = 'all';
 let visibleTenders = [];
 
@@ -1498,6 +1507,7 @@ async function fetchTenders() {
 
   function applyData(data) {
     allTenders = (data.tenders||[]).map(t=>({
+      id:         t.tender_id || t['اسم المناقصة'] || '',
       title:      t['اسم المناقصة']||'',
       owner:      t['المالك']||'',
       sector:     t['القطاع']||'',
@@ -1623,6 +1633,29 @@ function applyFilters() {
   renderTable(filtered);
 }
 
+const LC_STORAGE_KEY = 'tender_local_content_v1';
+function getLocalContentMap() {
+  try { return JSON.parse(localStorage.getItem(LC_STORAGE_KEY)) || {}; }
+  catch(e) { return {}; }
+}
+function getLocalContent(id) {
+  if(!id) return '';
+  return getLocalContentMap()[id] || '';
+}
+function setLocalContent(id, value) {
+  if(!id) return;
+  const map = getLocalContentMap();
+  const v = (value||'').trim();
+  if(v) map[id] = v; else delete map[id];
+  try { localStorage.setItem(LC_STORAGE_KEY, JSON.stringify(map)); } catch(e) {}
+}
+function onLocalContentEdit(el) {
+  setLocalContent(el.dataset.id, el.textContent);
+}
+function escapeHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 function renderTable(tenders) {
   visibleTenders = tenders;
   document.getElementById('loading').style.display = 'none';
@@ -1635,13 +1668,16 @@ function renderTable(tenders) {
   document.getElementById('tenders-tbody').innerHTML = tenders.map((t,i) => {
     const u = getUrgency(t.submitDate);
     const gToday = isGuaranteeToday(t.guarantee);
-    const spLink = SP_FOLDER_BASE + encodeURIComponent(t.title);
+    const spLink = buildSpLink(t.title);
+    const lcId = t.id || t.title;
+    const lcVal = escapeHtml(getLocalContent(lcId));
     return `<tr><td style="color:var(--text-muted);font-size:12px;font-weight:600">${i+1}</td>
     <td><span class="title-text" title="${t.title}">${t.title}</span><span class="owner-text">${t.workType}</span></td>
     <td><span class="owner-text" style="max-width:140px">${t.owner}</span></td>
     <td style="font-size:12px">${t.workType||'—'}</td>
     <td class="date-text">${t.submitDate?t.submitDate.split('T')[0]:'—'}</td>
     <td class="date-text" style="${gToday?'color:var(--teal);font-weight:800;':''}">${t.guarantee?t.guarantee.split('T')[0]:'—'}${gToday?' 🔐':''}</td>
+    <td class="lc-cell" contenteditable="true" spellcheck="false" data-id="${escapeHtml(lcId)}" data-placeholder="— اضغط للتعديل —" onblur="onLocalContentEdit(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">${lcVal}</td>
     <td><span class="urgency-badge ${u.cls}">${u.label}</span></td>
     <td style="text-align:center;"><a href="${spLink}" target="_blank" title="فتح فولدر المناقصة في SharePoint" style="text-decoration:none;font-size:18px;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">📁</a></td></tr>`;
   }).join('');
@@ -1839,13 +1875,7 @@ function loadExecutiveReport() {
   const source = document.getElementById('executive-report-b64');
   if(!frame || !source || frame.dataset.loaded === '1') return;
   const bytes = Uint8Array.from(atob(source.textContent.trim()), c => c.charCodeAt(0));
-  let html = new TextDecoder('utf-8').decode(bytes);
-  // إصلاح: srcdoc iframe له origin معتم، فلا يحفظ localStorage بين الجلسات.
-  // نوجّه كل استدعاءات localStorage داخل الـ iframe إلى localStorage الخاص بالصفحة الأم،
-  // وبذلك تبقى البيانات المستوردة من Excel محفوظة بعد الخروج والعودة.
-  const lsShim = '<script>(function(){try{var p=window.parent.localStorage;Object.defineProperty(window,"localStorage",{value:p,configurable:true});}catch(e){console.warn("LS shim failed:",e);}})();<\/script>';
-  html = html.replace(/<head(\s[^>]*)?>/i, function(m){ return m + lsShim; });
-  frame.srcdoc = html;
+  frame.srcdoc = new TextDecoder('utf-8').decode(bytes);
   frame.dataset.loaded = '1';
 }
 
